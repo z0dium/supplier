@@ -1,4 +1,5 @@
 package com.pamihnenkov.supplier.model;
 
-public class BaseEntity {
+public abstract class BaseEntity {
+    private Long id;
 }

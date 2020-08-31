@@ -1,10 +1,12 @@
 package com.pamihnenkov.supplier.model;
 
-import java.util.Set;
+public class Order extends BaseEntity{
 
-public class Order {
-    private String author;
-    private String date;
-    private Integer number;
-    private Set<Item> itemsOfOrder;
+    private Request request;
+    private Item item;
+    private Integer orderedQuantity;
+    private Integer deliveredQuantity;
+    private Long expectedTo;
+    private Contragent contragent;
+    private Long deliveryDay;
 }
