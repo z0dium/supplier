@@ -1,6 +1,11 @@
 package com.pamihnenkov.supplier.model;
 
-public class Order extends BaseEntity{
+import lombok.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+public class Requirement extends BaseEntity{
 
     private Request request;
     private Item item;

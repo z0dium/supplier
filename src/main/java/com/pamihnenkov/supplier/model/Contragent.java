@@ -1,10 +1,14 @@
 package com.pamihnenkov.supplier.model;
 
+import lombok.Data;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.Entity;
 import java.util.Set;
 
-public class Contragent{
+public class Contragent extends BaseEntity{
 
-    private String id;
+    private Integer inn_code;
     private String name;
     private Set<Member> member;
     private String siteAdress;
