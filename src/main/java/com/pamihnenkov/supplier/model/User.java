@@ -1,4 +1,28 @@
 package com.pamihnenkov.supplier.model;
 
-public class User extends Human {
+import lombok.Builder;
+import lombok.Data;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Data
+@Builder
+@Table(name = "users")
+public class User extends BaseEntity{
+
+    private String name;
+    private String surname;
+    private String phoneNumber;
+    private String birthDate;
+    private String email;
+
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinTable(name = "contragent_user",
+        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "contragent_id", referencedColumnName = "id"))
+    private Set<Contragent> contragents = new HashSet<>();
+
 }

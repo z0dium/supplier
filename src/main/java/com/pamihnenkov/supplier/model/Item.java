@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 @Data
 @Entity
+@Builder
 @Table(name = "items")
 public class Item extends BaseEntity {
 
