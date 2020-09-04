@@ -64,12 +64,12 @@ public class BootStrapData implements CommandLineRunner {
                 .email("sibsnab1@gmail.com")
         .build();
 
-        Request request = Request.builder()
-                .author(user)
-                .number(3565)
-                .requirements(set)
-                .date("Сейчас").build();
-
-        requestRepository.save(request);
+   //     Request request = Request.builder()
+   //             .author(user)
+   //             .number(3565)
+   //             .requirements(set)
+   //             .date("Сейчас").build();
+//
+   //     requestRepository.save(request);
     }
 }

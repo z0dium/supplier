@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание заявки:</title>
+</head>
+<body>
+
+<form method="post" action="#" th:action="@{/addRequest}" th:object="${newRequest}">
+    <p>Цель заявки: <input type="text" th:field="*{goal}"/></p>
+    <p><input type="submit" value="Создать" /><input type="reset" value="Отменить" /></p>
+</form>
+</body>
+</html>

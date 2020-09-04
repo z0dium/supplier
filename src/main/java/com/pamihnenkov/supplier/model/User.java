@@ -23,6 +23,6 @@ public class User extends BaseEntity{
     @JoinTable(name = "contragent_user",
         joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "contragent_id", referencedColumnName = "id"))
-    private Set<Contragent> contragents = new HashSet<>();
+    private Set<Contragent> contragents;
 
 }
