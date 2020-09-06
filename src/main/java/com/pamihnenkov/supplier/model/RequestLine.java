@@ -7,10 +7,10 @@ import javax.persistence.*;
 @Data
 @Entity
 @Builder
-@Table(name = "requirements")
-public class Requirement extends BaseEntity{
+@Table(name = "requestLines")
+public class RequestLine extends BaseEntity{
 
-//    private Request request;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Item item;
     @ManyToOne(cascade = CascadeType.PERSIST)

@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,7 +15,6 @@ public class User extends BaseEntity{
     private String name;
     private String surname;
     private String phoneNumber;
-    private String birthDate;
     private String email;
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
