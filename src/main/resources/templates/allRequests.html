@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table>
+        <tr th:each="request: ${requests}">
+            <td th:text="${request.author.name}"></td>
+            <td th:text="${request.date}"></td>
+            <td th:text="${request.number}"></td>
+        </tr>
+    </table>
+</body>
+</html>

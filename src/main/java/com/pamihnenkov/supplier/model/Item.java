@@ -11,13 +11,12 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Builder
+@NoArgsConstructor
 @Table(name = "items")
 public class Item extends BaseEntity {
 
     private String name; //Subject. 1-2 words
-    private String serialNumber; //Any combination to identify the DIN, ISO, model, and so on...
-    private String description; //Any additional information
+    private String model; //Any combination to identify the DIN, ISO, serial number, and so on...
     private String brand;
     private String category;
     private String urlOfExample;

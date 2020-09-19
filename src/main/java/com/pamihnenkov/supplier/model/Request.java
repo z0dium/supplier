@@ -1,19 +1,18 @@
 package com.pamihnenkov.supplier.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Data
 @Entity
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Table(name = "requests")
 public class Request extends BaseEntity{
 
@@ -23,7 +22,7 @@ public class Request extends BaseEntity{
     private Integer number;
     private String goal;
     @OneToMany(mappedBy = "request", cascade = CascadeType.PERSIST)
-    private Set<RequestLine> requestLines;
+    private List<RequestLine> requestLines = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -44,4 +43,6 @@ public class Request extends BaseEntity{
         result = 31 * result + (getNumber() != null ? getNumber().hashCode() : 0);
         return result;
     }
+
+
 }

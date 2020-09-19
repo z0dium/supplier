@@ -10,12 +10,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class RequsetJPAService implements RequestService {
+public class RequsetJpaService implements RequestService {
 
     private final RequestRepository requestRepository;
 
     @Autowired
-    public RequsetJPAService(RequestRepository requestRepository) {
+    public RequsetJpaService(RequestRepository requestRepository) {
         this.requestRepository = requestRepository;
     }
 
@@ -34,6 +34,7 @@ public class RequsetJPAService implements RequestService {
     @Override
     public Request save(Request object) {
 
+
         object.getRequestLines().stream()
                 .forEach(requestLine -> requestLine.setRequest(object));
         return requestRepository.save(object);
@@ -41,8 +42,6 @@ public class RequsetJPAService implements RequestService {
 
     @Override
     public void delete(Request object) {
-
-
         requestRepository.delete(object);
     }
 

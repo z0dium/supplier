@@ -1,20 +1,15 @@
 package com.pamihnenkov.supplier.bootstrap;
 
-import com.pamihnenkov.supplier.model.Item;
-import com.pamihnenkov.supplier.model.Request;
-import com.pamihnenkov.supplier.model.RequestLine;
-import com.pamihnenkov.supplier.model.User;
-import com.pamihnenkov.supplier.repository.ItemRepository;
-import com.pamihnenkov.supplier.repository.RequestLineRepository;
-import com.pamihnenkov.supplier.repository.RequestRepository;
-import com.pamihnenkov.supplier.repository.UserRepository;
+import com.pamihnenkov.supplier.model.*;
 import com.pamihnenkov.supplier.service.RequestService;
+import com.pamihnenkov.supplier.service.UomService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Component
 @AllArgsConstructor
@@ -23,52 +18,45 @@ public class BootStrapData implements CommandLineRunner {
 
     private final RequestService requestService;
 
-
-
     @Override
     public void run(String... args) throws Exception {
-        Item bolt = Item.builder()
-            .name("Болт")
-            .serialNumber("DIN 912")
-            .description("M12*110")
-        .build();
-   //     itemRepository.save(bolt);
+        Uom uom = new Uom();
+            uom.setName("л");
 
-        Item siz = Item.builder()
-            .name("Перчатки хб")
-            .description("c Пвх, 5нитка")
-        .build();
-  //      itemRepository.save(siz);
+        Item bolt = new Item();
+            bolt.setName("Болт");
+            bolt.setModel("DIN 912");
 
-        RequestLine req1 = RequestLine.builder()
-                .item(siz)
-                .orderedQuantity(1000)
-                .build();
- //       requestLineRepository.save(req1);
+        Item siz = new Item();
+            siz.setName("Перчатки хб");
 
-        RequestLine req2 = RequestLine.builder()
-                .item(bolt)
-                .orderedQuantity(50)
-                .build();
+        RequestLine req1 = new RequestLine();
+            req1.setItem(bolt);
+            req1.setOrderedQuantity(1000);
+            req1.setDescription("M12*110");
+            req1.setUnitOfMeasure(uom);
 
-        Set<RequestLine> set = new HashSet<>();
-        set.add(req1);
-        set.add(req2);
+        RequestLine req2 = new RequestLine();
+            req2.setItem(siz);
+            req2.setOrderedQuantity(50);
+            req2.setDescription("c Пвх, 5нитка");
 
-        User user = User.builder()
-                .name("Павел")
-                .surname("Михненков")
-                .email("sibsnab1@gmail.com")
-        .build();
 
-        Request request = Request.builder()
-                .author(user)
-                .number(3565)
-                .requestLines(set)
-                .date(System.currentTimeMillis())
-                .build();
-        request.getApprovers().add(user);
+        List<RequestLine> list = new ArrayList<>();
+            list.add(req1);
+            list.add(req2);
 
+        User user = new User();
+                user.setName("Павел");
+                user.setSurname("Михненков");
+                user.setEmail("sibsnab1@gmail.com");
+
+
+        Request request = new Request();
+        request.setAuthor(user);
+        request.setNumber(3565);
+        request.setRequestLines(list);
+        request.setDate(System.currentTimeMillis());
 
         requestService.save(request);
     }
