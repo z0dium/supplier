@@ -2,12 +2,12 @@ package com.pamihnenkov.supplier.bootstrap;
 
 import com.pamihnenkov.supplier.model.*;
 import com.pamihnenkov.supplier.service.RequestService;
-import com.pamihnenkov.supplier.service.UomService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -20,9 +20,6 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Uom uom = new Uom();
-            uom.setName("л");
-
         Item bolt = new Item();
             bolt.setName("Болт");
             bolt.setModel("DIN 912");
@@ -34,7 +31,7 @@ public class BootStrapData implements CommandLineRunner {
             req1.setItem(bolt);
             req1.setOrderedQuantity(1000);
             req1.setDescription("M12*110");
-            req1.setUnitOfMeasure(uom);
+            req1.setUnitOfMeasure(UnitOfMeasures.PCS);
 
         RequestLine req2 = new RequestLine();
             req2.setItem(siz);
@@ -56,7 +53,7 @@ public class BootStrapData implements CommandLineRunner {
         request.setAuthor(user);
         request.setNumber(3565);
         request.setRequestLines(list);
-        request.setDate(System.currentTimeMillis());
+        request.setDate(new Date());
 
         requestService.save(request);
     }

@@ -3,9 +3,12 @@ package com.pamihnenkov.supplier.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -17,15 +20,17 @@ import java.util.List;
 public class Request extends BaseEntity{
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    private User author;
-    private Long date;
-    private Integer number;
-    private String goal;
+        private User author;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Type(type = "date")
+        private Date date;
+        private Integer number;
+        private String goal;
     @OneToMany(mappedBy = "request", cascade = CascadeType.PERSIST)
-    private List<RequestLine> requestLines = new ArrayList<>();
+        private List<RequestLine> requestLines = new ArrayList<>();
 
     @Override
-    public boolean equals(Object o) {
+        public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -37,12 +42,12 @@ public class Request extends BaseEntity{
     }
 
     @Override
-    public int hashCode() {
-        int result = getAuthor().hashCode();
-        result = 31 * result + getDate().hashCode();
-        result = 31 * result + (getNumber() != null ? getNumber().hashCode() : 0);
-        return result;
-    }
+        public int hashCode() {
+            int result = getAuthor().hashCode();
+            result = 31 * result + getDate().hashCode();
+            result = 31 * result + (getNumber() != null ? getNumber().hashCode() : 0);
+            return result;
+        }
 
 
 }

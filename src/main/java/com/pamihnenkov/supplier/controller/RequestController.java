@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Date;
+
 @Controller
 public class RequestController {
 
@@ -38,12 +40,12 @@ public class RequestController {
     @PostMapping("request/save")
     public String createRequest(@ModelAttribute RequestLinesContainer requestLinesContainer, Model model) {
         Request newRequest = new Request();
-        newRequest.setDate(System.currentTimeMillis());
+        newRequest.setDate(new Date());
         newRequest.setRequestLines(requestLinesContainer.getRequestLines());
         newRequest.setAuthor(userService.findById(1L)); //testing purpose. Should be changed to CurrentUser
         requestService.save(newRequest);
         model.addAttribute("requests", requestService.findAll());
-        return "allRequests";
+        return "redirect:allRequests";
     }
 
     @GetMapping("request")
