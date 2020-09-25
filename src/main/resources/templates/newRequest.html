@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript" th:src="@{/js/javascript.js}"></script>
-    <script type="text/javascript" src="jquery.js"></script>
-    <script type="text/javascript" src="jquery.autocomplete.js"></script>
 </head>
 <body>
-<form action="#" th:action="@{/request/save}" th:object="${requestLinesContainer}" method="post">
+<form action="#" th:action="@{/requests/save}" th:object="${requestLinesContainer}" method="post">
     <fieldset>
         <input type="submit" id="submitButton" th:value="Save">
         <input type="reset" id="resetButton" name="reset" th:value="Reset">

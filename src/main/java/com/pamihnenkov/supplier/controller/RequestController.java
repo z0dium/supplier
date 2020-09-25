@@ -3,9 +3,12 @@ package com.pamihnenkov.supplier.controller;
 import com.pamihnenkov.supplier.model.Request;
 import com.pamihnenkov.supplier.model.RequestLine;
 import com.pamihnenkov.supplier.model.RequestLinesContainer;
+import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
+import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUserService;
 import com.pamihnenkov.supplier.service.RequestService;
 import com.pamihnenkov.supplier.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,17 +21,16 @@ import java.util.Date;
 public class RequestController {
 
     private final RequestService requestService;
-    private final UserService userService; //testing purpose
+    private final ApplicationUserService applicationUserService;
 
 
     @Autowired
-    public RequestController(RequestService requestService, UserService userService) {
+    public RequestController(RequestService requestService, UserService userService, ApplicationUserService applicationUserService) {
         this.requestService = requestService;
-
-        this.userService = userService;
+        this.applicationUserService = applicationUserService;
     }
 
-    @GetMapping("request/create")
+    @GetMapping("requests/create")
     public String showCreateForm(Model model) {
 
         RequestLinesContainer requestLinesContainer = new RequestLinesContainer();
@@ -37,18 +39,18 @@ public class RequestController {
         return "newRequest";
     }
 
-    @PostMapping("request/save")
+    @PostMapping("requests/save")
     public String createRequest(@ModelAttribute RequestLinesContainer requestLinesContainer, Model model) {
         Request newRequest = new Request();
         newRequest.setDate(new Date());
         newRequest.setRequestLines(requestLinesContainer.getRequestLines());
-        newRequest.setAuthor(userService.findById(1L)); //testing purpose. Should be changed to CurrentUser
+        ApplicationUser currentUser = (ApplicationUser) applicationUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        newRequest.setAuthor(currentUser);
         requestService.save(newRequest);
-        model.addAttribute("requests", requestService.findAll());
-        return "redirect:allRequests";
+        return "redirect:/requests";
     }
 
-    @GetMapping("request")
+    @GetMapping("requests")
     public String showAllRequests(Model model){
 
         model.addAttribute("requests", requestService.findAll());

@@ -1,14 +1,17 @@
 package com.pamihnenkov.supplier.bootstrap;
 
 import com.pamihnenkov.supplier.model.*;
+import com.pamihnenkov.supplier.security.ApplicationGrantedAuthority;
+import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
+import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUserService;
 import com.pamihnenkov.supplier.service.RequestService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Component
@@ -17,6 +20,10 @@ public class BootStrapData implements CommandLineRunner {
 
 
     private final RequestService requestService;
+    private PasswordEncoder passwordEncoder;
+    private final ApplicationUserService applicationUserService;
+
+
 
     @Override
     public void run(String... args) throws Exception {
@@ -43,11 +50,30 @@ public class BootStrapData implements CommandLineRunner {
             list.add(req1);
             list.add(req2);
 
-        User user = new User();
-                user.setName("Павел");
-                user.setSurname("Михненков");
-                user.setEmail("sibsnab1@gmail.com");
+        ApplicationUser admin = new ApplicationUser(new HashSet<ApplicationGrantedAuthority>(),
+                                            passwordEncoder.encode("password"),
+                                    true,
+                                    true,
+                                    true,
+                                                true);
+        admin.setName("Павел");
+        admin.setSurname("Михненков");
+        admin.setEmail("sibsnab1@gmail.com");
+        admin.getAuthorities().add(ApplicationGrantedAuthority.ROLE_ADMIN);
+        admin.getAuthorities().add(ApplicationGrantedAuthority.ROLE_USER);
 
+        applicationUserService.save(admin);
+
+        ApplicationUser user = new ApplicationUser(new HashSet<ApplicationGrantedAuthority>(),
+                passwordEncoder.encode("user"),
+                true,
+                true,
+                true,
+                true);
+        user.setName("Игорь");
+        user.setSurname("234");
+        user.setEmail("snab@sib-centr.ru");
+        user.getAuthorities().add(ApplicationGrantedAuthority.ROLE_USER);
 
         Request request = new Request();
         request.setAuthor(user);
