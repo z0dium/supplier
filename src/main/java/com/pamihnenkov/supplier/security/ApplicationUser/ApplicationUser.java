@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,7 +20,7 @@ public class ApplicationUser extends User implements UserDetails {
     @JoinTable(name = "applicationGrantedAuthority", joinColumns = @JoinColumn (name = "applicationUserId"))
     @Column(name = "applicationGrantedAuthority", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Set<ApplicationGrantedAuthority> grantedAuthorities;
+    private Set<ApplicationGrantedAuthority> grantedAuthorities = new HashSet<>();
     private String password;
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
@@ -49,6 +50,10 @@ public class ApplicationUser extends User implements UserDetails {
         return password;
     }
 
+    public void setPassword(String password){
+        this.password = password;
+    }
+
     @Override
     public String getUsername() {
         return getEmail();
@@ -64,19 +69,41 @@ public class ApplicationUser extends User implements UserDetails {
         return isAccountNonExpired;
     }
 
+
+
     @Override
     public boolean isAccountNonLocked() {
         return isAccountNonLocked;
     }
+
+
 
     @Override
     public boolean isCredentialsNonExpired() {
         return isCredentialsNonExpired;
     }
 
+
+
     @Override
     public boolean isEnabled() {
         return isEnabled;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        isAccountNonExpired = accountNonExpired;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        isAccountNonLocked = accountNonLocked;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        isCredentialsNonExpired = credentialsNonExpired;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 
     @Override
