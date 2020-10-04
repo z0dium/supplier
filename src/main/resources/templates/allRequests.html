@@ -2,15 +2,26 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Все заявки</title>
+    <link rel="stylesheet" href="/css/sort.css">
+    <script type="text/javascript" th:src="@{/js/sort.js}"></script>
 </head>
 <body>
-    <table>
-        <tr th:each="request: ${requests}">
-            <td th:text="${request.author.name}"></td>
-            <td th:text="${request.date}"></td>
-            <td th:text="${request.number}"></td>
-        </tr>
+    <table class="sort" align="center">
+        <thead>
+            <tr>
+                <td>Номер заявки</td>
+                <td>Дата</td>
+                <td>Фамилия</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="request: ${requests}">
+                <td th:text="${request.number}"></td>
+                <td th:text="${request.date}"></td>
+                <td th:text="${request.author.surname}"></td>
+                </tr>
+        </tbody>
     </table>
 </body>
 </html>

@@ -8,37 +8,37 @@
 <body>
 <form action="#" th:action="@{/requests/save}" th:object="${requestLinesContainer}" method="post">
     <fieldset>
-        <input type="submit" id="submitButton" th:value="Save">
-        <input type="reset" id="resetButton" name="reset" th:value="Reset">
+        <input type="submit" id="submitButton" th:value="save">
+        <input type="reset" id="resetButton" name="reset" th:value="reset">
         <button type="button" th:onclick="addRow('listOfRequestLines');">Добавить строку</button>
         <table id="listOfRequestLines">
             <thead>
-            <tr>
-                <th>Наименование</th>
-                <th>Модель</th>
-                <th>Характеристики</th>
-                <th>Количество</th>
-                <th>Единицы измерения</th>
-                <th>Срочность</th>
-                <th>Ссылка</th>
-                <th></th>
-            </tr>
+                <tr>
+                    <th>Наименование</th>
+                    <th>Модель</th>
+                    <th>Характеристики</th>
+                    <th>Количество</th>
+                    <th>Единицы измерения</th>
+                    <th>Срочность</th>
+                    <th>Ссылка</th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
-            <tr th:each="requestLine, itemStat : *{requestLines}">
-                <td><input th:field="*{requestLines[__${itemStat.index}__].item.name}"></td>
-                <td><input th:field="*{requestLines[__${itemStat.index}__].item.model}"></td>
-                <td><input th:field="*{requestLines[__${itemStat.index}__].description}"></td>
-                <td><input th:field="*{requestLines[__${itemStat.index}__].orderedQuantity}"></td>
-                <td><select th:field="*{requestLines[__${itemStat.index}__].unitOfMeasure}" th:required="required">
-                        <option th:each="uom : ${T(com.pamihnenkov.supplier.model.UnitOfMeasures).values()}"
-                                th:value="${uom}"
-                                th:text="${uom.title}"></option>
-                    </select></td>
-                <td><input th:type="date" th:field="*{requestLines[__${itemStat.index}__].expectedTo}" th:value="yyyy-MM-dd"></td>
-                <td><input th:field="*{requestLines[__${itemStat.index}__].item.urlOfExample}"></td>
-                <td><button>+</button></td>
-            </tr>
+                <tr th:each="requestLine, itemStat : *{requestLines}">
+                    <td><input th:field="*{requestLines[__${itemStat.index}__].item.name}"></td>
+                    <td><input th:field="*{requestLines[__${itemStat.index}__].item.model}"></td>
+                    <td><input th:field="*{requestLines[__${itemStat.index}__].description}"></td>
+                    <td><input th:field="*{requestLines[__${itemStat.index}__].orderedQuantity}"></td>
+                    <td><select th:field="*{requestLines[__${itemStat.index}__].unitOfMeasure}">
+                            <option th:each="uom : ${T(com.pamihnenkov.supplier.model.UnitOfMeasures).values()}"
+                                    th:value="${uom}"
+                                    th:text="${uom.title}"></option>
+                        </select></td>
+                    <td><input th:type="date" th:field="*{requestLines[__${itemStat.index}__].expectedTo}" th:value="yyyy-MM-dd"></td>
+                    <td><input th:field="*{requestLines[__${itemStat.index}__].item.urlOfExample}"></td>
+                    <td><button type="button" th:id="addRowButton[__${itemStat.index}__]" th:onclick="cloneRow('listOfRequestLines',this)">+</button></td>
+                </tr>
             </tbody>
         </table>
     </fieldset>

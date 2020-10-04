@@ -5,39 +5,37 @@
     <title>Title</title>
 </head>
 <body>
-<h1 th:text="#{label.form.title}">form</h1>
+<h1>Регистрация нового пользователя</h1>
 <form action="/" th:action="@{/login/registration}" th:object="${applicationUser}" method="POST">
-    <div>
-        <label>Ваше имя</label>
-        <input th:field="*{name}"/>
-        <p th:each="error: ${#fields.errors('name')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label>Ваша фамилия</label>
-        <input th:field="*{surname}"/>
-        <p th:each="error : ${#fields.errors('surname')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label>email</label>
-        <input type="email" th:field="*{email}"/>
-        <p th:each="error : ${#fields.errors('email')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label>Пароль</label>
-        <input type="password" th:field="*{password}"/>
-        <p th:each="error : ${#fields.errors('password')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label>Подтверждение пароля</label>
-        <input type="password"/>
-    </div>
-    <button type="submit" th:text="#{label.form.submit}">submit</button>
+    <table>
+        <tr>
+            <td><div><label>Ваше имя</label></div></td>
+            <td><div><input th:id="name" th:field="*{name}"/></div></td>
+        </tr>
+        <tr>
+            <td><div><label>Ваша фамилия</label></div></td>
+            <td><div><input th:id="surname"th:field="*{surname}"/></div></td>
+        </tr>
+        <tr>
+            <td><div><label>Email</label></div></td>
+            <td><div><input type="email" th:id="email" th:field="*{email}"/></div></td>
+        </tr>
+        <tr>
+            <td><div><label>Пароль</label></div></td>
+            <td><div><input type="password" th:id="password" th:field="*{password}"/></div></td>
+        </tr>
+        <tr>
+            <td><div><label>Подтверждение пароля</label></div></td>
+            <td><div><input th:id="confirm_password" type="password"/></div></td>
+        </tr>
+        <tr>
+            <td><div><button type="submit">Зарегистрироваться</button></div></td>
+            <td><div><a th:href="@{/login.html}">Войти в систему</a></div></td>
+        </tr>
+    </table>
+    </table>
 </form>
 
-<a th:href="@{/login.html}" th:text="#{label.form.loginLink}">login</a>
+
 </body>
 </html>
