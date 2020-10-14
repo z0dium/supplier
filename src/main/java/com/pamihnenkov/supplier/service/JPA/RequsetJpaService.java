@@ -16,13 +16,16 @@ public class RequsetJpaService implements RequestService {
 
     @Autowired
     public RequsetJpaService(RequestRepository requestRepository) {
+
         this.requestRepository = requestRepository;
     }
+
+
 
     @Override
     public Set<Request> findAll() {
         Set<Request> requests = new HashSet<>();
-        requestRepository.findAll().forEach(requests::add);
+        requests.addAll(requestRepository.findAll());
         return requests;
     }
 
@@ -34,9 +37,9 @@ public class RequsetJpaService implements RequestService {
     @Override
     public Request save(Request object) {
 
-
         object.getRequestLines().stream()
                 .forEach(requestLine -> requestLine.setRequest(object));
+
         return requestRepository.save(object);
     }
 

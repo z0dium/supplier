@@ -37,7 +37,7 @@
                         </select></td>
                     <td><input th:type="date" th:field="*{requestLines[__${itemStat.index}__].expectedTo}" th:value="yyyy-MM-dd"></td>
                     <td><input th:field="*{requestLines[__${itemStat.index}__].item.urlOfExample}"></td>
-                    <td><button type="button" th:id="addRowButton[__${itemStat.index}__]" th:onclick="cloneRow('listOfRequestLines',this)">+</button></td>
+                    <td><button type="button" th:onclick="cloneRow('listOfRequestLines',this)">+</button></td>
                 </tr>
             </tbody>
         </table>

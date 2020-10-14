@@ -4,9 +4,9 @@ import com.pamihnenkov.supplier.model.*;
 import com.pamihnenkov.supplier.security.ApplicationGrantedAuthority;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUserService;
+import com.pamihnenkov.supplier.service.ItemService;
 import com.pamihnenkov.supplier.service.RequestService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -31,8 +31,10 @@ public class BootStrapData implements CommandLineRunner {
             bolt.setName("Болт");
             bolt.setModel("DIN 912");
 
+
         Item siz = new Item();
             siz.setName("Перчатки хб");
+
 
         RequestLine req1 = new RequestLine();
             req1.setItem(bolt);

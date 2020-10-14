@@ -2,45 +2,79 @@
 function addRow(id){
 
         var table = document.getElementById(id);
-        var tbody = table.getElementsByTagName("TBODY")[0];
         var lastRow = table.rows[table.rows.length - 1];
-        var name = lastRow.getElementsByTagName("td")[0].getElementsByTagName("input")[0].name;
 
-        var index = (name.match(/\d+/)); // Finds index of lastRow. (books[0].title, index=0);
-
-        var prefix = name.substring(0,name.indexOf(index)); // books[
-
-        var row = document.createElement("TR");
-        for (i=0; i<lastRow.cells.length-1; i++){
-            var nameOfProperty = lastRow.cells[i].firstElementChild.name;
-            var suffix = findSuffix(prefix, index, nameOfProperty);
-            var newIndex = String(Number(index) + 1);
-            var nameOfProperty = prefix + newIndex + suffix;
-            var element = document.createElement("TD");
-            var input = document.createElement("INPUT");
-            input.id = prefix.substring(0, prefix.length-1) + newIndex + suffix.substring(1);
-            input.name = nameOfProperty;
-            element.appendChild(input);
-            row.appendChild(element);
-        }
-
-        var button = document.createElement("BUTTON");
-        button.innerHTML = "+";
-        element = document.createElement("TD");
-        element.appendChild(button);
-        row.appendChild(element);
-
-        tbody.appendChild(row);
+        cloneRow(id,lastRow.firstElementChild.firstElementChild); //Copy of lastRow
+        cleanValuesOfInput(table.rows[table.rows.length - 1]);
   }
 
-  function findSuffix(prefix, index, name){
+  function findSuffix(name){
+    var index = findIndexFromName(name);
     return name.substring(name.indexOf(index)+String(index).length);
   }
 
-  function cloneRow(tableToModify,thisElement) {
+  function findPrefix(name){
+    var index = findIndexFromName(name);
+    return name.substring(0,name.indexOf(index));
+  }
+
+  function cleanValuesOfInput(lastRow){
+        for (i=0; i<lastRow.cells.length-1; i++){
+            var td = lastRow.cells[i];
+            element = td.firstElementChild;
+            element.value = null;
+        }
+  }
+
+  function findIndexFromName(name){
+    var str = String(name.match(/\[\d+\]/));
+    var number = str.substring(1,str.length-1);
+    return number; // Finds index of Row. (books[0].title, index=0);
+  }
+
+  function findLastRowIndex(table){
+    return table.rows[table.rows.length - 1];
+  }
+
+  function findNewIndex(table){
+    var tableRows = table.rows;
+    var lastRow = tableRows[tableRows.length-1];
+    var td = lastRow.firstElementChild;
+    var input = td.firstElementChild;
+    var name = input.name;
+    var index = findIndexFromName(name);
+    return ++index;
+  }
+
+
+
+  function cloneRow(tableToModifyId,thisElement) {
     var row = thisElement.parentElement.parentElement; // find row to copy
-    var table = document.getElementById(tableToModify); // find table to append to
-    alert(table.id);
+    var table = document.getElementById(tableToModifyId);
+    var tbody = table.getElementsByTagName("TBODY")  // find table to append to
     var clone = row.cloneNode(true); // copy children too
-    table.getElementsByTagName("TBODY").appendChild(clone); // add new row to end of table
+
+
+    var nameOfProperty = clone.firstElementChild.firstElementChild.name;
+    var prefix = findPrefix(nameOfProperty);
+        for (i=0; i<clone.cells.length-1; i++){
+
+                    var td = clone.cells[i];
+                    var input = td.firstElementChild;
+                    var nameOfProperty = input.name;
+                    var suffix = findSuffix(nameOfProperty);
+                    var newIndex = findNewIndex(table);
+                    var nameOfProperty = prefix + newIndex + suffix;
+                    if (i==4) {
+                        input.value = row.cells[4].firstElementChild.value;
+                    }
+
+                    input.name = nameOfProperty;
+                    input.id = prefix.substring(0, prefix.length-1) + newIndex + suffix.substring(1);
+                }
+
+
+    var tbody = table.getElementsByTagName("TBODY")[0];
+        tbody.appendChild(clone);// add new row to end of table
+
   }
