@@ -13,9 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @Controller
 public class RequestController {
@@ -55,6 +58,31 @@ public class RequestController {
 
         model.addAttribute("requests", requestService.findAll());
         return "allRequests";
+    }
+
+    @GetMapping("requests/{id}")
+    public ModelAndView showRequest(@PathVariable Long id){
+
+        ModelAndView mav = new ModelAndView();
+        RequestLinesContainer container = new RequestLinesContainer();
+        container.setRequestLines(requestService.findById(id).getRequestLines());
+        mav.addObject("container",container);
+        mav.setViewName("allRequestsLines");
+        return mav;
+    }
+
+    @GetMapping("requests/my")
+    public ModelAndView showMyRequests(){
+        ModelAndView mav = new ModelAndView();
+        ApplicationUser currentUser = (ApplicationUser) applicationUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+
+        RequestLinesContainer container = new RequestLinesContainer();
+        container.setRequestLines(requestService.findByAuthor(currentUser).stream()
+                                    .flatMap(request -> request.getRequestLines().stream())
+                                    .collect(Collectors.toList()));
+        mav.addObject("container", container);
+        mav.setViewName("allRequestsLines");
+        return mav;
     }
 
 }

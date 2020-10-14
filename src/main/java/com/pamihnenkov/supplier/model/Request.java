@@ -19,7 +19,7 @@ import java.util.List;
 @Table(name = "requests")
 public class Request extends BaseEntity{
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)         // can be removed in prod
         private User author;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Type(type = "date")

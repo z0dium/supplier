@@ -8,8 +8,7 @@
 <body>
 <form action="#" th:action="@{/requests/save}" th:object="${requestLinesContainer}" method="post">
     <fieldset>
-        <input type="submit" id="submitButton" th:value="save">
-        <input type="reset" id="resetButton" name="reset" th:value="reset">
+
         <button type="button" th:onclick="addRow('listOfRequestLines');">Добавить строку</button>
         <table id="listOfRequestLines">
             <thead>
@@ -42,6 +41,10 @@
             </tbody>
         </table>
     </fieldset>
+    <center>
+        <input type="submit" id="submitButton" value="Создать заявку">
+        <input type="submit" id="saveButton" value="Сохранить черновик">
+    </center>
 </form>
 
 

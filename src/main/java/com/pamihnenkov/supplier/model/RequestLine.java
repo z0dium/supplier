@@ -18,7 +18,7 @@ public class RequestLine extends BaseEntity{
         private Request request;
     @ManyToOne(cascade = CascadeType.PERSIST)
         private Item item;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
         private UnitOfMeasures unitOfMeasure;
     @ManyToOne(cascade = CascadeType.PERSIST)
         private Contragent contragent;
@@ -28,5 +28,7 @@ public class RequestLine extends BaseEntity{
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Type(type = "date")
         private Date expectedTo;
-        private Long deliveryDay;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Type(type = "date")
+        private Date deliveryDay;
 }

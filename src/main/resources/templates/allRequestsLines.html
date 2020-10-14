@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Все заявки</title>
+    <link rel="stylesheet" href="/css/sort.css">
+    <script type="text/javascript" th:src="@{/js/sort.js}"></script>
+</head>
+<body>
+<table class="sort" align="center">
+    <thead>
+    <tr>
+        <td>Инициатор</td>
+        <td>Дата</td>
+        <td>Наименование</td>
+        <td>Модель/артикул/и тд</td>
+        <td>Описание</td>
+        <td>Кол-во</td>
+        <td>Ед. изм.</td>
+        <td>Категория</td>
+        <td>Срочность</td>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="rl: ${container.requestLines}">
+        <td th:text="${rl.request.author.surname}"></td>
+        <td th:text="${rl.request.date}"></td>
+        <td th:text="${rl.item.name}"></td>
+        <td th:text="${rl.item.model}"></td>
+        <td th:text="${rl.description}"></td>
+        <td th:text="${rl.orderedQuantity}"></td>
+        <td th:text="${rl.unitOfMeasure}"></td>
+        <td th:text="${rl.item.category}"></td>
+        <td th:text="${rl.expectedTo}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -13,6 +13,8 @@
                 <td>Номер заявки</td>
                 <td>Дата</td>
                 <td>Фамилия</td>
+                <td>Цель заявки</td>
+                <td>Список</td>
             </tr>
         </thead>
         <tbody>
@@ -20,7 +22,10 @@
                 <td th:text="${request.number}"></td>
                 <td th:text="${request.date}"></td>
                 <td th:text="${request.author.surname}"></td>
-                </tr>
+                <td th:text="${request.goal}"></td>
+
+                <td><button th:onclick="'window.location.href=\'requests/' + ${request.id} +'\';'"  type="button">Список</button></td>
+            </tr>
         </tbody>
     </table>
 </body>

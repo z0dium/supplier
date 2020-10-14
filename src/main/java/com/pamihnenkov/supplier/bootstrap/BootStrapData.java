@@ -40,7 +40,7 @@ public class BootStrapData implements CommandLineRunner {
             req1.setItem(bolt);
             req1.setOrderedQuantity(1000);
             req1.setDescription("M12*110");
-            req1.setUnitOfMeasure(UnitOfMeasures.PCS);
+            req1.setUnitOfMeasure(UnitOfMeasures.шт);
 
         RequestLine req2 = new RequestLine();
             req2.setItem(siz);
@@ -72,14 +72,14 @@ public class BootStrapData implements CommandLineRunner {
                 true,
                 true,
                 true);
-        user.setName("Игорь");
-        user.setSurname("234");
+        user.setName("Алексей");
+        user.setSurname("Иванов");
         user.setEmail("snab@sib-centr.ru");
         user.getAuthorities().add(ApplicationGrantedAuthority.ROLE_USER);
 
         Request request = new Request();
         request.setAuthor(user);
-        request.setNumber(3565);
+        request.setNumber(1);
         request.setRequestLines(list);
         request.setDate(new Date());
 
