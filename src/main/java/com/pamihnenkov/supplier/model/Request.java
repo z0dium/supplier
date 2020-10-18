@@ -22,7 +22,6 @@ public class Request extends BaseEntity{
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Type(type = "date")
         private Date date;
-        private Integer number;
         private String goal;
     @OneToMany(mappedBy = "request")
         private List<RequestLine> requestLines = new ArrayList<>();
@@ -39,13 +38,6 @@ public class Request extends BaseEntity{
         return getId() != null ? getId().equals(request.getId()) : request.getId() == null;
     }
 
-    @Override
-        public int hashCode() {
-            int result = getAuthor().hashCode();
-            result = 31 * result + getDate().hashCode();
-            result = 31 * result + (getNumber() != null ? getNumber().hashCode() : 0);
-            return result;
-        }
 
     @Override
     public String toString(){

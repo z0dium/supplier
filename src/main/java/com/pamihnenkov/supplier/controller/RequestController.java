@@ -60,6 +60,20 @@ public class RequestController {
         return "allRequests";
     }
 
+    @GetMapping("requests/all")
+    public ModelAndView showAllRequestLines(){
+
+        ModelAndView mav = new ModelAndView();
+        RequestLinesContainer container = new RequestLinesContainer();
+        container.setRequestLines(requestService.findAll().stream()
+                                    .flatMap(request -> request.getRequestLines().stream())
+                                    .collect(Collectors.toList()));
+
+        mav.addObject("container",container);
+        mav.setViewName("allRequestsLines");
+        return mav;
+    }
+
     @GetMapping("requests/{id}")
     public ModelAndView showRequest(@PathVariable Long id){
 

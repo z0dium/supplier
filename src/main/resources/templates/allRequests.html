@@ -19,7 +19,7 @@
         </thead>
         <tbody>
             <tr th:each="request: ${requests}">
-                <td th:text="${request.number}"></td>
+                <td th:text="${request.id}"></td>
                 <td th:text="${request.date}"></td>
                 <td th:text="${request.author.surname}"></td>
                 <td th:text="${request.goal}"></td>
