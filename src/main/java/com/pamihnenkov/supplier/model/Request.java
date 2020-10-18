@@ -2,7 +2,6 @@ package com.pamihnenkov.supplier.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,18 +14,17 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor
-@ToString
 @Table(name = "requests")
 public class Request extends BaseEntity{
 
-    @ManyToOne(cascade = CascadeType.PERSIST)         // can be removed in prod
+    @ManyToOne
         private User author;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Type(type = "date")
         private Date date;
         private Integer number;
         private String goal;
-    @OneToMany(mappedBy = "request", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "request")
         private List<RequestLine> requestLines = new ArrayList<>();
 
     @Override
@@ -38,7 +36,7 @@ public class Request extends BaseEntity{
 
         if (!getAuthor().equals(request.getAuthor())) return false;
         if (!getDate().equals(request.getDate())) return false;
-        return getNumber() != null ? getNumber().equals(request.getNumber()) : request.getNumber() == null;
+        return getId() != null ? getId().equals(request.getId()) : request.getId() == null;
     }
 
     @Override
@@ -48,6 +46,15 @@ public class Request extends BaseEntity{
             result = 31 * result + (getNumber() != null ? getNumber().hashCode() : 0);
             return result;
         }
+
+    @Override
+    public String toString(){
+        return "Request{" +
+                "author=" + getAuthor().getSurname() +
+                ", date=" + getDate() +
+                ", goal=" + getGoal() +
+                ",  requestLines[" + getRequestLines().size()+"]}";
+    }
 
 
 }

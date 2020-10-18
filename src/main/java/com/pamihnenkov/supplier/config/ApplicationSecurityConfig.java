@@ -2,6 +2,7 @@ package com.pamihnenkov.supplier.config;
 
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUserService;
 import com.pamihnenkov.supplier.security.Authentication.PasswordAuthenticationProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +16,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordAuthenticationProvider passwordAuthenticationProvider;
     private final ApplicationUserService userDetailsService;
 
+    @Autowired
     public ApplicationSecurityConfig(PasswordAuthenticationProvider passwordAuthenticationProvider, ApplicationUserService userDetailsService) {
         this.passwordAuthenticationProvider = passwordAuthenticationProvider;
         this.userDetailsService = userDetailsService;

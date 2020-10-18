@@ -14,13 +14,13 @@ import java.util.Date;
 @Table(name = "requestLines")
 public class RequestLine extends BaseEntity{
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne (cascade = CascadeType.PERSIST)
         private Request request;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
         private Item item;
     @Enumerated(EnumType.STRING)
         private UnitOfMeasures unitOfMeasure;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
         private Contragent contragent;
         private String description; //Any additional information
         private Integer orderedQuantity;

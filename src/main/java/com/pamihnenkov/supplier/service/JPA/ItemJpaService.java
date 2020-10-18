@@ -42,12 +42,12 @@ public class ItemJpaService implements ItemService {
     public Item save(Item object) {
 
         if(object.getId() != null){ // If Id isNotNull then just store object
-            return  itemRepository.saveAndFlush(object);
+            return  itemRepository.save(object);
         }
         else {                      // If Id isNull. But there are still exist possible that new instance of entity is same to stored.
                                     // Then object is loaded from db. When it new Entity it stored.
             Item loaded = itemRepository.findByNameAndModel(object.getName(),object.getModel()).orElse(null);
-            if (loaded == null) loaded = itemRepository.saveAndFlush(object);
+            if (loaded == null) loaded = itemRepository.save(object);
             return loaded;
         }
     }

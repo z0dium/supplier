@@ -4,7 +4,7 @@ import com.pamihnenkov.supplier.model.Request;
 import com.pamihnenkov.supplier.model.User;
 import com.pamihnenkov.supplier.repository.RequestLineRepository;
 import com.pamihnenkov.supplier.repository.RequestRepository;
-import com.pamihnenkov.supplier.repository.UserRepository;
+import com.pamihnenkov.supplier.service.RequestLinesService;
 import com.pamihnenkov.supplier.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,14 +19,14 @@ import java.util.Set;
 public class RequsetJpaService implements RequestService {
 
     private final RequestRepository requestRepository;
-    private final RequestLineRepository requestLineRepository;
+    private final RequestLinesService requestLinesService;
 
 
     @Autowired
-    public RequsetJpaService(RequestRepository requestRepository, RequestLineRepository requestLineRepository) {
+    public RequsetJpaService(RequestRepository requestRepository, RequestLinesService requestLinesService) {
 
         this.requestRepository = requestRepository;
-        this.requestLineRepository = requestLineRepository;
+        this.requestLinesService = requestLinesService;
     }
 
     @Override
@@ -49,9 +49,7 @@ public class RequsetJpaService implements RequestService {
     public Request save(Request object) {
         object.getRequestLines().stream()
                 .peek(requestLine -> requestLine.setRequest(object))
-                .forEach(requestLineRepository::save);
-
-        System.out.println(object);
+                .forEach(requestLinesService::save);
         return requestRepository.save(object);
     }
 

@@ -77,6 +77,8 @@ public class BootStrapData implements CommandLineRunner {
         user.setEmail("snab@sib-centr.ru");
         user.getAuthorities().add(ApplicationGrantedAuthority.ROLE_USER);
 
+        applicationUserService.save(user);
+
         Request request = new Request();
         request.setAuthor(user);
         request.setNumber(1);
