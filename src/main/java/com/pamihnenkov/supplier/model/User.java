@@ -16,7 +16,7 @@ public class User extends BaseEntity {
     private String surname;
     private String phoneNumber;
     private String email;
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "contragent_user",
         joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "contragent_id", referencedColumnName = "id"))
