@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@Entity
+@MappedSuperclass
 @NoArgsConstructor
 public class User extends BaseEntity {
 

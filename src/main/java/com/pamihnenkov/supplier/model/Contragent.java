@@ -1,5 +1,6 @@
 package com.pamihnenkov.supplier.model;
 
+import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ public class Contragent extends BaseEntity{
     private Integer inn_code;
     private String name;
     @ManyToMany(mappedBy = "contragents")
-    private Set<User> members;
+    private Set<ApplicationUser> members;
     private String siteAdress;
     private String accountatEmail;
 

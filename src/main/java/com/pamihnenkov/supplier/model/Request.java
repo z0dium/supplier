@@ -1,5 +1,6 @@
 package com.pamihnenkov.supplier.model;
 
+import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
@@ -18,7 +19,7 @@ import java.util.List;
 public class Request extends BaseEntity{
 
     @ManyToOne
-        private User author;
+        private ApplicationUser author;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Type(type = "date")
         private Date date;
