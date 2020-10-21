@@ -23,15 +23,15 @@ public class RegistrationController {
         this.applicationUserService = applicationUserService;
     }
 
-    @GetMapping("/login/registration")
+    @GetMapping("/registration")
     public String showCRegistrationForm(Model model) {
 
         model.addAttribute("applicationUser", new ApplicationUser());
         return "registration";
     }
 
-    @PostMapping("/login/registration")
-    public String processRegistration(@ModelAttribute ApplicationUser applicationUser, Model model){
+    @PostMapping("/registration")
+    public String processRegistration(@ModelAttribute ApplicationUser applicationUser){
 
         applicationUser.getAuthorities().add(ApplicationGrantedAuthority.ROLE_USER);
         applicationUser.setAccountNonExpired(true);

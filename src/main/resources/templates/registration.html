@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body><center>
 <h1>Регистрация нового пользователя</h1>
-<form action="/" th:action="@{/login/registration}" th:object="${applicationUser}" method="POST">
+<form action="/" th:action="@{/registration}" th:object="${applicationUser}" method="POST">
     <table>
         <tr>
             <td><div><label>Ваше имя</label></div></td>
@@ -30,12 +30,11 @@
         </tr>
         <tr>
             <td><div><button type="submit">Зарегистрироваться</button></div></td>
-            <td><div><a th:href="@{/login.html}">Войти в систему</a></div></td>
+            <td><div><a th:href="@{/login}">Войти в систему</a></div></td>
         </tr>
     </table>
     </table>
 </form>
-
-
+</center>
 </body>
 </html>
