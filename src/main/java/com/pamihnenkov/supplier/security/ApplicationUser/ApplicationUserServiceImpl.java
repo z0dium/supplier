@@ -21,10 +21,11 @@ public class ApplicationUserServiceImpl implements ApplicationUserService  {
         this.applicationUserRepository = applicationUserRepository;
     }
 
+
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Optional<ApplicationUser> applicationUser = applicationUserRepository.findFirstByEmail(s);
-        return applicationUser.orElseThrow(() -> new UsernameNotFoundException(String.format("Пользователь %s не найден", s)));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<ApplicationUser> applicationUser = applicationUserRepository.findFirstByEmail(email);
+        return applicationUser.orElseThrow(() -> new UsernameNotFoundException(String.format("Пользователь %s не найден", email)));
     }
 
     @Override
