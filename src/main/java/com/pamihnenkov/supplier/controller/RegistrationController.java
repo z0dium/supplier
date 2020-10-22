@@ -5,12 +5,17 @@ import com.pamihnenkov.supplier.security.ApplicationGrantedAuthority;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class RegistrationController {
@@ -23,16 +28,28 @@ public class RegistrationController {
         this.applicationUserService = applicationUserService;
     }
 
-    @GetMapping("/registration")
-    public String showCRegistrationForm(Model model) {
+//    @ExceptionHandler(DataIntegrityViolationException.class)
+//    public ResponseEntity<ErrorInfo> duplicateEmailException(HttpServletRequest req, DataIntegrityViolationException e) {
+//        return exceptionInfoHandler.getErrorInfoResponseEntity(req, e, EXCEPTION_DUPLICATE_EMAIL, HttpStatus.CONFLICT);
+//    }
 
-        model.addAttribute("applicationUser", new ApplicationUser());
-        return "registration";
+    @GetMapping("/registration*")
+    public ModelAndView showCRegistrationForm(@ModelAttribute ApplicationUser applicationUser) {
+        ModelAndView mav = new ModelAndView("registration");
+        System.out.println(applicationUser);
+
+        if(applicationUser==null){
+            applicationUser = new ApplicationUser();
+        }
+
+        mav.addObject("applicationUser", applicationUser);
+        System.out.println(mav);
+        return mav;
     }
 
-    @PostMapping("/registration")
-    public String processRegistration(@ModelAttribute ApplicationUser applicationUser){
-
+    @PostMapping("/registration*")
+    public ModelAndView processRegistration(@ModelAttribute ApplicationUser applicationUser){
+        ModelAndView mav = new ModelAndView();
         applicationUser.getAuthorities().add(ApplicationGrantedAuthority.ROLE_USER);
         applicationUser.setAccountNonExpired(true);
         applicationUser.setAccountNonLocked(true);
@@ -42,11 +59,17 @@ public class RegistrationController {
         applicationUser.setPassword(passwordEncoder.encode(applicationUser.getPassword()));
 
         try {
-            if (applicationUserService.save(applicationUser).getId() != null) return "redirect:/";
-            return "redirect:/registration?error=true";
+            if (applicationUserService.save(applicationUser).getId() != null) {
+                mav.setViewName("redirect:/login");
+
+            }else mav.setViewName("redirect:/registration?error=true");
+            return mav;
         }catch (Exception ex){
             // do smth
-            return "redirect:/registration?error=true";
+            mav.addObject("applicationUser", applicationUser);
+            mav.addObject("message","Данный email уже используется другим пользователем.");
+            mav.setViewName("registration");
+            return mav;
         }
     }
 }
