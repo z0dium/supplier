@@ -41,8 +41,12 @@ public class RegistrationController {
 
         applicationUser.setPassword(passwordEncoder.encode(applicationUser.getPassword()));
 
-
-        if (applicationUserService.save(applicationUser).getId()!= null) return "redirect:/";
-        else return "registration/error";
+        try {
+            if (applicationUserService.save(applicationUser).getId() != null) return "redirect:/";
+            return "redirect:/registration?error=true";
+        }catch (Exception ex){
+            // do smth
+            return "redirect:/registration?error=true";
+        }
     }
 }
