@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/css/registration.css">
+    <script type="text/javascript" th:src="@{/js/passwordConfirmation.js}"></script>
 </head>
 <body><center>
 <h1>Регистрация нового пользователя</h1>
+
 <form action="/" th:action="@{/registration}" th:object="${applicationUser}" method="POST">
+    <div style="background-color:powderblue;" id="message" th:if="${message}" ? th:text="${message}":></div>
     <table>
         <tr>
             <td><div><label>Ваше имя</label></div></td>
@@ -25,12 +29,12 @@
         </tr>
         <tr>
             <td><div><label>Пароль</label></div></td>
-            <td><div><input type="password" th:id="password" th:field="*{password}"/></div></td>
+            <td><div><input type="password" th:id="password" th:field="*{password}" onkeyup='check();'/></div></td>
             <td></td>
         </tr>
         <tr>
             <td><div><label>Подтверждение пароля</label></div></td>
-            <td><div><input th:id="confirm_password" type="password"/></div></td>
+            <td><div><input th:id="confirm_password" type="password" onkeyup='check();'/></div></td>
             <td></td>
         </tr>
         <tr>

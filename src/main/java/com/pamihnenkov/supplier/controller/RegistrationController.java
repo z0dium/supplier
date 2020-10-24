@@ -36,14 +36,12 @@ public class RegistrationController {
     @GetMapping("/registration*")
     public ModelAndView showCRegistrationForm(@ModelAttribute ApplicationUser applicationUser) {
         ModelAndView mav = new ModelAndView("registration");
-        System.out.println(applicationUser);
 
         if(applicationUser==null){
             applicationUser = new ApplicationUser();
         }
 
         mav.addObject("applicationUser", applicationUser);
-        System.out.println(mav);
         return mav;
     }
 
