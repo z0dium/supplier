@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
+<header th:fragment="header">
+    <hr>
+        <div>
+            <div class="nav"><a href="/requests/create"><p class="string">Создать заявку</p></a></div>
+            <div class="nav"><a href="/requests"><p class="string">Заявки</p></a> </div>
+            <div class="nav"><a href="/requests/all"><p class="string">Список позиций</p></a></div>
+            <div class="nav"><a href="/requests/my"><p class="string">Мои заказы</p></a></div>
+
+        </div>
+    <hr>
+</header>
+
 <footer th:fragment="footer">
     <hr>
     <center>

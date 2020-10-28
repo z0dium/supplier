@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/css/menu.css">
     <script type="text/javascript" th:src="@{/js/javascript.js}"></script>
 </head>
 <body>
+<div th:insert="fragments/fragments :: header"></div>
 <form action="#" th:action="@{/requests/save}" th:object="${requestLinesContainer}" method="post">
     <fieldset>
 
@@ -47,6 +49,6 @@
     </center>
 </form>
 
-
+<div th:insert="fragments/fragments :: footer"></div>
 </body>
 </html>

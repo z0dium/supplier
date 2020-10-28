@@ -1,0 +1,9 @@
+.nav {
+	display: inline-block; /*Задаем блочно-строчное отображение*/
+  	width: auto; /*задаем ширину блока*/
+  	padding: {10, 5}
+}
+
+.string{
+    align:center;
+}
