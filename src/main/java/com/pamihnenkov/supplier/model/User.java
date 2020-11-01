@@ -22,8 +22,6 @@ public class User extends BaseEntity {
         inverseJoinColumns = @JoinColumn(name = "contragent_id", referencedColumnName = "id"))
     private Set<Contragent> contragents = new HashSet<>();
 
-
-
     @Override
         public boolean equals(Object o) {
         if (this == o) return true;

@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class ApplicationUser extends User implements UserDetails {
 
     @ElementCollection(targetClass = ApplicationGrantedAuthority.class,fetch = FetchType.EAGER)

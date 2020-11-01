@@ -1,0 +1,8 @@
+
+input[type=password].match{
+background-color: rgba(100, 190, 100, 0.3);
+
+}
+input[type=password].different{
+background-color: rgba(190, 100, 100, 0.3);
+}

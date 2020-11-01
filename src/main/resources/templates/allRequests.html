@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <title>Все заявки</title>
     <link rel="stylesheet" href="/css/sort.css">
+    <link rel="stylesheet" href="/css/menu.css">
+
     <script type="text/javascript" th:src="@{/js/sort.js}"></script>
 </head>
 <body>
+<div th:replace="fragments/fragments :: header"></div>
+    <div class="tableContainer">
     <table class="sort" align="center">
         <thead>
             <tr>
@@ -28,5 +32,7 @@
             </tr>
         </tbody>
     </table>
+    </div>
+    <div th:replace="fragments/fragments :: footer"></div>
 </body>
 </html>

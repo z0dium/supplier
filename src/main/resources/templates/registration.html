@@ -3,39 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/css/registration.css">
+    <script type="text/javascript" th:src="@{/js/passwordConfirmation.js}"></script>
 </head>
 <body>
+<center>
 <h1>Регистрация нового пользователя</h1>
-<form action="/" th:action="@{/login/registration}" th:object="${applicationUser}" method="POST">
+
+<form action="/" th:action="@{/registration}" th:object="${applicationUser}" method="POST">
+    <div style="background-color:powderblue;" id="message" th:if="${message}" ? th:text="${message}":></div>
     <table>
         <tr>
             <td><div><label>Ваше имя</label></div></td>
-            <td><div><input th:id="name" th:field="*{name}"/></div></td>
+            <td><div><input th:id="name" th:field="*{name}" th:value="${applicationUser.name}"/></div></td>
+            <td></td>
         </tr>
         <tr>
             <td><div><label>Ваша фамилия</label></div></td>
-            <td><div><input th:id="surname"th:field="*{surname}"/></div></td>
+            <td><div><input th:id="surname"th:field="*{surname}" th:value="${applicationUser.surname}"/></div></td>
+            <td></td>
         </tr>
         <tr>
             <td><div><label>Email</label></div></td>
-            <td><div><input type="email" th:id="email" th:field="*{email}"/></div></td>
+            <td><div><input type="email" th:id="email" th:field="*{email}" th:value="${applicationUser.email}"/></div></td>
+            <td></td>
         </tr>
         <tr>
             <td><div><label>Пароль</label></div></td>
-            <td><div><input type="password" th:id="password" th:field="*{password}"/></div></td>
+            <td><div><input type="password" th:id="password" th:field="*{password}" onkeyup='check();'/></div></td>
+            <td></td>
         </tr>
         <tr>
             <td><div><label>Подтверждение пароля</label></div></td>
-            <td><div><input th:id="confirm_password" type="password"/></div></td>
+            <td><div><input th:id="confirm_password" type="password" onkeyup='check();'/></div></td>
+            <td></td>
         </tr>
         <tr>
             <td><div><button type="submit">Зарегистрироваться</button></div></td>
-            <td><div><a th:href="@{/login.html}">Войти в систему</a></div></td>
+            <td><div><a th:href="@{/login}">Войти в систему</a></div></td>
+            <td></td>
         </tr>
     </table>
     </table>
 </form>
-
-
+</center>
+<div th:replace="fragments/fragments :: footer"></div>
 </body>
 </html>
