@@ -1,9 +1,37 @@
 .nav {
 	display: inline-block; /*Задаем блочно-строчное отображение*/
   	width: auto; /*задаем ширину блока*/
-  	padding: {10, 5}
+    background: rgb(0,55,120);
+    background: linear-gradient(180deg, rgba(0,55,120,1) 0%, rgba(144,182,228,1) 9%, rgba(0,32,69,1) 100%);
+    border-radius: 7px;
+}
+
+.nav:hover {
+background: rgb(0,55,120);
+background: linear-gradient(180deg, rgba(0,55,120,1) 0%, rgba(255,255,255,1) 9%, rgba(0,32,69,1) 100%);
+}
+
+.tableContainer{
+     rgba(0,32,69,1)
 }
 
 .string{
-    align:center;
+    padding-left:10px;
+    padding-right:10px;
+    color:white;
+    text-align:center;
 }
+
+TABLE{
+background: white;
+width:100%;
+box-shadow: -3px -5px 10px 0px #123;
+}
+
+a{
+    text-decoration: none;
+}
+
+body{
+background: rgb(148,187,233);
+background: linear-gradient(90deg, rgba(148,187,233,0.14) 0%, rgba(225,239,188,0.63) 32%, rgba(255,255,249,0.63) 50%, rgba(225,239,188,0.63) 68%, rgba(148,187,233,0.14) 100%);}

@@ -18,7 +18,7 @@ public class ItemJpaService implements ItemService {
     private final EntityManagerFactory entityManagerFactory;
 
     @Autowired
-    public ItemJpaService(ItemRepository itemRepository, EntityManager entityManager, EntityManagerFactory entityManagerFactory) {
+    public ItemJpaService(ItemRepository itemRepository, EntityManagerFactory entityManagerFactory) {
         this.itemRepository = itemRepository;
 
         this.entityManagerFactory = entityManagerFactory;
