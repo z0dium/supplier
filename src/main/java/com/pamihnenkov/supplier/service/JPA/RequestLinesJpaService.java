@@ -7,6 +7,7 @@ import com.pamihnenkov.supplier.service.RequestLinesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,6 +36,11 @@ public class RequestLinesJpaService implements RequestLinesService {
     @Override
     public RequestLine save(RequestLine object) {
         object.setItem(itemService.save(object.getItem()));
+        if (object.getExpectedTo()==null) {
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, 7);
+            object.setExpectedTo(cal.getTime());
+        }
         return requestLineRepository.save(object);
     }
 
