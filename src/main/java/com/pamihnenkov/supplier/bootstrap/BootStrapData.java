@@ -46,6 +46,7 @@ public class BootStrapData implements CommandLineRunner {
             req2.setItem(siz);
             req2.setOrderedQuantity(50);
             req2.setDescription("c Пвх, 5нитка");
+            req2.setUnitOfMeasure(UnitOfMeasures.пар);
 
 
         List<RequestLine> list = new ArrayList<>();
