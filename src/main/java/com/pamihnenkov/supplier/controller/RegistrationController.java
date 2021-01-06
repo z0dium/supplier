@@ -1,31 +1,30 @@
 package com.pamihnenkov.supplier.controller;
 
 
+import com.pamihnenkov.supplier.email.EmailService;
 import com.pamihnenkov.supplier.security.ApplicationGrantedAuthority;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Controller
 public class RegistrationController {
 
     private final ApplicationUserService applicationUserService;
+    private final EmailService emailService;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public RegistrationController(ApplicationUserService applicationUserService) {
+    public RegistrationController(ApplicationUserService applicationUserService, EmailService emailService) {
         this.applicationUserService = applicationUserService;
+        this.emailService = emailService;
     }
 
 //    @ExceptionHandler(DataIntegrityViolationException.class)
@@ -48,18 +47,23 @@ public class RegistrationController {
     @PostMapping("/registration*")
     public ModelAndView processRegistration(@ModelAttribute ApplicationUser applicationUser){
         ModelAndView mav = new ModelAndView();
+
         applicationUser.getAuthorities().add(ApplicationGrantedAuthority.ROLE_USER);
         applicationUser.setAccountNonExpired(true);
         applicationUser.setAccountNonLocked(true);
         applicationUser.setCredentialsNonExpired(true);
         applicationUser.setEnabled(true); //TO DO implement email verification.
-
         applicationUser.setPassword(passwordEncoder.encode(applicationUser.getPassword()));
+
 
         try {
             if (applicationUserService.save(applicationUser).getId() != null) {
-                mav.setViewName("redirect:/login");
+                emailService.send("sib-centr@gmail.com",
+                                    applicationUser.getEmail(),
+                                "Регистрация на портале закупок",
+                        "Спасибо за регистрацию!");
 
+                mav.setViewName("redirect:/login");
             }else mav.setViewName("redirect:/registration?error=true");
             return mav;
         }catch (Exception ex){
