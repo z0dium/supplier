@@ -1,7 +1,7 @@
 package com.pamihnenkov.supplier.service.JPA;
 
 import com.pamihnenkov.supplier.model.RequestLine;
-import com.pamihnenkov.supplier.repository.RequestLineRepository;
+import com.pamihnenkov.supplier.service.repository.RequestLineRepository;
 import com.pamihnenkov.supplier.service.ItemService;
 import com.pamihnenkov.supplier.service.RequestLinesService;
 import org.springframework.beans.factory.annotation.Autowired;

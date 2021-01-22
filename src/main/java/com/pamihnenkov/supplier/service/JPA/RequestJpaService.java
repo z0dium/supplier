@@ -1,9 +1,9 @@
 package com.pamihnenkov.supplier.service.JPA;
 
+import com.pamihnenkov.supplier.model.Department;
 import com.pamihnenkov.supplier.model.Request;
 import com.pamihnenkov.supplier.model.User;
-import com.pamihnenkov.supplier.repository.RequestLineRepository;
-import com.pamihnenkov.supplier.repository.RequestRepository;
+import com.pamihnenkov.supplier.service.repository.RequestRepository;
 import com.pamihnenkov.supplier.service.RequestLinesService;
 import com.pamihnenkov.supplier.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class RequsetJpaService implements RequestService {
+public class RequestJpaService implements RequestService {
 
     private final RequestRepository requestRepository;
     private final RequestLinesService requestLinesService;
 
 
     @Autowired
-    public RequsetJpaService(RequestRepository requestRepository, RequestLinesService requestLinesService) {
+    public RequestJpaService(RequestRepository requestRepository, RequestLinesService requestLinesService) {
 
         this.requestRepository = requestRepository;
         this.requestLinesService = requestLinesService;
@@ -37,6 +37,20 @@ public class RequsetJpaService implements RequestService {
     @Override
     public List<Request> findByAuthor(User user){
         return new ArrayList<>(requestRepository.findByAuthor(user));
+    }
+
+    @Override
+    public List<Request> findByDepartment(Department department) {
+        return requestRepository.findByDepartment(department);
+    }
+
+    @Override // returns unsorted list of requests
+    public List<Request> findByDepartmentIn(Set<Department> departments) {
+        List<Request> result = new ArrayList<Request>();
+        for (Department department: departments) {
+            result.addAll(requestRepository.findByDepartment(department));
+        }
+        return result;
     }
 
     @Override

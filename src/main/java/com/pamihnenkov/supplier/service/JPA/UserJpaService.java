@@ -1,7 +1,7 @@
 package com.pamihnenkov.supplier.service.JPA;
 
 import com.pamihnenkov.supplier.model.User;
-import com.pamihnenkov.supplier.repository.UserRepository;
+import com.pamihnenkov.supplier.service.repository.UserRepository;
 import com.pamihnenkov.supplier.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
