@@ -1,4 +1,4 @@
-package com.pamihnenkov.supplier.repository;
+package com.pamihnenkov.supplier.service.repository;
 
 import com.pamihnenkov.supplier.model.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
