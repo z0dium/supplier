@@ -23,7 +23,13 @@ public class Request extends BaseEntity{
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Type(type = "date")
         private Date date;
+    @ManyToOne
+        private Department department;
         private String goal;
+    @ManyToOne
+        private ApplicationUser signer;  // Person who approved the request
+    @ManyToOne
+        private ApplicationUser supplier; // Supplier who checked the request before approving
     @OneToMany(mappedBy = "request")
         private List<RequestLine> requestLines = new ArrayList<>();
 
