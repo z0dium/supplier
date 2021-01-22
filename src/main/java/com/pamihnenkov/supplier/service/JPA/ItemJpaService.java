@@ -1,12 +1,11 @@
 package com.pamihnenkov.supplier.service.JPA;
 
 import com.pamihnenkov.supplier.model.Item;
-import com.pamihnenkov.supplier.repository.ItemRepository;
+import com.pamihnenkov.supplier.service.repository.ItemRepository;
 import com.pamihnenkov.supplier.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,13 +14,10 @@ import java.util.Set;
 public class ItemJpaService implements ItemService {
 
     private final ItemRepository itemRepository;
-    private final EntityManagerFactory entityManagerFactory;
 
     @Autowired
-    public ItemJpaService(ItemRepository itemRepository, EntityManagerFactory entityManagerFactory) {
+    public ItemJpaService(ItemRepository itemRepository) {
         this.itemRepository = itemRepository;
-
-        this.entityManagerFactory = entityManagerFactory;
     }
 
 
