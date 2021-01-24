@@ -26,9 +26,9 @@ public class Request extends BaseEntity{
     @ManyToOne
         private Department department;
         private String goal;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
         private ApplicationUser signer;  // Person who approved the request
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
         private ApplicationUser supplier; // Supplier who checked the request before approving
     @OneToMany(mappedBy = "request")
         private List<RequestLine> requestLines = new ArrayList<>();

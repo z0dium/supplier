@@ -16,11 +16,12 @@ import java.util.Objects;
 public class Department extends BaseEntity {
 
         private String name;
-        private String organization;
+    @ManyToOne
+        private Contragent organization;
     @ManyToOne
         private ApplicationUser supplier;
 
-    public Department(String name, String organization) {
+    public Department(String name, Contragent organization) {
         this.name = name;
         this.organization = organization;
     }

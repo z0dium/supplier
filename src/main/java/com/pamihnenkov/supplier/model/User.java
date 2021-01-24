@@ -12,15 +12,15 @@ import java.util.Set;
 @NoArgsConstructor
 public class User extends BaseEntity {
 
-    private String name;
-    private String surname;
-    private String phoneNumber;
-    private String email;
+        private String name;
+        private String surname;
+        private String phoneNumber;
+        private String email;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "contragent_user",
-        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "contragent_id", referencedColumnName = "id"))
-    private Set<Contragent> contragents = new HashSet<>();
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "contragent_id", referencedColumnName = "id"))
+        private Set<Contragent> contragents = new HashSet<>();
 
     @Override
         public boolean equals(Object o) {

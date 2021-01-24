@@ -4,6 +4,7 @@ import com.pamihnenkov.supplier.model.*;
 import com.pamihnenkov.supplier.security.ApplicationGrantedAuthority;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUserService;
+import com.pamihnenkov.supplier.service.ContragentService;
 import com.pamihnenkov.supplier.service.DepartmentService;
 import com.pamihnenkov.supplier.service.RequestService;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.*;
 @AllArgsConstructor
 public class BootStrapData implements CommandLineRunner {
 
-
+    private final ContragentService contragentService;
     private final DepartmentService departmentService;
     private final RequestService requestService;
     private final PasswordEncoder passwordEncoder;
@@ -27,7 +28,7 @@ public class BootStrapData implements CommandLineRunner {
 
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
 
         Item bolt = new Item();
@@ -72,6 +73,20 @@ public class BootStrapData implements CommandLineRunner {
         list2.add(req3);
         list2.add(req4);
 
+        Contragent sib = new Contragent();
+        sib.setName("СиБ-центр");
+        sib.setInn_code("7804008250");
+        sib.setSiteAdress("sib-centr.ru");
+
+        contragentService.save(sib);
+
+        Contragent gbi = new Contragent();
+        gbi.setName("ЖБИ №1 Рыбацкое");
+        gbi.setInn_code("7811631610");
+        gbi.setSiteAdress("gbi1.org");
+
+        contragentService.save(gbi);
+
         ApplicationUser admin = new ApplicationUser(new HashSet<ApplicationGrantedAuthority>(),
                 passwordEncoder.encode("password"),
                 true,
@@ -84,6 +99,7 @@ public class BootStrapData implements CommandLineRunner {
         admin.getAuthorities().add(ApplicationGrantedAuthority.ROLE_ADMIN);
         admin.getAuthorities().add(ApplicationGrantedAuthority.ROLE_USER);
         admin.getAuthorities().add(ApplicationGrantedAuthority.ROLE_SUPPLIER);
+        admin.getContragents().add(sib);
 
         applicationUserService.save(admin);
 
@@ -97,16 +113,22 @@ public class BootStrapData implements CommandLineRunner {
         user.setSurname("Иванов");
         user.setEmail("snab@sib-centr.ru");
         user.getAuthorities().add(ApplicationGrantedAuthority.ROLE_USER);
+        user.getContragents().add(sib);
+        user.getContragents().add(gbi);
 
         applicationUserService.save(user);
 
-        Department department = new Department("Энергоцех", "СиБ-центр");
+        Department department = new Department("Энергоцех", sib);
         department.setSupplier(admin);
         departmentService.save(department);
 
-        Department department2 = new Department("Цех сваи", "СиБ-центр");
+        Department department2 = new Department("Цех сваи", sib);
         department2.setSupplier(user);
         departmentService.save(department2);
+
+        Department department3 = new Department("Арматурный цех", gbi);
+        department3.setSupplier(admin);
+        departmentService.save(department3);
 
         Request request = new Request();
         request.setAuthor(user);

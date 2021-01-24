@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import static com.pamihnenkov.supplier.security.ApplicationGrantedAuthority.ROLE_ADMIN;
+
 @Controller
 public class RequestController {
 
@@ -43,7 +45,7 @@ public class RequestController {
     }
 
     @PostMapping("requests/save")
-    public String createRequest(@ModelAttribute RequestLinesContainer requestLinesContainer, Model model) {
+    public String createRequest(@ModelAttribute RequestLinesContainer requestLinesContainer) {
         Request newRequest = new Request();
         newRequest.setDate(new Date());
         newRequest.setRequestLines(requestLinesContainer.getRequestLines());
