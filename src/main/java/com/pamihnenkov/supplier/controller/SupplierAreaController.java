@@ -34,19 +34,24 @@ public class SupplierAreaController {
     }
 
     @GetMapping("/supplier/sib")
-    public ModelAndView enterSibArea(Model model){
-
-        ModelAndView mav = new ModelAndView();
+    public ModelAndView enterSibArea(){
         ApplicationUser currentUser = (ApplicationUser) applicationUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-
         RequestLinesContainer container = new RequestLinesContainer();
-
         container.setRequestLines(requestService.findByDepartmentIn(departmentService.findBySupplier(currentUser)).stream()
                 .flatMap(request -> request.getRequestLines().stream())
                 .collect(Collectors.toList()));
+        ModelAndView mav = new ModelAndView();
         mav.addObject("container", container);
         mav.setViewName("allRequestsLines");
         return mav;
+    }
 
+    @GetMapping("/checking")
+    public ModelAndView checkNewRequests(){
+        RequestLinesContainer container = new RequestLinesContainer();
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("container", container);
+        mav.setViewName("allRequestsLines");
+        return mav;
     }
 }

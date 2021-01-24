@@ -28,5 +28,30 @@
         </tbody>
     </table>
 </div>
+
+<div th:fragment="allUsers" class="tableContainer">
+    <table class="sort" align="center">
+        <thead>
+        <tr>
+            <td>Фамилия</td>
+            <td>Имя</td>
+            <td>Телефон</td>
+            <td>E-mail</td>
+            <td>Список компаний</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user: ${users}">
+            <td th:text="${user.surname}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.phoneNumber}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.contragents.size() >= 2} ? '...' : ${user.contragents.stream().findAny().orElse('')}"></td>
+            <td><button th:onclick="'window.location.href=\'users/' + ${user.id} +'\';'"  type="button">id</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
