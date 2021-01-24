@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <body>
 <header th:fragment="header">
     <hr>
@@ -8,7 +8,8 @@
             <div class="nav"><a href="/requests"><p class="string">Заявки</p></a> </div>
             <div class="nav"><a href="/requests/all"><p class="string">Список позиций</p></a></div>
             <div class="nav"><a href="/requests/my"><p class="string">Мои заказы</p></a></div>
-            <div class="nav"><a href="/supplier"><p class="string">Кабинет снабженцца</p></a></div>
+            <div class="nav"><a href="/supplier"><p class="string">Кабинет снабженца</p></a></div>
+            <div sec:authorize="hasRole('ROLE_ADMIN')" class="nav"><a href="/admin"><p class="string">Панель администратора</p></a></div>
         </div>
     <hr>
 </header>

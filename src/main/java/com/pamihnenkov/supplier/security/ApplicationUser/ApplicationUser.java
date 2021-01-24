@@ -123,4 +123,29 @@ public class ApplicationUser extends User implements UserDetails {
     public int hashCode() {
         return super.hashCode();
     }
+
+    // getter and setter for thymeleaf templates
+    public boolean getIsEnabled(){
+        return isEnabled;
+    }
+    public void setIsEnabled(boolean enabled){
+        this.isEnabled = enabled;
+    }
+    public boolean getIsAccountNonLocked(){
+        return isAccountNonLocked;
+    }
+    public void setIsAccountNonLocked(boolean isAccountNonLocked){
+        this.isAccountNonLocked = isAccountNonLocked;
+    }
+
+    @Override
+    public String toString() {
+        return "ApplicationUser{" +
+                "id=" + getId() +
+                ", isAccountNonExpired=" + isAccountNonExpired +
+                ", isAccountNonLocked=" + isAccountNonLocked +
+                ", isCredentialsNonExpired=" + isCredentialsNonExpired +
+                ", isEnabled=" + isEnabled +
+                "} " + super.toString();
+    }
 }

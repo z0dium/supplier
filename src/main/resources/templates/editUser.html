@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать пользователя</title>
+    <link rel="stylesheet" href="/css/sort.css">
+    <link rel="stylesheet" href="/css/menu.css">
+    <script type="text/javascript" th:src="@{/js/sort.js}"></script>
+</head>
+<body><center>
+    <form action="#" th:action="@{/admin/users/save}" th:object="${applicationUser}" method="POST">
+    <table class="sort" align="center">
+        <tbody>
+            <tr>
+                <td align="right">Фамилия</td>
+                <td align="left"><div th:text="*{surname}"></div><input type="text" th:field="*{surname}" style="display:none;" readonly></td>
+            </tr>
+            <tr>
+                <td align="right">Имя</td>
+                <td align="left"><div th:text="*{name}"></div><input type="text" th:field="*{name}" style="display:none;" readonly></td>
+            </tr>
+            <tr>
+                <td align="right">Номер телефона</td>
+                <td align="left"><div th:text="*{phoneNumber}"></div><input type="text" th:field="*{phoneNumber}" style="display:none;" readonly></td>
+            </tr>
+            <tr>
+                <td align="right">E-mail</td>
+                <td align="left"><div th:text="*{email}"></div><input type="text" th:field="*{email}" style="display:none;" readonly></td>
+            </tr>
+            <tr>
+                <td align="right">Аккаунт активирован</td>
+                <td align="left"><input th:type="checkbox" th:field="*{isEnabled}"></td>
+            </tr>
+            <tr>
+                <td align="right">Аккаунт разблокирован</td>
+                <td align="left"><input th:type="checkbox" th:field="*{isAccountNonLocked}"></td>
+            </tr>
+            <tr>
+
+                <td><div><input type="submit" th:value="Сохранить"></div></td>
+                <td><div><input type="button" th:value="Отмена"></div></td>
+            </tr>
+        </tbody>
+    </table>
+        <input type="text" th:field="*{id}" style="display:none;" readonly>
+    </form>
+</center></body>
+</html>
