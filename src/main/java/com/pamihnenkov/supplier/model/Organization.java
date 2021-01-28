@@ -1,10 +1,8 @@
 package com.pamihnenkov.supplier.model;
 
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -16,20 +14,21 @@ import java.util.Set;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "contragents",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"inn_code"})} )
-public class Contragent extends BaseEntity{
+@Table(name = "organizations",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"innCode"})} )
+public class Organization extends BaseEntity{
 
-        private String inn_code;
+        private String innCode;
         private String name;
-    @ManyToMany(mappedBy = "contragents")
+        private String legalForm;
+    @ManyToMany(mappedBy = "organizations")
         private Set<ApplicationUser> members = new HashSet<>();
         private String siteAdress;
         private String accountatEmail;
 
     @Override
     public String toString(){
-        return name + " (" + inn_code + ")";
+        return name + " (" + innCode + ")";
     }
 
 }
