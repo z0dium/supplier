@@ -10,7 +10,29 @@
 </head>
 <body>
 <div th:replace="fragments/fragments :: header"></div>
-<div th:replace="fragments/tables :: allRequests"></div>
+<div th:fragment="allRequests" class="tableContainer">
+    <table class="sort" align="center">
+        <thead>
+        <tr>
+            <td>Номер заявки</td>
+            <td>Дата</td>
+            <td>Фамилия</td>
+            <td>Цель заявки</td>
+            <td>Список</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="request: ${requests}">
+            <td th:text="${request.id}"></td>
+            <td th:text="${request.date}"></td>
+            <td th:text="${request.author.surname}"></td>
+            <td th:text="${request.goal}"></td>
+
+            <td><button th:onclick="'window.location.href=\'requests/' + ${request.id} +'\';'"  type="button">Список</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <div th:replace="fragments/fragments :: footer"></div>
 </body>
 </html>

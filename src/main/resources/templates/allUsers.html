@@ -8,7 +8,30 @@
     <script type="text/javascript" th:src="@{/js/sort.js}"></script>
 </head>
 <body>
-<div th:replace="fragments/tables :: allUsers"></div>
+<div th:fragment="allUsers" class="tableContainer">
+    <table class="sort" align="center">
+        <thead>
+        <tr>
+            <td>Фамилия</td>
+            <td>Имя</td>
+            <td>Телефон</td>
+            <td>E-mail</td>
+            <td>Список компаний</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user: ${users}">
+            <td th:text="${user.surname}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.phoneNumber}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.organizations.size() >= 2} ? '...' : ${user.organizations.stream().findAny().orElse('')}"></td>
+            <td><button th:onclick="'window.location.href=\'users/' + ${user.id} +'\';'"  type="button">id</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <div th:replace="fragments/fragments :: footer"></div>
 </body>
 </html>
