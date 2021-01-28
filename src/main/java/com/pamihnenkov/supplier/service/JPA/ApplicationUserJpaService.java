@@ -1,26 +1,40 @@
-package com.pamihnenkov.supplier.security.ApplicationUser;
+package com.pamihnenkov.supplier.service.JPA;
 
+import com.pamihnenkov.supplier.model.Organization;
+import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
+import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
+import com.pamihnenkov.supplier.service.repository.ApplicationUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 
 @Service
-public class ApplicationUserServiceImpl implements ApplicationUserService  {
+public class ApplicationUserJpaService implements ApplicationUserService {
 
     private final ApplicationUserRepository applicationUserRepository;
 
     @Autowired
-    public ApplicationUserServiceImpl(ApplicationUserRepository applicationUserRepository) {
+    public ApplicationUserJpaService(ApplicationUserRepository applicationUserRepository) {
         this.applicationUserRepository = applicationUserRepository;
     }
 
+    public ApplicationUser getCurrentUser() {
+        return (ApplicationUser) loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
+
+    @Override
+    public List<ApplicationUser> findByOrganizationId(Long organizationId) {
+        return applicationUserRepository.findByOrganizationId(organizationId);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
