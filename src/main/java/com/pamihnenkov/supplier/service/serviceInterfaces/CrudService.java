@@ -1,4 +1,4 @@
-package com.pamihnenkov.supplier.service;
+package com.pamihnenkov.supplier.service.serviceInterfaces;
 
 import java.util.Set;
 
