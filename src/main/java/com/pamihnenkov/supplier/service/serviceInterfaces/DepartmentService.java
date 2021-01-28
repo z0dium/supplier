@@ -1,9 +1,8 @@
-package com.pamihnenkov.supplier.service;
+package com.pamihnenkov.supplier.service.serviceInterfaces;
 
 import com.pamihnenkov.supplier.model.Department;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 
-import java.util.List;
 import java.util.Set;
 
 public interface DepartmentService extends CrudService <Department, Long> {
