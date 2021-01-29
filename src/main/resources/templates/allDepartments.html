@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Все заявки</title>
+    <link rel="stylesheet" href="/css/sort.css">
+    <link rel="stylesheet" href="/css/menu.css">
+    <script type="text/javascript" th:src="@{/js/sort.js}"></script>
+</head>
+<body>
+
+<div th:fragment="allDepartments" class="tableContainer">
+    <table class="sort" align="center">
+        <thead>
+        <tr>
+            <td>Организация</td>
+            <td>Отдел</td>
+            <td>Начальник</td>
+            <td>Снабженец</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="department: ${departments}">
+            <td th:text="${department.organization}"></td>
+            <td th:text="${department.name}"></td>
+            <td th:text="${department.leader == null ? '' : department.leader.fio()}"></td>
+            <td th:text="${department.supplier == null ? '' : department.supplier.fio()}"></td>
+            <td><button th:onclick="'window.location.href=\'departments/' + ${department.id} +'\';'"  type="button">id</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:replace="fragments/fragments :: footer"></div>
+</body>
+</html>
