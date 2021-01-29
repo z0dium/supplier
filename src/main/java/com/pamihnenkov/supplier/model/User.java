@@ -17,10 +17,10 @@ public class User extends BaseEntity {
         private String phoneNumber;
         private String email;
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "contragent_user",
+    @JoinTable(name = "organization_user",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "contragent_id", referencedColumnName = "id"))
-        private Set<Contragent> contragents = new HashSet<>();
+            inverseJoinColumns = @JoinColumn(name = "organization_id", referencedColumnName = "id"))
+        private Set<Organization> organizations = new HashSet<>();
 
     @Override
         public boolean equals(Object o) {
@@ -41,4 +41,9 @@ public class User extends BaseEntity {
         result = 31 * result + getEmail().hashCode();
         return result;
     }
+
+        public String fio(){
+            StringBuilder sb = new StringBuilder(this.surname).append(" ").append(this.name.charAt(0)).append(".");
+            return sb.toString();
+        }
 }

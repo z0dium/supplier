@@ -21,7 +21,7 @@ public class RequestLine extends BaseEntity{
     @Enumerated(EnumType.STRING)
         private UnitOfMeasures unitOfMeasure;
     @ManyToOne
-        private Contragent contragent;
+        private Organization organization;
         private String description; //Any additional information
         private Integer orderedQuantity;
         private Integer deliveredQuantity;
