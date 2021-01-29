@@ -1,6 +1,6 @@
 package com.pamihnenkov.supplier.config;
 
-import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUserService;
+import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
 import com.pamihnenkov.supplier.security.Authentication.PasswordAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

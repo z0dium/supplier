@@ -40,73 +40,53 @@ public class ApplicationUser extends User implements UserDetails {
         this.isCredentialsNonExpired = isCredentialsNonExpired;
         this.isEnabled = isEnabled;
     }
-
     @Override
     public Set<ApplicationGrantedAuthority> getAuthorities() {
         return grantedAuthorities;
     }
-
     @Override
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password){
         this.password = password;
     }
-
     @Override
     public String getUsername() {
         return getEmail();
     }
-
     @Override
     public Long getId() {
         return super.getId();
     }
-
     @Override
     public boolean isAccountNonExpired() {
         return isAccountNonExpired;
     }
-
-
-
     @Override
     public boolean isAccountNonLocked() {
         return isAccountNonLocked;
     }
-
-
-
     @Override
     public boolean isCredentialsNonExpired() {
         return isCredentialsNonExpired;
     }
-
-
-
     @Override
     public boolean isEnabled() {
         return isEnabled;
     }
-
     public void setAccountNonExpired(boolean accountNonExpired) {
         isAccountNonExpired = accountNonExpired;
     }
-
     public void setAccountNonLocked(boolean accountNonLocked) {
         isAccountNonLocked = accountNonLocked;
     }
-
     public void setCredentialsNonExpired(boolean credentialsNonExpired) {
         isCredentialsNonExpired = credentialsNonExpired;
     }
-
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -118,12 +98,10 @@ public class ApplicationUser extends User implements UserDetails {
         if (!this.getUsername().equals(that.getUsername())) return false;
         return true;
     }
-
     @Override
     public int hashCode() {
         return super.hashCode();
     }
-
     // getter and setter for thymeleaf templates
     public boolean getIsEnabled(){
         return isEnabled;
@@ -137,7 +115,6 @@ public class ApplicationUser extends User implements UserDetails {
     public void setIsAccountNonLocked(boolean isAccountNonLocked){
         this.isAccountNonLocked = isAccountNonLocked;
     }
-
     @Override
     public String toString() {
         return "ApplicationUser{" +

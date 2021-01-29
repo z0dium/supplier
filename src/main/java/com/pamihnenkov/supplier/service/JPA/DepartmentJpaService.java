@@ -2,13 +2,12 @@ package com.pamihnenkov.supplier.service.JPA;
 
 import com.pamihnenkov.supplier.model.Department;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
-import com.pamihnenkov.supplier.service.DepartmentService;
+import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
 import com.pamihnenkov.supplier.service.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service

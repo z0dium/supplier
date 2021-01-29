@@ -4,8 +4,8 @@ import com.pamihnenkov.supplier.model.Department;
 import com.pamihnenkov.supplier.model.Request;
 import com.pamihnenkov.supplier.model.User;
 import com.pamihnenkov.supplier.service.repository.RequestRepository;
-import com.pamihnenkov.supplier.service.RequestLinesService;
-import com.pamihnenkov.supplier.service.RequestService;
+import com.pamihnenkov.supplier.service.serviceInterfaces.RequestLinesService;
+import com.pamihnenkov.supplier.service.serviceInterfaces.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

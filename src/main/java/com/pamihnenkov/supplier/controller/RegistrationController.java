@@ -4,7 +4,7 @@ package com.pamihnenkov.supplier.controller;
 import com.pamihnenkov.supplier.email.EmailService;
 import com.pamihnenkov.supplier.security.ApplicationGrantedAuthority;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
-import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUserService;
+import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;

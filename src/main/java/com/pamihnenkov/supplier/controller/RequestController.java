@@ -4,9 +4,9 @@ import com.pamihnenkov.supplier.model.Request;
 import com.pamihnenkov.supplier.model.RequestLine;
 import com.pamihnenkov.supplier.model.RequestLinesContainer;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
-import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUserService;
-import com.pamihnenkov.supplier.service.RequestService;
-import com.pamihnenkov.supplier.service.UserService;
+import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
+import com.pamihnenkov.supplier.service.serviceInterfaces.RequestService;
+import com.pamihnenkov.supplier.service.serviceInterfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,8 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 import java.util.stream.Collectors;
-
-import static com.pamihnenkov.supplier.security.ApplicationGrantedAuthority.ROLE_ADMIN;
 
 @Controller
 public class RequestController {

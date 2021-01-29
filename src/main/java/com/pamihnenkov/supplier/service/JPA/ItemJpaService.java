@@ -2,11 +2,10 @@ package com.pamihnenkov.supplier.service.JPA;
 
 import com.pamihnenkov.supplier.model.Item;
 import com.pamihnenkov.supplier.service.repository.ItemRepository;
-import com.pamihnenkov.supplier.service.ItemService;
+import com.pamihnenkov.supplier.service.serviceInterfaces.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManagerFactory;
 import java.util.HashSet;
 import java.util.Set;
 

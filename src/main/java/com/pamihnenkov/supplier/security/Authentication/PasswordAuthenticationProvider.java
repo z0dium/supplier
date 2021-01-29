@@ -1,7 +1,7 @@
 package com.pamihnenkov.supplier.security.Authentication;
 
 
-import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUserService;
+import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
