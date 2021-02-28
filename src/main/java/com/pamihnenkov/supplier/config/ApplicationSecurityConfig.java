@@ -32,7 +32,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/","/css/*","/js/*","/images/*").permitAll()
                     .antMatchers("/h2-console/*").permitAll()
                     .antMatchers("/registration","/registration/").anonymous()
-                    .antMatchers("/requests/create").hasRole("ADMIN")
+                    .antMatchers("/requests/create").authenticated()
                     .antMatchers("/supplier","/supplier/").hasRole("SUPPLIER")
                     .anyRequest().authenticated().and()
                 .formLogin().and()
