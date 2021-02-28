@@ -40,14 +40,17 @@
                 <td align="right"><div><button type="submit">Сохранить</button></div></td>
                 <td align="left"><div><button type="cancel">Отмена</button></div></td>
             </tr>
-            <tr><td> <center>Организации:</center></td></tr>
-            <tr th:each="organization : ${organizations}">
-                <td th:text="${organization.innCode}"></td>
-                <td th:text="${organization.legalForm}"></td>
-                <td th:text="${organization.name}"></td>
-            </tr>
         </tbody>
     </table>
+            <center>
+                <input type="text" name="innCode">
+                <button th:formaction="@{/admin/users/__${userId}__/addOrganization}"  type="submit">Добавить организацию</button>
+            </center>
+
+                <div th:each="organization : ${organizations}">
+                    <div th:text="${organization}"></div>
+                </div>
+
         <input type="text" th:field="*{id}" style="display:none;" readonly>
     </form>
 </center></body>
