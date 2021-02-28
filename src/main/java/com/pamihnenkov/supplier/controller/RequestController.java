@@ -1,8 +1,10 @@
 package com.pamihnenkov.supplier.controller;
 
+import com.pamihnenkov.supplier.model.Department;
 import com.pamihnenkov.supplier.model.Request;
 import com.pamihnenkov.supplier.model.RequestLine;
 import com.pamihnenkov.supplier.model.RequestLinesContainer;
+import com.pamihnenkov.supplier.model.commandObjects.Department.DepartmentIdAndNameCom;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
@@ -40,17 +42,23 @@ public class RequestController {
         RequestLinesContainer requestLinesContainer = new RequestLinesContainer();
         requestLinesContainer.getRequestLines().add(new RequestLine());
         model.addAttribute("requestLinesContainer", requestLinesContainer);
-        model.addAttribute("departments",departmentService.findByLeader(applicationUserService.getCurrentUser()));
+        Iterable<DepartmentIdAndNameCom> departments = departmentService.findByLeader(applicationUserService.getCurrentUser()).stream()
+                                                    .map(DepartmentIdAndNameCom::new)
+                                                    .collect(Collectors.toList());
+        model.addAttribute("departments",departments);
+        model.addAttribute("department",new Department());
+
         return "newRequest";
     }
 
     @PostMapping("requests/save")
-    public String createRequest(@ModelAttribute RequestLinesContainer requestLinesContainer) {
+    public String createRequest(@ModelAttribute RequestLinesContainer requestLinesContainer, @ModelAttribute Long departmentId) {
         Request newRequest = new Request();
         newRequest.setDate(new Date());
+
+        newRequest.setDepartment(departmentService.findById(departmentId));
         newRequest.setRequestLines(requestLinesContainer.getRequestLines());
-        ApplicationUser currentUser = (ApplicationUser) applicationUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        newRequest.setAuthor(currentUser);
+        newRequest.setAuthor(applicationUserService.getCurrentUser());
         requestService.save(newRequest);
         return "redirect:/requests";
     }
