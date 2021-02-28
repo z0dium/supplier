@@ -10,8 +10,15 @@
 <div th:replace="fragments/fragments :: header"></div>
 <form action="#" th:action="@{/requests/save}" th:object="${requestLinesContainer}" method="post">
     <fieldset>
+        <input type="text" id="goal">
+        <select id="department">
+            <option th:each="department : ${departments}"
+                    th:value="${department.id}"
+                    th:text="${department.id + ' ' + department.name}"></option>
+        </select>
+    </fieldset>
+    <fieldset>
 
-        <button type="button" th:onclick="addRow('listOfRequestLines');">Добавить строку</button>
         <table id="listOfRequestLines">
             <thead>
                 <tr>
@@ -44,6 +51,7 @@
         </table>
     </fieldset>
     <center>
+        <button type="button" th:onclick="addRow('listOfRequestLines');">Добавить строку</button>
         <input type="submit" id="submitButton" value="Создать заявку">
         <input type="submit" id="saveButton" value="Сохранить черновик">
     </center>
