@@ -28,7 +28,7 @@
             <td th:text="${request.author.surname}"></td>
             <td th:text="${request.goal}"></td>
 
-            <td><button th:onclick="'window.location.href=\'requests/' + ${request.id} +'\';'"  type="button">Список</button></td>
+            <td><button th:onclick="'window.location.href=\'/requests/' + ${request.id} +'\';'"  type="button">Список</button></td>
         </tr>
         </tbody>
     </table>
