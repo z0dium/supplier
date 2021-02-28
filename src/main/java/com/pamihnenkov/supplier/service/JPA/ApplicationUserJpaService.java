@@ -1,6 +1,5 @@
 package com.pamihnenkov.supplier.service.JPA;
 
-import com.pamihnenkov.supplier.model.Organization;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
 import com.pamihnenkov.supplier.service.repository.ApplicationUserRepository;
@@ -32,8 +31,17 @@ public class ApplicationUserJpaService implements ApplicationUserService {
     }
 
     @Override
-    public List<ApplicationUser> findByOrganizationId(Long organizationId) {
+    public Set<ApplicationUser> findByOrganizationId(Long organizationId) {
         return applicationUserRepository.findByOrganizationId(organizationId);
+    }
+
+    @Override
+    public Set<ApplicationUser> findAllManagedUsers() {
+        Set<ApplicationUser> result;
+        result = (applicationUserRepository.findByOrganizationId(1l));
+        result.addAll(applicationUserRepository.findByOrganizationId(2L));
+        result.forEach(System.out::println);
+        return result;
     }
 
     @Override

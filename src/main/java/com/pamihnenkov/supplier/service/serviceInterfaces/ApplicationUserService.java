@@ -5,8 +5,10 @@ import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ApplicationUserService extends CrudService<ApplicationUser,Long>,UserDetailsService {
     ApplicationUser getCurrentUser();
-    List<ApplicationUser> findByOrganizationId(Long organizationId);
+    Set<ApplicationUser> findByOrganizationId(Long organizationId);
+    Set<ApplicationUser> findAllManagedUsers();
 }
