@@ -26,10 +26,16 @@
             <td th:text="${department.name}"></td>
             <td th:text="${department.leader == null ? '' : department.leader.fio()}"></td>
             <td th:text="${department.supplier == null ? '' : department.supplier.fio()}"></td>
-            <td><button th:onclick="'window.location.href=\'departments/' + ${department.id} +'\';'"  type="button">id</button></td>
+            <td><button th:onclick="'window.location.href=\'/admin/departments/' + ${department.id} +'\';'"  type="button">id</button></td>
         </tr>
         </tbody>
     </table>
+</div>
+
+<div>
+    <center>
+        <button th:onclick="'window.location.href=\'/admin/departments/create\';'" type="button"> Создать новый отдел </button>
+    </center>
 </div>
 <div th:replace="fragments/fragments :: footer"></div>
 </body>

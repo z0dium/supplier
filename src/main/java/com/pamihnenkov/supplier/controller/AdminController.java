@@ -85,7 +85,7 @@ public class AdminController {
 
 
 
-        @GetMapping("/admin/departments")
+    @GetMapping("/admin/departments")
     public String showAllDepartments(Model model){
 
         model.addAttribute("departments", departmentService.findAll());
@@ -94,13 +94,18 @@ public class AdminController {
 
     @GetMapping("/admin/departments/create")
     public ModelAndView createNewDepartment(){
-
         ModelAndView mav = new ModelAndView();
-        List<UserIdAndFioCom> list = applicationUserService.findAll().stream()
+        Department department = new Department();
+
+        Iterable<UserIdAndFioCom> list = applicationUserService.findAllManagedUsers().stream()
                 .map(UserIdAndFioCom::new)
                 .collect(Collectors.toList());
+        Iterable<Organization> listOfOrganizations = organizationService.findAllManaged();
+        mav.addObject("department",department);
+        mav.addObject("listOfOrganizations",listOfOrganizations);
+        mav.addObject("listOfUsers", list);
+        mav.setViewName("editDepartment");
         return  mav;
-
     }
 
     @GetMapping("/admin/departments/{id}")
@@ -110,11 +115,11 @@ public class AdminController {
         Department department = departmentService.findById(id);
 
         if (department != null) {
-            mav.addObject("department", department);
+
             List<UserIdAndFioCom> list = applicationUserService.findAllManagedUsers().stream()
                     .map(UserIdAndFioCom::new)
                     .collect(Collectors.toList());
-
+            mav.addObject("department", department);
             mav.addObject("listOfUsers", list);
             mav.setViewName("editDepartment");
             return mav;
@@ -126,8 +131,16 @@ public class AdminController {
 
     @PostMapping("/admin/departments/save")
     public String saveDepartment(@ModelAttribute Department department){
-
-        departmentService.save(department);
+        Long id = department.getId();
+        if (id==null){
+            department.setOrganization(organizationService.findById(department.getOrganization().getId()));
+            departmentService.save(department);
+        } else {
+            Department persist =  departmentService.findById(id);
+            persist.setLeader(applicationUserService.findById(department.getLeader().getId()));
+            persist.setSupplier(applicationUserService.findById(department.getSupplier().getId()));
+            departmentService.save(persist);
+        }
 
         return "redirect:/admin/departments";
     }

@@ -8,43 +8,51 @@
     <script type="text/javascript" th:src="@{/js/sort.js}"></script>
 </head>
 <body><center>
-    <p th:text="${listOfUsers}">Список пользователей</p>
     <form action="#" th:action="@{/admin/departments/save}" th:object="${department}" method="POST">
     <table class="sort" align="center">
         <tbody>
             <tr>
                 <td align="right">Организация</td>
-                <td align="left"><div th:text="*{organization}"></div><input type="text" th:field="*{organization}" style="display:none;" readonly></td>
+                <td align="left"><div th:if="${department.id != null}" th:text="${department.organization}"><input type="text" th:field="${department.organization}" style="display:none;" readonly></div>
+                                 <div th:if="${department.id == null}"><select th:field="${department.organization}">
+                                                                <option th:each="org : ${listOfOrganizations}"
+                                                                        th:value="${org.id}"
+                                                                        th:text="${org}"></option>
+
+                                 </select></div></td>
             </tr>
             <tr>
                 <td align="right">Наименование отдела</td>
-                <td align="left"><div th:text="*{name}"></div><input type="text" th:field="*{name}" style="display:none;" readonly></td>
+                <td align="left">
+                    <div th:if="${department.id != null}" th:text="${department.name}"><input type="text" th:field="${department.name}" style="display:none;" readonly></div>
+                    <div th:if="${department.id == null}"><input type="text" th:field="${department.name}"></div></td>
             </tr>
             <tr>
                 <td align="right">Начальник</td>
                 <td align="left">
-                    <select th:field="*{leader}">
+                    <select th:field="*{leader.id}">
                         <option th:each="applicationUser : ${listOfUsers}"
                                 th:value="${applicationUser.id}"
                                 th:text="${applicationUser.fio}"
-                                th:selected="${applicationUser.id == department.leader.id}"></option>
+                                th:selected="${department.id == null ? false : applicationUser.id == department.leader.id}"></option>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td align="right">Снабженец</td>
                 <td align="left">
-                    <select th:field="*{supplier}">
+                    <select th:field="*{supplier.id}">
                         <option th:each="applicationUser : ${listOfUsers}"
                                 th:value="${applicationUser.id}"
                                 th:text="${applicationUser.fio}"
-                                th:selected="${applicationUser.id == department.supplier.id}"></option>
+                                th:selected="${department.id == null ? false : applicationUser.id == department.supplier.id}"></option>
                     </select>
                 </td>
             </tr>
             <tr>
+
                 <td align="right"><div><button type="submit">Сохранить</button></div></td>
-                <td align="left"><div><button type="cancel">Отмена</button></div></td>
+                <td align="left"><div><a href="/admin/departments/">Назад</a></div></td>
             </tr>
         </tbody>
     </table>
