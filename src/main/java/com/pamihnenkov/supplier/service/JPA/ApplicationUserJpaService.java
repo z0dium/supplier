@@ -40,7 +40,6 @@ public class ApplicationUserJpaService implements ApplicationUserService {
         Set<ApplicationUser> result;
         result = (applicationUserRepository.findByOrganizationId(1l));
         result.addAll(applicationUserRepository.findByOrganizationId(2L));
-        result.forEach(System.out::println);
         return result;
     }
 
