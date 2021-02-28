@@ -6,6 +6,7 @@ import com.pamihnenkov.supplier.service.serviceInterfaces.OrganizationService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -15,6 +16,11 @@ public class OrganizationJpaService implements OrganizationService {
 
     public OrganizationJpaService(OrganozationRepository organozationRepository) {
         this.organozationRepository = organozationRepository;
+    }
+
+    @Override
+    public Organization findByInnCode(String inn) {
+        return organozationRepository.findByInnCode(inn);
     }
 
     @Override
