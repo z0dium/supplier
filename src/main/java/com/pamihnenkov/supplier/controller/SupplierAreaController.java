@@ -1,16 +1,15 @@
 package com.pamihnenkov.supplier.controller;
 
 import com.pamihnenkov.supplier.model.RequestLinesContainer;
-import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
-import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUserService;
-import com.pamihnenkov.supplier.service.DepartmentService;
-import com.pamihnenkov.supplier.service.RequestService;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
+import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
+import com.pamihnenkov.supplier.service.serviceInterfaces.RequestService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.persistence.Persistence;
 import java.util.stream.Collectors;
 
 @Controller
@@ -33,25 +32,31 @@ public class SupplierAreaController {
         return "supplierArea";
     }
 
-    @GetMapping("/supplier/sib")
-    public ModelAndView enterSibArea(){
-        ApplicationUser currentUser = (ApplicationUser) applicationUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+    @GetMapping("/supplier/{org}")
+    public ModelAndView enterSibArea(@PathVariable String org){
+
         RequestLinesContainer container = new RequestLinesContainer();
-        container.setRequestLines(requestService.findByDepartmentIn(departmentService.findBySupplier(currentUser)).stream()
+        Long id = null;
+        if (org.equals("sib")) id = 1L;
+        if (org.equals("gbi")) id = 2L;
+        Long finalId = id;
+        container.setRequestLines(requestService.findByDepartmentIn(departmentService.findAll().stream()
+                .filter(department -> department.getOrganization().getId()== finalId)  // TODO remove hardcoded Organization id
+                .collect(Collectors.toSet())).stream()
                 .flatMap(request -> request.getRequestLines().stream())
                 .collect(Collectors.toList()));
+
         ModelAndView mav = new ModelAndView();
         mav.addObject("container", container);
         mav.setViewName("allRequestsLines");
         return mav;
     }
 
-    @GetMapping("/checking")
+    @GetMapping("/supplier/checking")
     public ModelAndView checkNewRequests(){
-        RequestLinesContainer container = new RequestLinesContainer();
         ModelAndView mav = new ModelAndView();
-        mav.addObject("container", container);
-        mav.setViewName("allRequestsLines");
+        mav.addObject("requests", requestService.findAllUnchecked());
+        mav.setViewName("allRequests");
         return mav;
     }
 }
