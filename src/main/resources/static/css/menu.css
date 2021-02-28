@@ -1,9 +1,11 @@
 .nav {
 	display: inline-block; /*Задаем блочно-строчное отображение*/
   	width: auto; /*задаем ширину блока*/
+  	height: auto;
     background: rgb(0,55,120);
     background: linear-gradient(180deg, rgba(0,55,120,1) 0%, rgba(144,182,228,1) 9%, rgba(0,32,69,1) 100%);
     border-radius: 7px;
+    margin-left: 5px;
 }
 
 .nav:hover {
