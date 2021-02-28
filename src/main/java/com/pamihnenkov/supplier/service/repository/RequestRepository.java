@@ -7,11 +7,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Long> {
     List<Request> findByAuthor(User user);
     List<Request> findByDepartment(Department department);
-    List<Request> findByDepartmentIn(Set<Department> departments);
+    List<Request> findBySupplier(User user);
+
 }

@@ -1,6 +1,7 @@
 package com.pamihnenkov.supplier.service.serviceInterfaces;
 
 import com.pamihnenkov.supplier.model.Department;
+import com.pamihnenkov.supplier.model.Organization;
 import com.pamihnenkov.supplier.model.Request;
 import com.pamihnenkov.supplier.model.User;
 
@@ -11,4 +12,7 @@ public interface RequestService extends CrudService<Request, Long>{
     List<Request> findByAuthor(User user);
     List<Request> findByDepartment(Department department);
     List<Request> findByDepartmentIn(Set<Department> departments);
+    List<Request> findAllUnchecked();
+    List<Request> findByOrganization(Organization organization);
+
 }

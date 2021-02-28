@@ -1,9 +1,11 @@
 package com.pamihnenkov.supplier.service.JPA;
 
 import com.pamihnenkov.supplier.model.Department;
+import com.pamihnenkov.supplier.model.Organization;
 import com.pamihnenkov.supplier.model.Request;
 import com.pamihnenkov.supplier.model.User;
 import com.pamihnenkov.supplier.service.repository.RequestRepository;
+import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.RequestLinesService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +16,22 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class RequestJpaService implements RequestService {
 
     private final RequestRepository requestRepository;
     private final RequestLinesService requestLinesService;
+    private final DepartmentService departmentService;
 
 
     @Autowired
-    public RequestJpaService(RequestRepository requestRepository, RequestLinesService requestLinesService) {
+    public RequestJpaService(RequestRepository requestRepository, RequestLinesService requestLinesService, DepartmentService departmentService) {
 
         this.requestRepository = requestRepository;
         this.requestLinesService = requestLinesService;
+        this.departmentService = departmentService;
     }
 
     @Override
@@ -51,6 +56,24 @@ public class RequestJpaService implements RequestService {
             result.addAll(requestRepository.findByDepartment(department));
         }
         return result;
+    }
+
+    @Override
+    public List<Request> findAllUnchecked() {
+        List<Request> result = requestRepository.findBySupplier(null);
+        System.out.println(result.size());
+        return result;
+    }
+
+
+    @Override
+    public List<Request> findByOrganization(Organization organization) {
+
+        List<Request> byDepartmentIn = findByDepartmentIn(departmentService.findAll().stream()
+                .filter(department -> department.getOrganization().equals(organization))
+                .collect(Collectors.toSet()));
+        System.out.println("service - " + byDepartmentIn.size());
+        return byDepartmentIn;
     }
 
     @Override
