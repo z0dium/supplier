@@ -8,4 +8,5 @@ import java.util.Set;
 public interface DepartmentService extends CrudService <Department, Long> {
 
     Set<Department> findBySupplier (ApplicationUser supplier);
+    Set<Department> findByLeader (ApplicationUser leader);
 }

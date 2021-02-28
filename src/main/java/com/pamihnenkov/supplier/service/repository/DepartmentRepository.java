@@ -10,5 +10,5 @@ import java.util.Set;
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department,Long> {
     Set<Department> findBySupplier (ApplicationUser supplier);
-
+    Set<Department> findByLeader (ApplicationUser leader);
 }

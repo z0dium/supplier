@@ -7,6 +7,7 @@ import com.pamihnenkov.supplier.service.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.OneToOne;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +24,11 @@ public class DepartmentJpaService implements DepartmentService {
     @Override
     public Set<Department> findBySupplier(ApplicationUser supplier) {
         return departmentRepository.findBySupplier(supplier);
+    }
+
+    @Override
+    public Set<Department> findByLeader(ApplicationUser leader) {
+        return departmentRepository.findByLeader(leader);
     }
 
     @Override
