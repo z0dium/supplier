@@ -27,7 +27,7 @@
             <td th:text="${user.phoneNumber}"></td>
             <td th:text="${user.email}"></td>
             <td th:text="${user.organizations.size() >= 2} ? '...' : ${user.organizations.stream().findAny().orElse('')}"></td>
-            <td><button th:onclick="'window.location.href=\'users/' + ${user.id} +'\';'"  type="button">id</button></td>
+            <td><button th:onclick="'window.location.href=\'/admin/users/' + ${user.id} +'\';'"  type="button">id</button></td>
         </tr>
         </tbody>
     </table>
