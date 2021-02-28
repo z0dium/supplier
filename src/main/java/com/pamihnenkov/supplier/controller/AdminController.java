@@ -1,18 +1,20 @@
 package com.pamihnenkov.supplier.controller;
 
 import com.pamihnenkov.supplier.model.Department;
+import com.pamihnenkov.supplier.model.Organization;
+import com.pamihnenkov.supplier.model.RequestLinesContainer;
 import com.pamihnenkov.supplier.model.commandObjects.User.UserIdAndFioCom;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
+import com.pamihnenkov.supplier.service.serviceInterfaces.OrganizationService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,10 +23,12 @@ public class AdminController {
 
     private final ApplicationUserService applicationUserService;
     private final DepartmentService departmentService;
+    private final OrganizationService organizationService;
 
-    public AdminController(ApplicationUserService applicationuserService, DepartmentService departmentService) {
+    public AdminController(ApplicationUserService applicationuserService, DepartmentService departmentService, OrganizationService organizationService) {
         this.applicationUserService = applicationuserService;
         this.departmentService = departmentService;
+        this.organizationService = organizationService;
     }
 
     @GetMapping("/admin")
@@ -39,15 +43,16 @@ public class AdminController {
         return "allUsers";
     }
 
-    @GetMapping("/admin/users/{id}")
-    public ModelAndView showAndEditUser(@PathVariable Long id){
+    @GetMapping("/admin/users/{userId}")
+    public ModelAndView showAndEditUser(@PathVariable Long userId){
 
         ModelAndView mav = new ModelAndView();
-        ApplicationUser user = applicationUserService.findById(id);
+        ApplicationUser user = applicationUserService.findById(userId);
 
         if (user != null) {
             mav.addObject("applicationUser", user);
             mav.addObject("organizations", user.getOrganizations());
+            mav.addObject("listOfOrganizations", organizationService.findAll());
             mav.setViewName("editUser");
             return mav;
         }
@@ -55,6 +60,16 @@ public class AdminController {
         mav.setViewName("errorHandler");
         return mav;
     }
+
+    @PostMapping("/admin/users/{userId}/addOrganization")
+    @Transactional
+    public String addOrganization(@RequestParam("innCode") String innCode, @PathVariable Long userId){
+        ApplicationUser user = applicationUserService.findById(userId);
+        user.getOrganizations().add(organizationService.findByInnCode(innCode));
+        return "redirect:/admin/users/"+ userId;
+    }
+
+
 
     @PostMapping("/admin/users/save")
     public String saveUser(@ModelAttribute ApplicationUser applicationUser){
@@ -68,11 +83,24 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/admin/departments")
+
+
+        @GetMapping("/admin/departments")
     public String showAllDepartments(Model model){
 
         model.addAttribute("departments", departmentService.findAll());
         return "allDepartments";
+    }
+
+    @GetMapping("/admin/departments/create")
+    public ModelAndView createNewDepartment(){
+
+        ModelAndView mav = new ModelAndView();
+        List<UserIdAndFioCom> list = applicationUserService.findAll().stream()
+                .map(UserIdAndFioCom::new)
+                .collect(Collectors.toList());
+        return  mav;
+
     }
 
     @GetMapping("/admin/departments/{id}")
@@ -83,7 +111,7 @@ public class AdminController {
 
         if (department != null) {
             mav.addObject("department", department);
-            List<UserIdAndFioCom> list = applicationUserService.findByOrganizationId(department.getOrganization().getId()).stream()
+            List<UserIdAndFioCom> list = applicationUserService.findAllManagedUsers().stream()
                     .map(UserIdAndFioCom::new)
                     .collect(Collectors.toList());
 
