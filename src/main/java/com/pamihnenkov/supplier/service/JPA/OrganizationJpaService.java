@@ -5,9 +5,7 @@ import com.pamihnenkov.supplier.service.repository.OrganozationRepository;
 import com.pamihnenkov.supplier.service.serviceInterfaces.OrganizationService;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class OrganizationJpaService implements OrganizationService {
@@ -16,6 +14,14 @@ public class OrganizationJpaService implements OrganizationService {
 
     public OrganizationJpaService(OrganozationRepository organozationRepository) {
         this.organozationRepository = organozationRepository;
+    }
+
+    @Override
+    public List<Organization> findAllManaged() {
+        List<Organization> result = new ArrayList<>();
+        result.add(organozationRepository.findById(1L).get());
+        result.add(organozationRepository.findById(2L).get());
+        return result;
     }
 
     @Override
