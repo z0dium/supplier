@@ -28,7 +28,7 @@ public class Organization extends BaseEntity{
 
     @Override
     public String toString(){
-        return name + " (" + innCode + ")";
+        return innCode + ' ' + legalForm + ' ' + name;
     }
 
 }
