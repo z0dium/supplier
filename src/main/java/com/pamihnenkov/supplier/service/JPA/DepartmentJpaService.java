@@ -38,13 +38,11 @@ public class DepartmentJpaService implements DepartmentService {
 
     @Override
     public Department findById(Long aLong) {
-
         return departmentRepository.findById(aLong).orElse(null);
     }
 
     @Override
     public Department save(Department object) {
-
         return departmentRepository.save(object);
     }
 

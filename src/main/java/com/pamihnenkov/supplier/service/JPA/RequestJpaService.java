@@ -61,7 +61,6 @@ public class RequestJpaService implements RequestService {
     @Override
     public List<Request> findAllUnchecked() {
         List<Request> result = requestRepository.findBySupplier(null);
-        System.out.println(result.size());
         return result;
     }
 
@@ -72,7 +71,6 @@ public class RequestJpaService implements RequestService {
         List<Request> byDepartmentIn = findByDepartmentIn(departmentService.findAll().stream()
                 .filter(department -> department.getOrganization().equals(organization))
                 .collect(Collectors.toSet()));
-        System.out.println("service - " + byDepartmentIn.size());
         return byDepartmentIn;
     }
 
