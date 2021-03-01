@@ -11,7 +11,6 @@ import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.RequestService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -28,9 +28,8 @@ public class RequestController {
     private final ApplicationUserService applicationUserService;
     private final DepartmentService departmentService;
 
-
     @Autowired
-    public RequestController(RequestService requestService, UserService userService, ApplicationUserService applicationUserService, DepartmentService departmentService) {
+    public RequestController(RequestService requestService, ApplicationUserService applicationUserService, DepartmentService departmentService) {
         this.requestService = requestService;
         this.applicationUserService = applicationUserService;
         this.departmentService = departmentService;
@@ -39,27 +38,28 @@ public class RequestController {
     @GetMapping("requests/create")
     public String showCreateForm(Model model) {
 
-        RequestLinesContainer requestLinesContainer = new RequestLinesContainer();
-        requestLinesContainer.getRequestLines().add(new RequestLine());
-        model.addAttribute("requestLinesContainer", requestLinesContainer);
+        Request request = new Request();
+        request.setDepartment(new Department());
+        request.setRequestLines(List.of(new RequestLine()));   //1 empty string needed for better vision on fronted
+
+
         Iterable<DepartmentIdAndNameCom> departments = departmentService.findByLeader(applicationUserService.getCurrentUser()).stream()
                                                     .map(DepartmentIdAndNameCom::new)
-                                                    .collect(Collectors.toList());
+                                                    .collect(Collectors.toList());  // список компаний для селектов
+
+        model.addAttribute(request);
         model.addAttribute("departments",departments);
-        model.addAttribute("department",new Department());
 
         return "newRequest";
     }
 
     @PostMapping("requests/save")
-    public String createRequest(@ModelAttribute RequestLinesContainer requestLinesContainer, @ModelAttribute Long departmentId) {
-        Request newRequest = new Request();
-        newRequest.setDate(new Date());
+    public String createRequest(@ModelAttribute Request request) {
 
-        newRequest.setDepartment(departmentService.findById(departmentId));
-        newRequest.setRequestLines(requestLinesContainer.getRequestLines());
-        newRequest.setAuthor(applicationUserService.getCurrentUser());
-        requestService.save(newRequest);
+        request.setDepartment(departmentService.findById(request.getDepartment().getId()));
+        request.setAuthor(applicationUserService.getCurrentUser());
+        request.setDate(new Date());
+        requestService.save(request);
         return "redirect:/requests";
     }
 
