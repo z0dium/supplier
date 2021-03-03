@@ -5,10 +5,17 @@
     <title>Панель администратора</title>
     <link rel="stylesheet" href="/css/menu.css">
 </head>
-
+<header th:fragment="header">
+    <hr>
+    <div>
+        <div class="nav"><a href="/index"><p class="string">Выйти</p></a></div>
+        <div class="nav"><a href="/admin/users"><p class="string">Список Пользователей</p></a></div>
+        <div class="nav"><a href="/admin/departments"><p class="string">Список Отделов</p></a></div>
+    </div>
+    <hr>
+</header>
 <body>
-<div class="nav"><a href="/admin/users"><p class="string">Список Пользователей</p></a></div>
-<div class="nav"><a href="/admin/departments"><p class="string">Список Отделов</p></a></div>
+
 
 <div th:replace="fragments/fragments :: footer"></div>
 </body>
