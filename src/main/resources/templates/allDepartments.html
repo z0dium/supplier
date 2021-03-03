@@ -7,9 +7,8 @@
     <link rel="stylesheet" href="/css/menu.css">
     <script type="text/javascript" th:src="@{/js/sort.js}"></script>
 </head>
-<header th:replace="adminPanel :: header"></header>
 <body>
-
+<header th:replace="adminPanel :: header"></header>
 <div th:fragment="allDepartments" class="tableContainer">
     <table class="sort" align="center">
         <thead>
@@ -38,6 +37,6 @@
         <button th:onclick="'window.location.href=\'/admin/departments/create\';'" type="button"> Создать новый отдел </button>
     </center>
 </div>
-<div th:replace="fragments/fragments :: footer"></div>
+<footer th:replace="fragments/fragments :: footer"></footer>
 </body>
 </html>

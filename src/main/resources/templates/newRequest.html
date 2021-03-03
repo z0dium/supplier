@@ -7,7 +7,7 @@
     <script type="text/javascript" th:src="@{/js/javascript.js}"></script>
 </head>
 <body>
-<div th:replace="fragments/fragments :: header"></div>
+<header th:replace="supplierArea :: header"></header>
 <form action="#" th:action="@{/requests/save}" th:object="${request}" method="post">
     <fieldset>
         <input type="text" th:field="*{goal}">
@@ -57,6 +57,6 @@
     </center>
 </form>
 
-<div th:replace="fragments/fragments :: footer"></div>
+<footer th:replace="fragments/fragments :: footer"></footer>
 </body>
 </html>
