@@ -28,6 +28,7 @@ TABLE{
 background: white;
 width:100%;
 box-shadow: -3px -5px 10px 0px #123;
+background: url("/images/background.jpg");
 }
 
 a{
