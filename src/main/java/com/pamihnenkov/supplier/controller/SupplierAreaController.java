@@ -7,12 +7,14 @@ import com.pamihnenkov.supplier.service.serviceInterfaces.RequestService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.Persistence;
 import java.util.stream.Collectors;
 
 @Controller
+@RequestMapping("/app")
 public class SupplierAreaController {
 
     private final ApplicationUserService applicationUserService;
@@ -25,14 +27,14 @@ public class SupplierAreaController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping("/supplier")
+    @GetMapping("supplier")
     public String showSupplierArea(){
   //      ApplicationUser currentUser = (ApplicationUser) applicationUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
         return "supplierArea";
     }
 
-    @GetMapping("/supplier/{org}")
+    @GetMapping("supplier/{org}")
     public ModelAndView enterSibArea(@PathVariable String org){
 
         RequestLinesContainer container = new RequestLinesContainer();
@@ -52,7 +54,7 @@ public class SupplierAreaController {
         return mav;
     }
 
-    @GetMapping("/supplier/checking")
+    @GetMapping("supplier/checking")
     public ModelAndView checkNewRequests(){
         ModelAndView mav = new ModelAndView();
         mav.addObject("requests", requestService.findAllUnchecked());

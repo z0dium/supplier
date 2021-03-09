@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
+@RequestMapping("/app")
 public class AdminController {
 
     private final ApplicationUserService applicationUserService;
@@ -29,19 +30,19 @@ public class AdminController {
         this.organizationService = organizationService;
     }
 
-    @GetMapping("/admin")
+    @GetMapping("admin")
     public String enterAdminPanel(){
         return "adminPanel";
     }
 
-    @GetMapping("/admin/users")
+    @GetMapping("admin/users")
     public String showAllUsers(Model model){
 
         model.addAttribute("users", applicationUserService.findAll());
         return "allUsers";
     }
 
-    @GetMapping("/admin/users/{userId}")
+    @GetMapping("admin/users/{userId}")
     public ModelAndView showAndEditUser(@PathVariable Long userId){
 
         ModelAndView mav = new ModelAndView();
@@ -59,17 +60,17 @@ public class AdminController {
         return mav;
     }
 
-    @PostMapping("/admin/users/{userId}/addOrganization")
+    @PostMapping("admin/users/{userId}/addOrganization")
     @Transactional
     public String addOrganization(@RequestParam("innCode") String innCode, @PathVariable Long userId){
         ApplicationUser user = applicationUserService.findById(userId);
         user.getOrganizations().add(organizationService.findByInnCode(innCode));
-        return "redirect:/admin/users/"+ userId;
+        return "redirect:/app/admin/users/"+ userId;
     }
 
 
 
-    @PostMapping("/admin/users/save")
+    @PostMapping("admin/users/save")
     public String saveUser(@ModelAttribute ApplicationUser applicationUser){
         ApplicationUser user = applicationUserService.findById(applicationUser.getId());
 
@@ -78,19 +79,19 @@ public class AdminController {
 
         applicationUserService.save(user);
 
-        return "redirect:/admin";
+        return "redirect:/app/admin";
     }
 
 
 
-    @GetMapping("/admin/departments")
+    @GetMapping("admin/departments")
     public String showAllDepartments(Model model){
 
         model.addAttribute("departments", departmentService.findAll());
         return "allDepartments";
     }
 
-    @GetMapping("/admin/departments/create")
+    @GetMapping("admin/departments/create")
     public ModelAndView createNewDepartment(){
         ModelAndView mav = new ModelAndView();
         Department department = new Department();
@@ -106,7 +107,7 @@ public class AdminController {
         return  mav;
     }
 
-    @GetMapping("/admin/departments/{id}")
+    @GetMapping("admin/departments/{id}")
     public ModelAndView showAndEditDepartment (@PathVariable Long id){
 
         ModelAndView mav = new ModelAndView();
@@ -127,7 +128,7 @@ public class AdminController {
         return mav;
     }
 
-    @PostMapping("/admin/departments/save")
+    @PostMapping("admin/departments/save")
     public String saveDepartment(@ModelAttribute Department department){
         Long id = department.getId();
         if (id==null){
@@ -140,6 +141,6 @@ public class AdminController {
             departmentService.save(persist);
         }
 
-        return "redirect:/admin/departments";
+        return "redirect:/app/admin/departments";
     }
 }

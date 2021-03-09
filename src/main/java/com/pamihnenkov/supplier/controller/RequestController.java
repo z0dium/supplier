@@ -9,7 +9,6 @@ import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.RequestService;
-import com.pamihnenkov.supplier.service.serviceInterfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -22,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
+@RequestMapping("/app")
 public class RequestController {
 
     private final RequestService requestService;
