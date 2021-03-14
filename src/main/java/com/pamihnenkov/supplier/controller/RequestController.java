@@ -5,6 +5,7 @@ import com.pamihnenkov.supplier.model.Request;
 import com.pamihnenkov.supplier.model.RequestLine;
 import com.pamihnenkov.supplier.model.RequestLinesContainer;
 import com.pamihnenkov.supplier.model.commandObjects.Department.DepartmentIdAndNameCom;
+import com.pamihnenkov.supplier.model.commandObjects.Request.AuthorAndDepartmentAndGoalCom;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
@@ -89,8 +90,13 @@ public class RequestController {
 
         ModelAndView mav = new ModelAndView();
         RequestLinesContainer container = new RequestLinesContainer();
-        container.setRequestLines(requestService.findById(id).getRequestLines());
+        Request request = requestService.findById(id);
+        AuthorAndDepartmentAndGoalCom metaRequest = new AuthorAndDepartmentAndGoalCom(request.getGoal(),
+                                                                        request.getAuthor().getSurname() + ' ' + request.getAuthor().getName(),
+                                                                              request.getDepartment().getName());
+        container.setRequestLines(request.getRequestLines());
         mav.addObject("container",container);
+        mav.addObject("request", metaRequest);
         mav.setViewName("allRequestsLines");
         return mav;
     }

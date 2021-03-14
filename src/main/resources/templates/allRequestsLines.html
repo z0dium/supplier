@@ -9,11 +9,18 @@
 </head>
 <body>
 <header th:replace="supplierArea :: header"></header>
-<table class="sort" align="center">
+<div th:if="${request != null}">
+    <span th:text="'Дата: ' + ${container.requestLines[0].request.date}">Дата: дата</span>,&nbsp
+    <span th:text="'Инициатор: ' + ${request.author}">Инициатор: Иванов Иван</span>,&nbsp
+    <span th:text="'Подразделение: ' + ${request.department}">Подразделение:  Цех ...</span>,&nbsp
+    <span th:text="'Цель приобретения: ' + ${request.goal}">Цель приобретения: для того-то...</span>
+</div>
+<div class="tableContainer">
+<table th:if="${container != null}" class="sort" align="center">
     <thead>
     <tr>
-        <td>Инициатор</td>
-        <td>Дата</td>
+        <td th:if="${request == null}">Инициатор</td>
+        <td th:if="${request == null}">Дата</td>
         <td>Наименование</td>
         <td>Модель/артикул/и тд</td>
         <td>Описание</td>
@@ -26,8 +33,8 @@
     </thead>
     <tbody>
     <tr th:each="rl: ${container.requestLines}">
-        <td th:text="${rl.request.author.surname}"></td>
-        <td th:text="${rl.request.date}"></td>
+        <td th:if="${request == null}" th:text="${rl.request.author.surname}"></td>
+        <td th:if="${request == null}" th:text="${rl.request.date}"></td>
         <td th:text="${rl.item.name}"></td>
         <td th:text="${rl.item.model}"></td>
         <td th:text="${rl.description}"></td>
@@ -35,9 +42,11 @@
         <td th:text="${rl.unitOfMeasure}"></td>
         <td th:text="${rl.item.category}"></td>
         <td th:text="${rl.expectedTo}"></td>
+
     </tr>
     </tbody>
 </table>
+</div>
 <footer th:replace="fragments/fragments :: footer"></footer>
 </body>
 </html>
