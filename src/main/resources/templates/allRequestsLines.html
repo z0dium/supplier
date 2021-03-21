@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Все заявки</title>
@@ -9,10 +9,10 @@
 </head>
 <body>
 <header th:replace="supplierArea :: header"></header>
-<div th:if="${request != null}">
-    <span th:text="'Дата: ' + ${container.requestLines[0].request.date}">Дата: дата</span>,&nbsp
-    <span th:text="'Инициатор: ' + ${request.author}">Инициатор: Иванов Иван</span>,&nbsp
-    <span th:text="'Подразделение: ' + ${request.department}">Подразделение:  Цех ...</span>,&nbsp
+<div th:if="${request != null}">  <!--/* This view used for several purposes. This block is for one defined request.  */-->
+    <span th:text="'Дата: ' + ${request.requestLines[0].request.date}">Дата: дата</span>,&nbsp
+    <span th:text="'Инициатор: ' + ${request.author.fio()}">Инициатор: Иванов Иван</span>,&nbsp
+    <span th:text="'Подразделение: ' + ${request.department.organization.name + ', ' + request.department.name} ">Подразделение:  Цех ...</span>,&nbsp
     <span th:text="'Цель приобретения: ' + ${request.goal}">Цель приобретения: для того-то...</span>
 </div>
 <div class="tableContainer">
@@ -46,6 +46,11 @@
     </tr>
     </tbody>
 </table>
+</div>
+<div sec:authorize="hasRole('ROLE_SUPPLIER')" th:if="${request != null && request.supplier == null}">
+    <form th:action="@{/app/requests/__${request.id}__/update}" method="post">
+        <center><button type="submit">Подтвердить заявку</button></center>
+    </form>
 </div>
 <footer th:replace="fragments/fragments :: footer"></footer>
 </body>
