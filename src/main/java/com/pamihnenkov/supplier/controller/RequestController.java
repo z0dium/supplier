@@ -5,13 +5,11 @@ import com.pamihnenkov.supplier.model.Request;
 import com.pamihnenkov.supplier.model.RequestLine;
 import com.pamihnenkov.supplier.model.RequestLinesContainer;
 import com.pamihnenkov.supplier.model.commandObjects.Department.DepartmentIdAndNameCom;
-import com.pamihnenkov.supplier.model.commandObjects.Request.AuthorAndDepartmentAndGoalCom;
-import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -61,7 +59,7 @@ public class RequestController {
         request.setAuthor(applicationUserService.getCurrentUser());
         request.setDate(new Date());
         requestService.save(request);
-        return "redirect:/requests";
+        return "redirect:/app/requests";
     }
 
     @GetMapping("requests")
@@ -89,25 +87,28 @@ public class RequestController {
     public ModelAndView showRequest(@PathVariable Long id){
 
         ModelAndView mav = new ModelAndView();
-        RequestLinesContainer container = new RequestLinesContainer();
         Request request = requestService.findById(id);
-        AuthorAndDepartmentAndGoalCom metaRequest = new AuthorAndDepartmentAndGoalCom(request.getGoal(),
-                                                                        request.getAuthor().getSurname() + ' ' + request.getAuthor().getName(),
-                                                                              request.getDepartment().getName());
-        container.setRequestLines(request.getRequestLines());
-        mav.addObject("container",container);
-        mav.addObject("request", metaRequest);
+        mav.addObject("container",new RequestLinesContainer(request.getRequestLines()));
+        mav.addObject("request", request);
         mav.setViewName("allRequestsLines");
         return mav;
+    }
+
+    @Secured("ROLE_SUPPLIER")
+    @PostMapping("requests/{id}/update")
+    public String updateRequest(@PathVariable String id){
+        Long longId = Long.parseLong(id);
+        Request request = requestService.findById(longId);
+        request.setSupplier(applicationUserService.getCurrentUser());
+        requestService.save(request);
+        return "redirect:/app/supplier/checking";
     }
 
     @GetMapping("requests/my")
     public ModelAndView showMyRequests(){
         ModelAndView mav = new ModelAndView();
-        ApplicationUser currentUser = (ApplicationUser) applicationUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-
         RequestLinesContainer container = new RequestLinesContainer();
-        container.setRequestLines(requestService.findByAuthor(currentUser).stream()
+        container.setRequestLines(requestService.findByAuthor(applicationUserService.getCurrentUser()).stream()
                                     .flatMap(request -> request.getRequestLines().stream())
                                     .collect(Collectors.toList()));
         mav.addObject("container", container);
