@@ -8,7 +8,7 @@
 </head>
 <body>
 <header th:replace="supplierArea :: header"></header>
-<form action="#" th:action="@{/requests/save}" th:object="${request}" method="post">
+<form action="#" th:action="@{/app/requests/save}" th:object="${request}" method="post">
     <fieldset>
         <input type="text" th:field="*{goal}">
         <select th:field="*{department.id}">
