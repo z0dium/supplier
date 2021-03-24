@@ -1,3 +1,8 @@
+header{
+display: flex;
+justify-content: space-between;
+}
+
 .nav {
 	display: inline-block; /*Задаем блочно-строчное отображение*/
   	width: auto; /*задаем ширину блока*/
