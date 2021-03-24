@@ -3,6 +3,7 @@ package com.pamihnenkov.supplier.controller;
 import com.pamihnenkov.supplier.model.Department;
 import com.pamihnenkov.supplier.model.Organization;
 import com.pamihnenkov.supplier.model.commandObjects.User.UserIdAndFioCom;
+import com.pamihnenkov.supplier.security.ApplicationGrantedAuthority;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
@@ -52,6 +53,7 @@ public class AdminController {
             mav.addObject("applicationUser", user);
             mav.addObject("organizations", user.getOrganizations());
             mav.addObject("listOfOrganizations", organizationService.findAll());
+            mav.addObject("roles", user.getAuthorities());
             mav.setViewName("editUser");
             return mav;
         }
@@ -68,6 +70,13 @@ public class AdminController {
         return "redirect:/app/admin/users/"+ userId;
     }
 
+    @PostMapping("admin/users/{userId}/addRole")
+    @Transactional
+    public String addRole(@RequestParam("role") ApplicationGrantedAuthority role, @PathVariable Long userId){
+        ApplicationUser user = applicationUserService.findById(userId);
+        user.getAuthorities().add(role);
+        return "redirect:/app/admin/users/"+ userId;
+    }
 
 
     @PostMapping("admin/users/save")

@@ -8,7 +8,7 @@
     <script type="text/javascript" th:src="@{/js/sort.js}"></script>
 </head>
 <body><center>
-    <form action="#" th:action="@{/admin/users/save}" th:object="${applicationUser}" method="POST">
+    <form action="#" th:action="@{/app/admin/users/save}" th:object="${applicationUser}" method="POST">
     <table class="sort" align="center">
         <tbody>
             <tr>
@@ -42,14 +42,25 @@
             </tr>
         </tbody>
     </table>
-            <center>
-                <input type="text" name="innCode">
-                <button th:formaction="@{/admin/users/__${userId}__/addOrganization}"  type="submit">Добавить организацию</button>
-            </center>
-
-                <div th:each="organization : ${organizations}">
-                    <div th:text="${organization}"></div>
-                </div>
+        <center>
+            <input type="text" name="innCode">
+            <button th:formaction="@{/app/admin/users/__${userId}__/addOrganization}"  type="submit">Добавить организацию</button>
+        </center>
+        <div th:each="organization : ${organizations}">
+            <div th:text="${organization}"></div>
+        </div>
+        <hr>
+        <center>
+            <select name="role">
+                <option th:each="ga : ${T(com.pamihnenkov.supplier.security.ApplicationGrantedAuthority).values()}"
+                        th:value="${ga}"
+                        th:text="${ga.name}"></option>
+            </select>
+            <button th:formaction="@{/app/admin/users/__${userId}__/addRole}"  type="submit">Добавить роль</button>
+        </center>
+        <div th:each="role : ${roles}">
+            <div th:text="${role}"></div>
+        </div>
 
         <input type="text" th:field="*{id}" style="display:none;" readonly>
     </form>
