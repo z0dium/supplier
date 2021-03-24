@@ -7,13 +7,11 @@
 </head>
 <body>
 <header th:fragment="header">
-    <hr>
     <div>
         <div class="nav"><a href="/app"><p class="string">Выйти</p></a></div>
         <div class="nav"><a href="/app/admin/users"><p class="string">Список Пользователей</p></a></div>
         <div class="nav"><a href="/app/admin/departments"><p class="string">Список Отделов</p></a></div>
     </div>
-    <hr>
 </header>
 
 <footer th:replace="fragments/fragments :: footer"></footer>

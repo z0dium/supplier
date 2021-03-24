@@ -10,7 +10,6 @@
 </head>
 <body>
 <header th:fragment="header">
-    <hr>
     <div>
         <div class="nav"><a href="/app"><p class="string">Выйти</p></a></div>
         <div class="nav"><a href="/app/requests/create"><p class="string">Создать заявку</p></a></div>
@@ -22,7 +21,6 @@
         <div sec:authorize="hasRole('ROLE_SUPPLIER')" class="nav"><a href="/app/supplier/gbi"><p class="string">ЖБИ №1 Рыбацкое</p></a> </div>
         <div sec:authorize="hasRole('ROLE_SUPPLIER')" class="nav"><a href="/app/supplier/checking"><p class="string">Проверить новые заявки</p></a> </div>
     </div>
-    <hr>
 </header>
 
 <footer th:replace="fragments/fragments :: footer"></footer>
