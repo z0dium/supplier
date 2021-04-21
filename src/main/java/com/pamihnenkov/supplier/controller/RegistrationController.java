@@ -32,7 +32,7 @@ public class RegistrationController {
 //        return exceptionInfoHandler.getErrorInfoResponseEntity(req, e, EXCEPTION_DUPLICATE_EMAIL, HttpStatus.CONFLICT);
 //    }
 
-    @GetMapping("/registration*")
+    @GetMapping("/registration")
     public ModelAndView showCRegistrationForm(@ModelAttribute ApplicationUser applicationUser) {
         ModelAndView mav = new ModelAndView("registration");
 
@@ -44,7 +44,7 @@ public class RegistrationController {
         return mav;
     }
 
-    @PostMapping("/registration*")
+    @PostMapping("/registration")
     public ModelAndView processRegistration(@ModelAttribute ApplicationUser applicationUser){
         ModelAndView mav = new ModelAndView();
 
@@ -54,7 +54,6 @@ public class RegistrationController {
         applicationUser.setCredentialsNonExpired(true);
         applicationUser.setEnabled(true); //TO DO implement email verification.
         applicationUser.setPassword(passwordEncoder.encode(applicationUser.getPassword()));
-
 
         try {
             if (applicationUserService.save(applicationUser).getId() != null) {
