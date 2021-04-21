@@ -43,7 +43,7 @@
         </tbody>
     </table>
         <center>
-            <input type="text" name="innCode">
+            <input type="text" name="innCode" placeholder="ИНН">
             <button th:formaction="@{/app/admin/users/__${userId}__/addOrganization}"  type="submit">Добавить организацию</button>
         </center>
         <div th:each="organization : ${organizations}">

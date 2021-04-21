@@ -10,15 +10,15 @@
 <header th:replace="supplierArea :: header"></header>
 <form action="#" th:action="@{/app/requests/save}" th:object="${request}" method="post">
     <fieldset>
+        <label>Цель приобретения</label>
         <input type="text" th:field="*{goal}">
+        <label>в</label>
         <select th:field="*{department.id}">
-            <option th:each="department : ${departments}"
-                    th:value="${department.id}"
-                    th:text="${department.name}"></option>
+            <option th:each="dep : ${departments}"
+                    th:value="${dep.id}"
+                    th:text="${dep.name + ' (' + dep.organization.name + ')'}"></option>
         </select>
-    </fieldset>
-    <fieldset>
-
+        <hr>
         <table id="listOfRequestLines">
             <thead>
                 <tr>
