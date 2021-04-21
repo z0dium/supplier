@@ -8,7 +8,8 @@ import javax.persistence.Enumerated;
 public enum ApplicationGrantedAuthority implements GrantedAuthority {
     ROLE_ADMIN("ROLE_ADMIN"),
     ROLE_USER("ROLE_USER"),
-    ROLE_SUPPLIER("ROLE_SUPPLIER");
+    ROLE_SUPPLIER("ROLE_SUPPLIER"),
+    ROLE_SIGNER("ROLE_SIGNER");
 
     public final String name;
 
