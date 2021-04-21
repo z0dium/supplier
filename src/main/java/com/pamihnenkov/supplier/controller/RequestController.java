@@ -4,7 +4,6 @@ import com.pamihnenkov.supplier.model.Department;
 import com.pamihnenkov.supplier.model.Request;
 import com.pamihnenkov.supplier.model.RequestLine;
 import com.pamihnenkov.supplier.model.RequestLinesContainer;
-import com.pamihnenkov.supplier.model.commandObjects.Department.DepartmentIdAndNameCom;
 import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.RequestService;
@@ -38,14 +37,9 @@ public class RequestController {
     public String showCreateForm(Model model) {
 
         Request request = new Request();
-        request.setDepartment(new Department());
+    //    request.setDepartment(new Department());
         request.setRequestLines(List.of(new RequestLine()));   //1 empty string needed for better vision on fronted
-
-
-        Iterable<DepartmentIdAndNameCom> departments = departmentService.findByLeader(applicationUserService.getCurrentUser()).stream()
-                                                    .map(DepartmentIdAndNameCom::new)
-                                                    .collect(Collectors.toList());  // список компаний для селектов
-
+        Iterable<Department> departments = (departmentService.findAll());  // список компаний для селектов
         model.addAttribute(request);
         model.addAttribute("departments",departments);
 
