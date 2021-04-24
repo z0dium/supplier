@@ -46,7 +46,7 @@
     </table>
         <center>
             <input type="text" name="innCode" placeholder="ИНН">
-            <button th:formaction="@{/app/admin/users/__${userId}__/addOrganization}"  type="submit">Добавить организацию</button>
+            <button th:formaction="@{/app/admin/users/__${applicationUser.getId()}__/addOrganization}"  type="submit">Добавить организацию</button>
         </center>
         <div th:each="organization : ${applicationUser.organizations}">
             <div th:text="${organization}"></div>
@@ -59,7 +59,7 @@
                             th:value="${ga}"
                             th:text="${ga.name}"></option>
                 </select>
-                <button th:formaction="@{/app/admin/users/__${userId}__/addRole}"  type="submit">Добавить роль</button>
+                <button th:formaction="@{/app/admin/users/__${applicationUser.getId()}__/addRole}"  type="submit">Добавить роль</button>
             </center>
             <div th:each="role : ${applicationUser.authorities}">
                 <div th:text="${role}"></div>
