@@ -9,7 +9,7 @@
             <div class="nav"><a href="/app/supplier"><p class="string">Отдел снабжения</p></a></div>
             <div sec:authorize="hasRole('ROLE_ADMIN')" class="nav"><a href="/app/admin"><p class="string">Панель администратора</p></a></div>
         </div>
-        <div class="nav" sec:authorize="hasRole('ROLE_USER')"><a href="/logout"><p class="string" sec:authentication="principal">Name</p></a></div>
+        <div class="nav"><a href="/logout"><p class="string" sec:authentication="principal">Name</p></a></div>
     </div>
     <hr>
 </header>
