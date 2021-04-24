@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Редактировать пользователя</title>
@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="/css/menu.css">
     <script type="text/javascript" th:src="@{/js/sort.js}"></script>
 </head>
-<body><center>
+<body>
+<header th:replace="adminPanel :: header"></header>
+<center>
     <form action="#" th:action="@{/app/admin/users/save}" th:object="${applicationUser}" method="POST">
     <table class="sort" align="center">
         <tbody>
@@ -46,23 +48,24 @@
             <input type="text" name="innCode" placeholder="ИНН">
             <button th:formaction="@{/app/admin/users/__${userId}__/addOrganization}"  type="submit">Добавить организацию</button>
         </center>
-        <div th:each="organization : ${organizations}">
+        <div th:each="organization : ${applicationUser.organizations}">
             <div th:text="${organization}"></div>
         </div>
         <hr>
-        <center>
-            <select name="role">
-                <option th:each="ga : ${T(com.pamihnenkov.supplier.security.ApplicationGrantedAuthority).values()}"
-                        th:value="${ga}"
-                        th:text="${ga.name}"></option>
-            </select>
-            <button th:formaction="@{/app/admin/users/__${userId}__/addRole}"  type="submit">Добавить роль</button>
-        </center>
-        <div th:each="role : ${roles}">
-            <div th:text="${role}"></div>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <center>
+                <select name="role">
+                    <option th:each="ga : ${T(com.pamihnenkov.supplier.security.ApplicationGrantedAuthority).values()}"
+                            th:value="${ga}"
+                            th:text="${ga.name}"></option>
+                </select>
+                <button th:formaction="@{/app/admin/users/__${userId}__/addRole}"  type="submit">Добавить роль</button>
+            </center>
+            <div th:each="role : ${applicationUser.authorities}">
+                <div th:text="${role}"></div>
+            </div>
         </div>
-
         <input type="text" th:field="*{id}" style="display:none;" readonly>
     </form>
-</center></body>
+</center></div></body>
 </html>

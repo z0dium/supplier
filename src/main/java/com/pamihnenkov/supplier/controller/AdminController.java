@@ -52,7 +52,6 @@ public class AdminController {
         if (user != null) {
             mav.addObject("applicationUser", user);
             mav.addObject("organizations", user.getOrganizations());
-            mav.addObject("listOfOrganizations", organizationService.findAll());
             mav.addObject("roles", user.getAuthorities());
             mav.setViewName("editUser");
             return mav;
