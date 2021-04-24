@@ -8,6 +8,7 @@ import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.OrganizationService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,11 +32,13 @@ public class AdminController {
         this.organizationService = organizationService;
     }
 
+    @Secured(value = {"ROLE_ADMIN"})
     @GetMapping("admin")
     public String enterAdminPanel(){
         return "adminPanel";
     }
 
+    @Secured(value = {"ROLE_ADMIN"})
     @GetMapping("admin/users")
     public String showAllUsers(Model model){
 
@@ -43,6 +46,7 @@ public class AdminController {
         return "allUsers";
     }
 
+    @Secured(value = {"ROLE_ADMIN"})
     @GetMapping("admin/users/{userId}")
     public ModelAndView showAndEditUser(@PathVariable Long userId){
 
@@ -51,8 +55,6 @@ public class AdminController {
 
         if (user != null) {
             mav.addObject("applicationUser", user);
-            mav.addObject("organizations", user.getOrganizations());
-            mav.addObject("roles", user.getAuthorities());
             mav.setViewName("editUser");
             return mav;
         }
@@ -61,14 +63,18 @@ public class AdminController {
         return mav;
     }
 
+    @Secured(value = {"ROLE_ADMIN"})
     @PostMapping("admin/users/{userId}/addOrganization")
     @Transactional
     public String addOrganization(@RequestParam("innCode") String innCode, @PathVariable Long userId){
         ApplicationUser user = applicationUserService.findById(userId);
         user.getOrganizations().add(organizationService.findByInnCode(innCode));
-        return "redirect:/app/admin/users/"+ userId;
+        return (user.getId().equals(applicationUserService.getCurrentUser().getId()))?
+                "redirect:/app/private/edit" :
+                "redirect:/app/admin/users/"+ userId;
     }
 
+    @Secured(value = {"ROLE_ADMIN"})
     @PostMapping("admin/users/{userId}/addRole")
     @Transactional
     public String addRole(@RequestParam("role") ApplicationGrantedAuthority role, @PathVariable Long userId){
@@ -77,7 +83,7 @@ public class AdminController {
         return "redirect:/app/admin/users/"+ userId;
     }
 
-
+    @Secured(value = {"ROLE_ADMIN"})
     @PostMapping("admin/users/save")
     public String saveUser(@ModelAttribute ApplicationUser applicationUser){
         ApplicationUser user = applicationUserService.findById(applicationUser.getId());
@@ -91,7 +97,7 @@ public class AdminController {
     }
 
 
-
+    @Secured(value = {"ROLE_ADMIN"})
     @GetMapping("admin/departments")
     public String showAllDepartments(Model model){
 
@@ -99,6 +105,7 @@ public class AdminController {
         return "allDepartments";
     }
 
+    @Secured(value = {"ROLE_ADMIN"})
     @GetMapping("admin/departments/create")
     public ModelAndView createNewDepartment(){
         ModelAndView mav = new ModelAndView();
@@ -115,6 +122,7 @@ public class AdminController {
         return  mav;
     }
 
+    @Secured(value = {"ROLE_ADMIN"})
     @GetMapping("admin/departments/{id}")
     public ModelAndView showAndEditDepartment (@PathVariable Long id){
 
@@ -136,6 +144,7 @@ public class AdminController {
         return mav;
     }
 
+    @Secured(value = {"ROLE_ADMIN"})
     @PostMapping("admin/departments/save")
     public String saveDepartment(@ModelAttribute Department department){
         Long id = department.getId();

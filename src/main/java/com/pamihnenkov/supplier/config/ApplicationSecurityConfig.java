@@ -33,7 +33,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/h2-console/*").permitAll()
                     .antMatchers("/registration","/registration/").anonymous()
                     .antMatchers("/app","/app/").hasRole("USER")
-                    .antMatchers("/app/admin","/app/admin/").hasRole("ADMIN")
+                    .antMatchers("/app/admin","/app/admin/*").hasRole("ADMIN")
                     .anyRequest().authenticated().and()
                 .formLogin().and()
                 .rememberMe().userDetailsService(userDetailsService);
