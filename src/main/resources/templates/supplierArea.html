@@ -23,7 +23,7 @@
             <div sec:authorize="hasRole('ROLE_SUPPLIER')" class="nav"><a href="/app/supplier/checking"><p class="string">Проверить новые заявки</p></a> </div>
         </div>
         <div>
-            <div class="nav"><p class="string">Отдел снабжения</p></div>
+            <div class="nav"><a href="/logout"><p class="string" sec:authentication="principal">Name</p></a></div>
         </div>
     </div>
     <hr>
