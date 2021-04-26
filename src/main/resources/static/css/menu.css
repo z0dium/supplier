@@ -3,6 +3,11 @@ display: flex;
 justify-content: space-between;
 }
 
+.menulinecentered{
+display: flex;
+justify-content: center;
+}
+
 .nav {
 	display: inline-block; /*Задаем блочно-строчное отображение*/
   	width: auto; /*задаем ширину блока*/

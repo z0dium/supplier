@@ -8,7 +8,8 @@
     <script type="text/javascript" th:src="@{/js/sort.js}"></script>
 </head>
 <body>
-<header th:replace="adminPanel :: header"></header>
+<header sec:authorize="hasRole('ROLE_ADMIN')" th:replace="adminPanel :: header"></header>
+<header sec:authorize="!(hasRole('ROLE_ADMIN'))"th:replace="fragments/fragments :: header"></header>
 <center>
     <form action="#" th:action="@{/app/admin/users/save}" th:object="${applicationUser}" method="POST">
     <table class="sort" align="center">
@@ -29,11 +30,11 @@
                 <td align="right">E-mail</td>
                 <td align="left"><div th:text="*{email}"></div><input type="text" th:field="*{email}" style="display:none;" readonly></td>
             </tr>
-            <tr>
+            <tr sec:authorize="hasRole('ROLE_ADMIN')">
                 <td align="right">Аккаунт активирован</td>
                 <td align="left"><input th:type="checkbox" th:field="*{isEnabled}"></td>
             </tr>
-            <tr>
+            <tr sec:authorize="hasRole('ROLE_ADMIN')">
                 <td align="right">Аккаунт разблокирован</td>
                 <td align="left"><input th:type="checkbox" th:field="*{isAccountNonLocked}"></td>
             </tr>
@@ -44,14 +45,17 @@
             </tr>
         </tbody>
     </table>
-        <center>
-            <input type="text" name="innCode" placeholder="ИНН">
-            <button th:formaction="@{/app/admin/users/__${applicationUser.getId()}__/addOrganization}"  type="submit">Добавить организацию</button>
-        </center>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <center>
+                <input type="text" name="innCode" placeholder="ИНН">
+                <button th:formaction="@{/app/admin/users/__${applicationUser.getId()}__/addOrganization}"  type="submit">Добавить организацию</button>
+            </center>
+        </div>
         <div th:each="organization : ${applicationUser.organizations}">
             <div th:text="${organization}"></div>
         </div>
         <hr>
+
         <div sec:authorize="hasRole('ROLE_ADMIN')">
             <center>
                 <select name="role">
@@ -62,7 +66,7 @@
                 <button th:formaction="@{/app/admin/users/__${applicationUser.getId()}__/addRole}"  type="submit">Добавить роль</button>
             </center>
             <div th:each="role : ${applicationUser.authorities}">
-                <div th:text="${role}"></div>
+                <div class="menulinecentered"><div th:text="${role}"></div><button  th:formaction="@{/app/admin/users/deleteRole/__${role}__}"><img style="height: 1em;" src="/images/cross.png"></button></div>
             </div>
         </div>
         <input type="text" th:field="*{id}" style="display:none;" readonly>

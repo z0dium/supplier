@@ -96,6 +96,17 @@ public class AdminController {
         return "redirect:/app/admin";
     }
 
+    @Secured(value = {"ROLE_ADMIN"})
+    @Transactional
+    @PostMapping("admin/users/deleteRole/{roleToDelete}")
+    public String saveUser(@ModelAttribute ApplicationUser applicationUser, @PathVariable ApplicationGrantedAuthority roleToDelete){
+        ApplicationUser user = applicationUserService.findById(applicationUser.getId());
+        user.getAuthorities().remove(roleToDelete);
+        applicationUserService.save(user);
+
+        return "redirect:/app/admin/users/" + applicationUser.getId();
+    }
+
 
     @Secured(value = {"ROLE_ADMIN"})
     @GetMapping("admin/departments")
