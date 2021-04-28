@@ -10,8 +10,9 @@
 </head>
 <body>
 <header th:replace="supplierArea :: header"></header>
-<div th:if="${requests.size() == 0}"><center>Новых заявок на данный момент нет</center></div>
-<div th:if="${requests.size() != 0}">
+<div th:if="${message != null}" th:text="${message}" style="color:red;"></div>
+<div th:if="${(!(requests == null)) && (requests.size() == 0)}"><center>Новых заявок на данный момент нет</center></div>
+<div th:if="${(!(requests == null)) && (requests.size() != 0)}">
     <div th:fragment="allRequests" class="tableContainer">
         <table class="sort" align="center">
             <thead>

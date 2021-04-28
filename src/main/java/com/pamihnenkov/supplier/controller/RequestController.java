@@ -77,14 +77,26 @@ public class RequestController {
         return mav;
     }
 
-    @GetMapping("requests/{id}")
-    public ModelAndView showRequest(@PathVariable Long id){
-
+    @GetMapping("requests/{stringId}")
+    public ModelAndView showRequest(@PathVariable String stringId){
         ModelAndView mav = new ModelAndView();
-        Request request = requestService.findById(id);
-        mav.addObject("container",new RequestLinesContainer(request.getRequestLines()));
-        mav.addObject("request", request);
-        mav.setViewName("allRequestsLines");
+        try {
+            Long id = Long.parseLong(stringId);
+             // logging
+            Request request = requestService.findById(id);
+            if (!(request == null)) {
+                mav.addObject("container", new RequestLinesContainer(request.getRequestLines()));
+                mav.addObject("request", request);
+                mav.setViewName("allRequestsLines");
+                return mav;
+            } else {
+                mav.addObject("message","Заявки №" + id + " не существует.");
+            }
+        } catch(NumberFormatException nfe) {
+            mav.addObject("message","'"+stringId+"'" + " не является корректным номером заявки.");
+        }
+        mav.addObject("requests",requestService.findAll());
+        mav.setViewName("allRequests");
         return mav;
     }
 
