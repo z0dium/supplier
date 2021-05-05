@@ -5,6 +5,7 @@ import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService
 import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.RequestService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +29,9 @@ public class SupplierAreaController {
     }
 
     @GetMapping("supplier")
-    public String showSupplierArea(){
+    public String showSupplierArea(Model model){
+        model.addAttribute("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
   //      ApplicationUser currentUser = (ApplicationUser) applicationUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-
         return "supplierArea";
     }
 
@@ -50,6 +51,7 @@ public class SupplierAreaController {
 
         ModelAndView mav = new ModelAndView();
         mav.addObject("container", container);
+        mav.addObject("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
         mav.setViewName("allRequestsLines");
         return mav;
     }
@@ -58,6 +60,8 @@ public class SupplierAreaController {
     public ModelAndView checkNewRequests(){
         ModelAndView mav = new ModelAndView();
         mav.addObject("requests", requestService.findAllUnchecked());
+        mav.addObject("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
+        mav.addObject("listOfDepartmentsForCurrentSupplier", departmentService.findBySupplier(applicationUserService.getCurrentUser()));
         mav.setViewName("allRequests");
         return mav;
     }

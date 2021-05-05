@@ -87,6 +87,7 @@ public class RequestController {
             if (!(request == null)) {
                 mav.addObject("container", new RequestLinesContainer(request.getRequestLines()));
                 mav.addObject("request", request);
+                mav.addObject("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
                 mav.setViewName("allRequestsLines");
                 return mav;
             } else {
