@@ -4,7 +4,9 @@ import com.pamihnenkov.supplier.model.Department;
 import com.pamihnenkov.supplier.model.Organization;
 import com.pamihnenkov.supplier.model.Request;
 import com.pamihnenkov.supplier.model.User;
+import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import com.pamihnenkov.supplier.service.repository.RequestRepository;
+import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.RequestLinesService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.RequestService;
@@ -24,14 +26,16 @@ public class RequestJpaService implements RequestService {
     private final RequestRepository requestRepository;
     private final RequestLinesService requestLinesService;
     private final DepartmentService departmentService;
+    private final ApplicationUserService applicationUserService;
 
 
     @Autowired
-    public RequestJpaService(RequestRepository requestRepository, RequestLinesService requestLinesService, DepartmentService departmentService) {
+    public RequestJpaService(RequestRepository requestRepository, RequestLinesService requestLinesService, DepartmentService departmentService, ApplicationUserService applicationUserService) {
 
         this.requestRepository = requestRepository;
         this.requestLinesService = requestLinesService;
         this.departmentService = departmentService;
+        this.applicationUserService = applicationUserService;
     }
 
     @Override
@@ -64,6 +68,11 @@ public class RequestJpaService implements RequestService {
         return result;
     }
 
+    @Override
+    public Boolean isNewRequestsExistsForSupplier() {
+        ApplicationUser currentUser = applicationUserService.getCurrentUser();
+        return findAllUnchecked().stream().anyMatch(request -> departmentService.findBySupplier(currentUser).contains(request.getDepartment()));
+    }
 
     @Override
     public List<Request> findByOrganization(Organization organization) {
