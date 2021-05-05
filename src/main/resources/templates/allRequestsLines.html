@@ -49,7 +49,7 @@
 </div>
 <div sec:authorize="hasRole('ROLE_SUPPLIER')" th:if="${request != null && request.supplier == null}">
     <form th:action="@{/app/requests/__${request.id}__/update}" method="post">
-        <center><button type="submit">Подтвердить заявку</button></center>
+        <center><button class="active" type="submit">Подтвердить заявку</button></center>
     </form>
 </div>
 <footer th:replace="fragments/fragments :: footer"></footer>
