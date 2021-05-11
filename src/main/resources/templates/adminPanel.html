@@ -9,12 +9,12 @@
 <header th:fragment="header">
         <div class="menuline">
             <div>
-                <div class="nav"><a href="/app"><p class="string">Выйти</p></a></div>
-                <div class="nav"><a href="/app/admin/users"><p class="string">Список Пользователей</p></a></div>
-                <div class="nav"><a href="/app/admin/departments"><p class="string">Список Отделов</p></a></div>
+                <div class="nav"><div class="nav"><a href="/app"><p class="string">Выйти</p></a></div></div>
+                <div class="nav"><div class="nav"><a href="/app/admin/users"><p class="string">Список Пользователей</p></a></div></div>
+                <div class="nav"><div class="nav"><a href="/app/admin/departments"><p class="string">Список Отделов</p></a></div></div>
             </div>
             <div>
-                <div class="nav"><a href="/logout"><p class="string" sec:authentication="principal">Name</p></a></div>
+                <div class="nav"><div class="nav"><a href="/logout"><p class="string" sec:authentication="principal">Name</p></a></div></div>
             </div>
         </div>
         <hr>
