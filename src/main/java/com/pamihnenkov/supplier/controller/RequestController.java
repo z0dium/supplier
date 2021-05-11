@@ -42,6 +42,8 @@ public class RequestController {
         Iterable<Department> departments = (departmentService.findAll());  // список компаний для селектов
         model.addAttribute(request);
         model.addAttribute("departments",departments);
+        model.addAttribute("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
+        model.addAttribute("listOfDepartmentsForCurrentSupplier", departmentService.findBySupplier(applicationUserService.getCurrentUser()));
 
         return "newRequest";
     }
@@ -60,6 +62,8 @@ public class RequestController {
     public String showAllRequests(Model model){
 
         model.addAttribute("requests", requestService.findAll());
+        model.addAttribute("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
+        model.addAttribute("listOfDepartmentsForCurrentSupplier", departmentService.findBySupplier(applicationUserService.getCurrentUser()));
         return "allRequests";
     }
 
@@ -73,6 +77,8 @@ public class RequestController {
                                     .collect(Collectors.toList()));
 
         mav.addObject("container",container);
+        mav.addObject("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
+        mav.addObject("listOfDepartmentsForCurrentSupplier", departmentService.findBySupplier(applicationUserService.getCurrentUser()));
         mav.setViewName("allRequestsLines");
         return mav;
     }
@@ -119,6 +125,8 @@ public class RequestController {
                                     .flatMap(request -> request.getRequestLines().stream())
                                     .collect(Collectors.toList()));
         mav.addObject("container", container);
+        mav.addObject("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
+        mav.addObject("listOfDepartmentsForCurrentSupplier", departmentService.findBySupplier(applicationUserService.getCurrentUser()));
         mav.setViewName("allRequestsLines");
         return mav;
     }
