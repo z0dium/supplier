@@ -1,18 +1,19 @@
 .menuline{
 display: flex;
 justify-content: space-between;
+background: rgba(76, 175, 80, 0.0);
 }
 
-.menulinecentered{
-display: flex;
-justify-content: center;
+.menuline > div {
+box-shadow: -2px -3px 7px 0px rgba(0,0,0,0.5);
+border-radius: 17px;
+padding: 0px;
 }
 
 .nav {
 	display: inline-block; /*Задаем блочно-строчное отображение*/
   	width: auto; /*задаем ширину блока*/
   	height: auto;
-    background: rgb(0,55,120);
     background: linear-gradient(180deg, rgba(0,55,120,1) 0%, rgba(144,182,228,1) 9%, rgba(0,32,69,1) 100%);
     border-radius: 17px;
     margin: 3px;
@@ -24,8 +25,8 @@ justify-content: center;
 }
 
 .nav:hover {
-background: rgb(0,55,120);
-background: linear-gradient(180deg, rgba(0,55,120,1) 0%, rgba(255,255,255,1) 9%, rgba(0,32,69,1) 100%);
+    background: rgb(0,55,120);
+    background: linear-gradient(180deg, rgba(0,55,120,1) 0%, rgba(255,255,255,1) 9%, rgba(0,32,69,1) 100%);
 }
 
 .tableContainer{
