@@ -2,12 +2,10 @@ package com.pamihnenkov.supplier.bootstrap;
 
 import com.pamihnenkov.supplier.controller.DadataController;
 import com.pamihnenkov.supplier.model.*;
+import com.pamihnenkov.supplier.model.Messages.Message;
 import com.pamihnenkov.supplier.security.ApplicationGrantedAuthority;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
-import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
-import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
-import com.pamihnenkov.supplier.service.serviceInterfaces.OrganizationService;
-import com.pamihnenkov.supplier.service.serviceInterfaces.RequestService;
+import com.pamihnenkov.supplier.service.serviceInterfaces.*;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +23,7 @@ public class BootStrapData implements CommandLineRunner {
     private final RequestService requestService;
     private final PasswordEncoder passwordEncoder;
     private final ApplicationUserService applicationUserService;
+    private final MessageService messageService;
 
 
 
@@ -155,5 +154,10 @@ public class BootStrapData implements CommandLineRunner {
         request2.setDate(new Date());
 
         requestService.save(request2);
+
+        Message message = new Message(admin);
+        message.setRecipient(user);
+        message.setText("Сообщение");
+        messageService.save(message);
     }
 }
