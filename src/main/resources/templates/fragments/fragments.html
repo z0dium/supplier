@@ -6,10 +6,18 @@
         <div>
             <!-- <div class="nav"><a><p class="string">Транспортный отдел</p></a></div>-->
             <!-- <div class="nav"><a><p class="string">Бухгалтерия</p></a></div> -->
-            <div class="nav"><div class="nav"><a href="/app/supplier"><p class="string">Отдел снабжения</p></a></div></div>
-            <div sec:authorize="hasRole('ROLE_ADMIN')" class="nav"><div class="nav"><a href="/app/admin"><p class="string">Панель администратора</p></a></div></div>
+            <div class="nav">
+                <div class="nav"><a href="/app/supplier"><p class="string">Отдел снабжения</p></a></div>
+            </div>
+            <div sec:authorize="hasRole('ROLE_ADMIN')" class="nav">
+                <div class="nav"><a href="/app/admin"><p class="string">Панель администратора</p></a></div>
+            </div>
         </div>
-        <div class="nav"><div class="nav"><a href="/logout"><p class="string" sec:authentication="principal">Name</p></a></div></div>
+        <div th:fragment="logout">
+            <div  class="nav">
+                <div class="nav"><a href="/logout"><p class="string" sec:authentication="principal">Name</p></a></div>
+            </div>
+        </div>
     </div>
     <hr>
 </header>

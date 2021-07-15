@@ -48,7 +48,11 @@ background: url("/images/background.jpg");
 }
 
 a{
-    text-decoration: none;
+color: #0000EE;
+}
+
+a:visited{
+color: #0000EE;
 }
 
 body{

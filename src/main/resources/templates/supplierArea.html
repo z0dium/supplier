@@ -16,15 +16,14 @@
             <div class="nav"><div class="nav"><a href="/app/requests/create"><p class="string">Создать заявку</p></a></div></div>
             <div class="nav"><div class="nav"><a href="/app/requests/my"><p class="string">Мои заказы</p></a></div></div>
             <div class="nav"><div class="nav"><a href="/app/requests"><p class="string">Заявки</p></a></div></div>
-
-            <div sec:authorize="hasRole('ROLE_SUPPLIER')" class="nav"><div class="nav"><a href="/app/requests/all"><p class="string">Список позиций</p></a></div></div>
-            <div sec:authorize="hasRole('ROLE_SUPPLIER')" class="nav"><div class="nav"><a href="/app/supplier/sib"><p class="string">СиБ-центр</p></a> </div></div>
-            <div sec:authorize="hasRole('ROLE_SUPPLIER')" class="nav"><div class="nav"><a href="/app/supplier/gbi"><p class="string">ЖБИ №1 Рыбацкое</p></a></div> </div>
-            <div sec:authorize="hasRole('ROLE_SUPPLIER')" class="nav"><div th:class="${isNewRequestsExistsForSupplier ?'active nav':'nav'}"><a href="/app/supplier/checking"><p class="string">Проверить новые заявки</p></a> </div></div>
         </div>
         <div>
-            <div class="nav"><div class="nav"><a href="/logout"><p class="string" sec:authentication="principal">Name</p></a></div></div>
+            <div sec:authorize="hasRole('ROLE_SUPPLIER')" class="nav"><div class="nav"><a href="/app/requests/all"><p class="string">Список позиций</p></a></div></div>
+            <div sec:authorize="hasRole('ROLE_SUPPLIER')" class="nav"><div th:class="${isNewRequestsExistsForSupplier ?'active nav':'nav'}"><a href="/app/supplier/checking"><p class="string">Проверить новые заявки</p></a> </div></div>
+            <div sec:authorize="hasRole('ROLE_SUPPLIER')" class="nav"><div class="nav"><a href="/app/supplier/sib"><p class="string">СиБ-центр</p></a> </div></div>
+            <div sec:authorize="hasRole('ROLE_SUPPLIER')" class="nav"><div class="nav"><a href="/app/supplier/gbi"><p class="string">ЖБИ №1 Рыбацкое</p></a></div> </div>
         </div>
+        <div th:replace="fragments/fragments :: logout"></div>
     </div>
     <hr>
 </header>

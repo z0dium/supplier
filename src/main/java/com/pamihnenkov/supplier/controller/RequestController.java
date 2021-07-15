@@ -33,6 +33,70 @@ public class RequestController {
         this.departmentService = departmentService;
     }
 
+    @GetMapping("requests")
+    public String showAllRequests(Model model){
+
+        model.addAttribute("requests", requestService.findAll());
+        model.addAttribute("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
+        model.addAttribute("listOfDepartmentsForCurrentSupplier", departmentService.findBySupplier(applicationUserService.getCurrentUser()));
+        return "allRequests";
+    }
+
+    @GetMapping("requests/all")
+    public ModelAndView showAllRequestLines(){
+
+        ModelAndView mav = new ModelAndView();
+        RequestLinesContainer container = new RequestLinesContainer();
+        container.setRequestLines(requestService.findAll().stream()
+                .flatMap(request -> request.getRequestLines().stream())
+                .collect(Collectors.toList()));
+
+        mav.addObject("container",container);
+        mav.addObject("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
+        mav.addObject("listOfDepartmentsForCurrentSupplier", departmentService.findBySupplier(applicationUserService.getCurrentUser()));
+        mav.setViewName("allRequestsLines");
+        return mav;
+    }
+
+    @GetMapping("requests/{stringId}")
+    public ModelAndView showRequest(@PathVariable String stringId){
+        ModelAndView mav = new ModelAndView();
+        try {
+            Long id = Long.parseLong(stringId);
+            // logging
+            Request request = requestService.findById(id);
+            if (!(request == null)) {
+                mav.addObject("container", new RequestLinesContainer(request.getRequestLines()));
+                mav.addObject("request", request);
+                mav.addObject("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
+                mav.setViewName("allRequestsLines");
+                return mav;
+            } else {
+                mav.addObject("message","Заявки №" + id + " не существует.");
+                return mav;
+            }
+        } catch(NumberFormatException nfe) {
+            mav.addObject("message","'"+stringId+"'" + " не является корректным номером заявки.");
+        }
+        mav.addObject("requests",requestService.findAll());
+        mav.setViewName("allRequests");
+        return mav;
+    }
+
+    @GetMapping("requests/my")
+    public ModelAndView showMyRequests(){
+        ModelAndView mav = new ModelAndView();
+        RequestLinesContainer container = new RequestLinesContainer();
+        container.setRequestLines(requestService.findByAuthor(applicationUserService.getCurrentUser()).stream()
+                .flatMap(request -> request.getRequestLines().stream())
+                .collect(Collectors.toList()));
+        mav.addObject("container", container);
+        mav.addObject("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
+        mav.addObject("listOfDepartmentsForCurrentSupplier", departmentService.findBySupplier(applicationUserService.getCurrentUser()));
+        mav.setViewName("allRequestsLines");
+        return mav;
+    }
+
     @GetMapping("requests/create")
     public String showCreateForm(Model model) {
 
@@ -58,54 +122,7 @@ public class RequestController {
         return "redirect:/app/requests";
     }
 
-    @GetMapping("requests")
-    public String showAllRequests(Model model){
 
-        model.addAttribute("requests", requestService.findAll());
-        model.addAttribute("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
-        model.addAttribute("listOfDepartmentsForCurrentSupplier", departmentService.findBySupplier(applicationUserService.getCurrentUser()));
-        return "allRequests";
-    }
-
-    @GetMapping("requests/all")
-    public ModelAndView showAllRequestLines(){
-
-        ModelAndView mav = new ModelAndView();
-        RequestLinesContainer container = new RequestLinesContainer();
-        container.setRequestLines(requestService.findAll().stream()
-                                    .flatMap(request -> request.getRequestLines().stream())
-                                    .collect(Collectors.toList()));
-
-        mav.addObject("container",container);
-        mav.addObject("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
-        mav.addObject("listOfDepartmentsForCurrentSupplier", departmentService.findBySupplier(applicationUserService.getCurrentUser()));
-        mav.setViewName("allRequestsLines");
-        return mav;
-    }
-
-    @GetMapping("requests/{stringId}")
-    public ModelAndView showRequest(@PathVariable String stringId){
-        ModelAndView mav = new ModelAndView();
-        try {
-            Long id = Long.parseLong(stringId);
-             // logging
-            Request request = requestService.findById(id);
-            if (!(request == null)) {
-                mav.addObject("container", new RequestLinesContainer(request.getRequestLines()));
-                mav.addObject("request", request);
-                mav.addObject("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
-                mav.setViewName("allRequestsLines");
-                return mav;
-            } else {
-                mav.addObject("message","Заявки №" + id + " не существует.");
-            }
-        } catch(NumberFormatException nfe) {
-            mav.addObject("message","'"+stringId+"'" + " не является корректным номером заявки.");
-        }
-        mav.addObject("requests",requestService.findAll());
-        mav.setViewName("allRequests");
-        return mav;
-    }
 
     @Secured("ROLE_SUPPLIER")
     @PostMapping("requests/{id}/update")
@@ -117,18 +134,6 @@ public class RequestController {
         return "redirect:/app/supplier/checking";
     }
 
-    @GetMapping("requests/my")
-    public ModelAndView showMyRequests(){
-        ModelAndView mav = new ModelAndView();
-        RequestLinesContainer container = new RequestLinesContainer();
-        container.setRequestLines(requestService.findByAuthor(applicationUserService.getCurrentUser()).stream()
-                                    .flatMap(request -> request.getRequestLines().stream())
-                                    .collect(Collectors.toList()));
-        mav.addObject("container", container);
-        mav.addObject("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
-        mav.addObject("listOfDepartmentsForCurrentSupplier", departmentService.findBySupplier(applicationUserService.getCurrentUser()));
-        mav.setViewName("allRequestsLines");
-        return mav;
-    }
+
 
 }
