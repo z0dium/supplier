@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать категории</title>
+    <link rel="stylesheet" href="/css/sort.css">
+    <link rel="stylesheet" href="/css/menu.css">
+    <script type="text/javascript" th:src="@{/js/sort.js}"></script>
+</head>
+<body><center>
+    <form action="#" th:action="@{/app/admin/categories/save}" th:object="${category}" method="POST">
+        <table class="sort" align="center">
+            <tbody>
+            <tr>
+                <td align="right">Название</td>
+                <td align="left">
+                    <div th:if="${category.id != null}" th:text="${category.name}"><input type="text" th:field="${category.name}" style="display:none;" readonly></div>
+                    <div th:if="${category.id == null}"><input type="text" th:field="${category.name}"></div></td>
+            </tr>
+            <tr>
+                <td align="right">Родительская категория</td>
+                <td align="left">
+                    <div th:if="${category.id != null}" th:text="${category.parentCategory.name}"><input type="text" th:field="${category.parentCategory.name}" style="display:none;" readonly></div>
+                    <div th:if="${category.id == null}"><select type="text" th:field="${category.parentCategory}">
+                                                        <option th:each="cat : ${listOfCategories}"
+                                                                th:value="${cat.id}"
+                                                                th:text="${cat.name}"></option>
+                    </select>
+                    </div></td>
+            </tr>
+            <tr>
+                <td align="right">Подкатегории</td>
+                <td align="left">
+
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Список подписавшихся</td>
+                <td align="left">
+                    <ul >
+                        <th:block th:each="applicationUser :${category.subscribers}">
+                            <li th:text="${applicationUser.fio()}"></li>
+                        </th:block>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+
+                <td align="right"><div><button type="submit">Сохранить</button></div></td>
+                <td align="left"><div><a href="/app/admin/categories/">Назад</a></div></td>
+            </tr>
+            </tbody>
+        </table>
+        <input type="text" th:field="*{id}" style="display:none;" readonly>
+    </form>
+</center></body>
+</html>

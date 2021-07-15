@@ -1,5 +1,6 @@
 package com.pamihnenkov.supplier.service.JPA;
 
+import com.pamihnenkov.supplier.model.Category;
 import com.pamihnenkov.supplier.model.Item;
 import com.pamihnenkov.supplier.service.repository.ItemRepository;
 import com.pamihnenkov.supplier.service.serviceInterfaces.ItemService;
@@ -21,17 +22,19 @@ public class ItemJpaService implements ItemService {
 
 
     @Override
+    public Set<Item> findAllByCategory(Category category) {
+        return itemRepository.findAllByCategory(category);
+    }
+
+    @Override
     public Set<Item> findAll() {
         return new HashSet<>(itemRepository.findAll());
     }
-
 
     @Override
     public Item findById(Long aLong) {
         return itemRepository.findById(aLong).orElse(null);
     }
-
-
 
     @Override
     public Item save(Item object) {

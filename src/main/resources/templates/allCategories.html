@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Все заявки</title>
+    <link rel="stylesheet" href="/css/sort.css">
+    <link rel="stylesheet" href="/css/menu.css">
+
+    <script type="text/javascript" th:src="@{/js/sort.js}"></script>
+</head>
+<body>
+<header th:replace="adminPanel :: header"></header>
+<div th:if="${message != null}" th:text="${message}" style="color:red;"></div>
+
+<div th:fragment="allCategories" class="tableContainer">
+    <table class="sort" align="center">
+        <thead>
+        <tr>
+            <td>Родительская категория</td>
+            <td>Название</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category: ${listOfCategories}">
+            <td th:text="${category.parentCategory == null ? '' : category.parentCategory.name}"></td>
+            <td th:text="${category.name}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <center>
+        <button th:onclick="'window.location.href=\'/app/admin/categories/create\';'" type="button"> Создать новую категорию </button>
+    </center>
+</div>
+
+</body>
+</html>

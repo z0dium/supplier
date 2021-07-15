@@ -24,11 +24,22 @@ public class BootStrapData implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private final ApplicationUserService applicationUserService;
     private final MessageService messageService;
+    private final CategoryService categoryService;
 
 
 
     @Override
     public void run(String... args) {
+
+        Category usluga = new Category();
+        usluga.setName("Услуга");
+        categoryService.save(usluga);
+
+        Category tovar = new Category();
+        tovar.setName("Товар");
+        categoryService.save(tovar);
+
+
 
         DadataController test = new DadataController();
         test.printOrganization("780408250");
