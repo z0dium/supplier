@@ -25,7 +25,7 @@
                 <td align="right">Наименование отдела</td>
                 <td align="left">
                     <div th:if="${department.id != null}" th:text="${department.name}"><input type="text" th:field="${department.name}" style="display:none;" readonly></div>
-                    <div th:if="${department.id == null}"><input type="text" th:field="${department.name}"></div></td>
+                    <div th:if="${department.id == null}"><input type="text" th:field="${department.name}" autocomplete="new-password"></div></td>
             </tr>
             <tr>
                 <td align="right">Начальник</td>

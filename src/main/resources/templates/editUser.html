@@ -47,7 +47,7 @@
     </table>
         <div sec:authorize="hasRole('ROLE_ADMIN')">
             <center>
-                <input type="text" name="innCode" placeholder="ИНН">
+                <input type="text" name="innCode" placeholder="ИНН" autocomplete="new-password">
                 <button th:formaction="@{/app/admin/users/__${applicationUser.getId()}__/addOrganization}"  type="submit">Добавить организацию</button>
             </center>
         </div>

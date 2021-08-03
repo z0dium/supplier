@@ -15,7 +15,7 @@
                 <td align="right">Название</td>
                 <td align="left">
                     <div th:if="${category.id != null}" th:text="${category.name}"><input type="text" th:field="${category.name}" style="display:none;" readonly></div>
-                    <div th:if="${category.id == null}"><input type="text" th:field="${category.name}"></div></td>
+                    <div th:if="${category.id == null}"><input type="text" th:field="${category.name}" autocomplete="new-password"></div></td>
             </tr>
             <tr>
                 <td align="right">Родительская категория</td>
@@ -24,7 +24,7 @@
                     <div th:if="${category.id == null}"><select type="text" th:field="${category.parentCategory}">
                                                         <option th:each="cat : ${listOfCategories}"
                                                                 th:value="${cat.id}"
-                                                                th:text="${cat.name}"></option>
+                                                                th:text="${cat.name + (cat.parentCategory == null ? '' : ' (' + cat.parentCategory.name + ')')}"></option>
                     </select>
                     </div></td>
             </tr>
