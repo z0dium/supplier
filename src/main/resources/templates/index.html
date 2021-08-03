@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta th:replace="fragments/fragments :: meta">
     <title>Личный кабинет</title>
     <link rel="stylesheet" href="/css/sort.css">
     <link rel="stylesheet" href="/css/menu.css">
@@ -9,7 +9,7 @@
 </head>
 <body>
 <header th:replace="fragments/fragments :: header"></header>
-
+<Center><H1>Список дел:</H1></Center>
 <footer th:replace="fragments/fragments :: footer"></footer>
 </body>
 </html>
