@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -157,18 +158,24 @@ public class AdminController {
 
     @Secured(value = {"ROLE_ADMIN"})
     @PostMapping("admin/departments/save")
-    public String saveDepartment(@ModelAttribute Department department){
+    public ModelAndView saveDepartment(@ModelAttribute Department department){
         Long id = department.getId();
+        ModelAndView mav = new ModelAndView("redirect:/app/admin/departments");
         if (id==null){
             department.setOrganization(organizationService.findById(department.getOrganization().getId()));
-            departmentService.save(department);
-        } else {
+            Optional<Department> dep = departmentService.findByNameAndOrganization(department.getName(),department.getOrganization());
+            if ( dep.isEmpty()){
+                departmentService.save(department);
+                mav.addObject("message","Отдел '" + department.getName() + "' добавлен.");
+            }
+            else {  mav.addObject("message","Отдел с названием '" +  department.getName() + "'уже зарегистрирован в системе.");
+                    mav.setViewName("redirect:/app/admin/departments/create");}
+        }else {
             Department persist =  departmentService.findById(id);
             persist.setLeader(applicationUserService.findById(department.getLeader().getId()));
             persist.setSupplier(applicationUserService.findById(department.getSupplier().getId()));
             departmentService.save(persist);
         }
-
-        return "redirect:/app/admin/departments";
+        return mav;
     }
 }

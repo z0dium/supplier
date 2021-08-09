@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="/css/menu.css">
     <script type="text/javascript" th:src="@{/js/sort.js}"></script>
 </head>
+
 <body><center>
+    <div  th:if="${param.message != null}" th:text="${param.message}"></div>
+
     <form action="#" th:action="@{/app/admin/departments/save}" th:object="${department}" method="POST">
     <table class="sort" align="center">
         <tbody>

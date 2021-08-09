@@ -1,6 +1,7 @@
 package com.pamihnenkov.supplier.service.JPA;
 
 import com.pamihnenkov.supplier.model.Department;
+import com.pamihnenkov.supplier.model.Organization;
 import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
 import com.pamihnenkov.supplier.service.repository.DepartmentRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.OneToOne;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -29,6 +31,11 @@ public class DepartmentJpaService implements DepartmentService {
     @Override
     public Set<Department> findByLeader(ApplicationUser leader) {
         return departmentRepository.findByLeader(leader);
+    }
+
+    @Override
+    public Optional<Department> findByNameAndOrganization(String name, Organization organization) {
+        return departmentRepository.findByNameAndOrganization(name, organization);
     }
 
     @Override

@@ -10,7 +10,7 @@ import java.util.Objects;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "departments")
+@Table(name = "departments",uniqueConstraints = @UniqueConstraint(columnNames = {"name","organization_id"}))
 public class Department extends BaseEntity {
 
         private String name;

@@ -9,6 +9,9 @@
 </head>
 <body>
 <header th:replace="adminPanel :: header"></header>
+
+<div  th:if="${param.message != null}" th:text="${param.message}"></div>
+
 <div th:fragment="allDepartments" class="tableContainer">
     <table class="sort" align="center">
         <thead>
