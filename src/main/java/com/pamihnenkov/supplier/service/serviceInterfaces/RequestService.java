@@ -13,6 +13,7 @@ public interface RequestService extends CrudService<Request, Long>{
     List<Request> findByDepartment(Department department);
     List<Request> findByDepartmentIn(Set<Department> departments);
     List<Request> findAllUnchecked();
+    List<Request> findAllUnsigned();
     Boolean isNewRequestsExistsForSupplier();
     List<Request> findByOrganization(Organization organization);
 

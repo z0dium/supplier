@@ -69,6 +69,12 @@ public class RequestJpaService implements RequestService {
     }
 
     @Override
+    public List<Request> findAllUnsigned() {
+        List<Request> result = requestRepository.findBySigner(null);
+        return result;
+    }
+
+    @Override
     public Boolean isNewRequestsExistsForSupplier() {
         ApplicationUser currentUser = applicationUserService.getCurrentUser();
         return findAllUnchecked().stream().anyMatch(request -> departmentService.findBySupplier(currentUser).contains(request.getDepartment()));

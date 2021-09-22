@@ -50,11 +50,19 @@
     </tbody>
 </table>
 </div>
-<div sec:authorize="hasRole('ROLE_SUPPLIER')" th:if="${request != null && request.supplier == null}">
-    <form th:action="@{/app/requests/__${request.id}__/update}" method="post">
-        <center><button class="active" type="submit">Подтвердить заявку</button></center>
-    </form>
-</div>
+<center>
+    <div sec:authorize="hasRole('ROLE_SUPPLIER')" th:if="${request != null && request.supplier == null}">
+        <form th:action="@{/app/requests/__${request.id}__/update}" method="post">
+            <center><button class="active" type="submit">Подтвердить заявку</button></center>
+        </form>
+    </div>
+    <div sec:authorize="hasRole('ROLE_SIGNER')" th:if="${request != null && request.supplier != null && request.signer == null }">
+        <form th:action="@{/app/signer/__${request.id}__/approve}" method="post">
+            <center><button class="active" type="submit">Утвердить заявку</button></center>
+        </form>
+    </div>
+</center>
+
 <footer th:replace="fragments/fragments :: footer"></footer>
 </body>
 </html>

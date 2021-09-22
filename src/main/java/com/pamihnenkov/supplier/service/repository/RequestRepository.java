@@ -13,5 +13,5 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
     List<Request> findByAuthor(User user);
     List<Request> findByDepartment(Department department);
     List<Request> findBySupplier(User user);
-
+    List<Request> findBySigner(User user);
 }

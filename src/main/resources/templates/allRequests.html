@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta th:replace="fragments/fragments :: meta">
     <title>Все заявки</title>
@@ -30,8 +30,11 @@
                 <td th:text="${request.date}"></td>
                 <td th:text="${request.author.surname}"></td>
                 <td th:text="${request.goal}"></td>
-
-                <td><button th:onclick="'window.location.href=\'/app/requests/' + ${request.id} +'\';'" th:class="${(isNewRequestsExistsForSupplier == true) && (listOfDepartmentsForCurrentSupplier.contains(request.department))?'active':''}" type="button">Список</button></td>
+                <td sec:authorize="hasRole('ROLE_SUPPLIER')"><button th:onclick="'window.location.href=\'/app/requests/' + ${request.id} +'\';'"
+                            th:class="${(isNewRequestsExistsForSupplier == true) && (listOfDepartmentsForCurrentSupplier.contains(request.department))?'active':''}"
+                            type="button">Список</button></td>
+                <td sec:authorize="hasRole('ROLE_SIGNER')"><button th:onclick="'window.location.href=\'/app/requests/' + ${request.id} +'\';'"
+                            type="button">Список</button></td>
             </tr>
             </tbody>
         </table>
