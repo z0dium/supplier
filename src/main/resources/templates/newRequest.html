@@ -26,7 +26,7 @@
                     <th>Модель</th>
                     <th>Характеристики</th>
                     <th>Количество</th>
-                    <th>Единицы измерения</th>
+                    <th></th>
                     <th>Срочность</th>
                     <th>Ссылка</th>
                     <th></th>
@@ -38,12 +38,12 @@
                     <td><input th:field="*{requestLines[__${itemStat.index}__].item.model}" autocomplete="new-password"></td>
                     <td><input th:field="*{requestLines[__${itemStat.index}__].description}" autocomplete="new-password"></td>
                     <td><input th:field="*{requestLines[__${itemStat.index}__].orderedQuantity}" th:required="required" autocomplete="new-password"></td>
-                    <td><select th:field="*{requestLines[__${itemStat.index}__].unitOfMeasure}">
+                    <td><select style="font-size: 1rem" th:field="*{requestLines[__${itemStat.index}__].unitOfMeasure}">
                             <option th:each="uom : ${T(com.pamihnenkov.supplier.model.UnitOfMeasures).values()}"
                                     th:value="${uom}"
                                     th:text="${uom.title}"></option>
                         </select></td>
-                    <td><input th:type="date" th:field="*{requestLines[__${itemStat.index}__].expectedTo}" th:value="yyyy-MM-dd" autocomplete="new-password"></td>
+                    <td><input th:type="date" style="font-size: 0.65rem" th:field="*{requestLines[__${itemStat.index}__].expectedTo}" th:value="yyyy-MM-dd" autocomplete="new-password"></td>
                     <td><input th:field="*{requestLines[__${itemStat.index}__].item.urlOfExample}" autocomplete="new-password"></td>
                     <td><button type="button" th:onclick="cloneRow('listOfRequestLines',this)">+</button></td>
                 </tr>

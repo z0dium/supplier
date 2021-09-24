@@ -47,6 +47,19 @@ box-shadow: -3px -5px 10px 0px #123;
 background: url("/images/background.jpg");
 }
 
+#listOfRequestLines td{
+margin:1%;
+}
+
+#listOfRequestLines td> input,
+#listOfRequestLines td> select{
+width:100%;
+height:100%;
+}
+#listOfRequestLines td> input[type="date"]Х
+height:98%;
+
+
 a{
 color: #0000EE;
 }
