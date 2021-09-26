@@ -1,13 +1,13 @@
 .menuline{
-display: flex;
-justify-content: space-between;
-background: rgba(76, 175, 80, 0.0);
+    display: flex;
+    justify-content: space-between;
+    background: rgba(76, 175, 80, 0.0);
 }
 
 .menuline > div {
-box-shadow: -2px -3px 7px 0px rgba(0,0,0,0.5);
-border-radius: 17px;
-padding: 0px;
+    box-shadow: -2px -3px 7px 0px rgba(0,0,0,0.5);
+    border-radius: 17px;
+    padding: 0px;
 }
 
 .nav {
@@ -41,27 +41,39 @@ padding: 0px;
 }
 
 TABLE{
-background: white;
-width:100%;
-box-shadow: -3px -5px 10px 0px #123;
-background: url("/images/background.jpg");
+    border-radius: 7px;
+    background: white;
+    width:100%;
+    box-shadow: -3px -5px 10px 0px #123;
+    background: url("/images/background.jpg");
 }
 
-#listOfRequestLines td{
-margin:1%;
+TD{
+}
+
+FIELDSET{
+    border-radius: 7px;
+}
+
+INPUT{
+    padding-left:5px;
 }
 
 #listOfRequestLines td> input,
 #listOfRequestLines td> select{
-width:100%;
-height:100%;
+    border-width: 1px;
+    border-radius: 3px;
+    width:97%;
+    height:100%;
 }
-#listOfRequestLines td> input[type="date"]Х
-height:98%;
-
+#listOfRequestLines td> input[type="date"]{
+    min-height: 1.3em;
+    max-height: 1.3em;
+    box-sizing:content-box;
+}
 
 a{
-color: #0000EE;
+    color: #0000EE;
 }
 
 a:visited{
