@@ -30,6 +30,7 @@
 }
 
 .tableContainer{
+    border-radius: 7px;
      rgba(0,32,69,1)
 }
 
@@ -42,6 +43,7 @@
 
 TABLE{
     border-radius: 7px;
+    padding: 4px;
     background: white;
     width:100%;
     box-shadow: -3px -5px 10px 0px #123;
