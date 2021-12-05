@@ -33,4 +33,10 @@ public class Category extends BaseEntity{
     public int hashCode() {
         return Objects.hash(name, parentCategory);
     }
+
+    @Override
+    public String toString() {
+        return  name + (parentCategory == null ? "" : "(" + parentCategory.getName() + ")");
+
+    }
 }

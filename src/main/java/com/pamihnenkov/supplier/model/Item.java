@@ -20,7 +20,8 @@ public class Item extends BaseEntity implements Serializable {
     private String name; //Subject. 1-2 words
     private String model; //Any combination to identify the DIN, ISO, serial number, and so on...
 //    private String brand;
-    private String category;
+    @ManyToOne
+    private Category category;
     private String urlOfExample;
     private String image;
 
@@ -31,14 +32,14 @@ public class Item extends BaseEntity implements Serializable {
 
         Item item = (Item) o;
 
-        if (!getName().equals(item.getName())) return false;
+        if (getName() != null ? !getName().equals(item.getName()) : item.getName() != null) return false;
         if (getModel() != null ? !getModel().equals(item.getModel()) : item.getModel() != null) return false;
         return getCategory() != null ? !getCategory().equals(item.getCategory()) : item.getCategory() != null;
     }
 
     @Override
     public int hashCode() {
-        int result = getName().hashCode();
+        int result = (getName() != null ? getName().hashCode() : 0);
         result = 31 * result + (getModel() != null ? getModel().hashCode() : 0);
         result = 31 * result + (getCategory() != null ? getCategory().hashCode() : 0);
         return result;

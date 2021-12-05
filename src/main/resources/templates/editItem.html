@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta th:replace="fragments/fragments :: meta">
+    <title>Редактировать ТМЦ</title>
+    <link rel="stylesheet" href="/css/sort.css">
+    <link rel="stylesheet" href="/css/menu.css">
+    <link rel="stylesheet" href="/css/modal.css">
+    <script type="text/javascript" th:src="@{/js/sort.js}"></script>
+
+</head>
+
+<body>
+<div th:text="${@categoryServiceBean.getAllCategories().size()}"></div>
+
+<center>
+    <div class="modal" id="modal">
+        <div class="modal-header">
+            <div class="title">Выбор категории</div>
+            <button data-close-button="#modal" class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            <select th:object="${item.category}">
+                <option th:each="category : ${@categoryServiceBean.getAllCategories()}"
+                        th:value="${category.id}"
+                        th:text="${category}"></option>
+            </select>
+        </div>
+    </div>
+    <div id="overlay"></div>
+
+    <div  th:if="${param.message != null}" th:text="${param.message}"></div>
+
+    <form action="#" th:action="@{/app/items/save}" th:object="${item}" method="POST">
+        <table class="sort" align="center">
+            <tbody>
+            <tr>
+                <td align="right">Наименование</td>
+                <td align="left"><div th:if="${item.id != null}" th:text="${item.name}"><input type="text" th:field="${item.name}" style="display:none;" readonly></div></td>
+            </tr>
+            <tr>
+                <td align="right">Модель</td>
+                <td align="left"><div th:if="${item.id != null}" th:text="${item.model}"><input type="text" th:field="${item.model}" style="display:none;" readonly></div></td>
+            </tr>
+            <tr>
+                <td align="right">Категория</td>
+                <td><button data-modal-target="#modal" class="modal-target">Выбрать категорию</button></td>
+                <!--
+                <td><select name="category" id="category">
+                    <option th:if="${item.category == null}" value="" th:selected="selected" th:disabled="disabled"></option>
+                    <option th:each="category : ${listOfCategories}"
+                            th:value="${category.id}"
+                            th:text="${category}"
+                            th:selected="${category == item.category}"></option>
+                </select></td>
+                -->
+            </tr>
+
+            <tr>
+
+                <td align="right"><div><button type="submit">Сохранить</button></div></td>
+                <td align="left"><div><a href="/app/items/">Назад</a></div></td>
+            </tr>
+            </tbody>
+        </table>
+        <input type="text" th:field="*{id}" style="display:none;" readonly>
+    </form>
+</center>
+<script type="text/javascript" th:src="@{/js/modal.js}"></script>
+</body>
+</html>
