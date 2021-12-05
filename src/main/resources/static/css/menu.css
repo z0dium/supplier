@@ -1,10 +1,10 @@
-.menuline{
+.menuLine{
     display: flex;
     justify-content: space-between;
     background: rgba(76, 175, 80, 0.0);
 }
 
-.menuline > div {
+.menuLine > div {
     box-shadow: -2px -3px 7px 0px rgba(0,0,0,0.5);
     border-radius: 17px;
     padding: 0px;
