@@ -19,8 +19,8 @@
 <table th:if="${container != null}" class="sort" align="center">
     <thead>
     <tr>
-        <td th:if="${request == null}">Инициатор</td>
         <td th:if="${request == null}">Дата</td>
+        <td th:if="${request == null}">№</td>
         <td>Наименование</td>
         <td>Модель/артикул/и тд</td>
         <td>Описание</td>
@@ -28,13 +28,14 @@
         <td>Ед. изм.</td>
         <td>Категория</td>
         <td>Срочность</td>
-
+        <td th:if="${request == null}">Инициатор</td>
     </tr>
     </thead>
     <tbody>
     <tr th:each="rl: ${container.requestLines}">
-        <td th:if="${request == null}" th:text="${rl.request.author.surname}"></td>
+
         <td th:if="${request == null}" th:text="${rl.request.date}"></td>
+        <td th:if="${request == null}" th:text="${rl.request.id}"></td>
         <!-- Link or text for item.name -->
             <td th:if="${(rl.item.urlOfExample == null) || (rl.item.urlOfExample.length() == 0)}" th:text="${rl.item.name}"></td>
             <td th:if="${rl.item.urlOfExample != null && rl.item.urlOfExample.length() > 0}"><a  target="_blank" th:href="${rl.item.urlOfExample}" th:text="${rl.item.name}"></a></td>
@@ -45,6 +46,7 @@
         <td th:text="${rl.unitOfMeasure}"></td>
         <td th:text="${rl.item.category}"></td>
         <td th:text="${rl.expectedTo}"></td>
+        <td th:if="${request == null}" th:text="${rl.request.author.surname}"></td>
 
     </tr>
     </tbody>
