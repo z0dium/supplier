@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta th:replace="fragments/fragments :: meta">
+    <title>ТМЦ</title>
+    <link rel="stylesheet" href="/css/sort.css">
+    <link rel="stylesheet" href="/css/menu.css">
+    <script type="text/javascript" th:src="@{/js/sort.js}"></script>
+</head>
+<body>
+<header th:replace="supplierArea :: header"></header>
+<div th:fragment="allItems" class="tableContainer">
+    <table class="sort" align="center">
+        <thead>
+        <tr>
+            <td>Наименование</td>
+            <td>Модель</td>
+            <td>Категория</td>
+            <td>Пример</td>
+            <td>Изображение</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item: ${items}">
+            <td><a th:href="'/app/items/' + ${item.id}" th:text="${item.name}"></a></td>
+            <td th:text="${item.model}"></td>
+
+                <td th:if="${item.category != null && item.category.name.length() > 0}" th:text="${item.category}"></td>
+                <td th:if="${item.category == null || item.category.name.length() == 0}"><button th:onclick="'window.location.href=\'/app/items/' + ${item.id} +'\';'"
+                                                                                                          type="button">Задать категорию</button></td>
+            <td th:text="${item.urlOfExample}"></td>
+            <td th:text="${item.image}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<footer th:replace="fragments/fragments :: footer"></footer>
+</body>
+</html>
