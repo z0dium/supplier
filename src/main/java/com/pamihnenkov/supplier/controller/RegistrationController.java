@@ -57,11 +57,10 @@ public class RegistrationController {
 
         try {
             if (applicationUserService.save(applicationUser).getId() != null) {
-                emailService.send("sib-centr@gmail.com",
+                emailService.send("sibcentrgbi@gmail.com",
                                     applicationUser.getEmail(),
                                 "Регистрация на портале закупок",
                         "Спасибо за регистрацию!");
-
                 mav.setViewName("redirect:/login");
             }else mav.setViewName("redirect:/registration?error=true");
             return mav;

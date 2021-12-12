@@ -6,3 +6,18 @@ background-color: rgba(100, 190, 100, 0.3);
 input[type=password].different{
 background-color: rgba(190, 100, 100, 0.3);
 }
+
+#registrationTable {
+    width:auto;
+    zoom: 1.5;
+    -moz-transform: scale(1.5);
+}
+
+INPUT{
+    border-radius:5px;
+    border: 1px solid black;
+}
+
+#message {
+margin-bottom: 10px;
+}

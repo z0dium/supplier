@@ -46,4 +46,8 @@ public class User extends BaseEntity {
             StringBuilder sb = new StringBuilder(this.surname).append(" ").append(this.name.charAt(0)).append(".");
             return sb.toString();
         }
+    @Override
+        public String toString(){
+        return fio();
+        }
 }

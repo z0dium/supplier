@@ -3,48 +3,44 @@
 <head>
     <meta th:replace="fragments/fragments :: meta">
     <title>Title</title>
+    <link rel="stylesheet" href="/css/menu.css">
     <link rel="stylesheet" href="/css/registration.css">
     <script type="text/javascript" th:src="@{/js/passwordConfirmation.js}"></script>
 </head>
 <body>
 <center>
-<h1>Регистрация нового пользователя</h1>
-
-<form action="/" th:action="@{/registration}" th:object="${applicationUser}" method="POST">
+    <h1><strong>Регистрация нового пользователя</strong></h1>
+    <hr>
     <div style="background-color:powderblue;" id="message" th:if="${message}" ? th:text="${message}":></div>
-    <table>
-        <tr>
-            <td><div><label>Ваше имя</label></div></td>
-            <td><div><input th:id="name" th:field="*{name}" th:value="${applicationUser.name}"/></div></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><div><label>Ваша фамилия</label></div></td>
-            <td><div><input th:id="surname"th:field="*{surname}" th:value="${applicationUser.surname}"/></div></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><div><label>Email</label></div></td>
-            <td><div><input type="email" th:id="email" th:field="*{email}" th:value="${applicationUser.email}"/></div></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><div><label>Пароль</label></div></td>
-            <td><div><input type="password" th:id="password" th:field="*{password}" onkeyup='check();'/></div></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><div><label>Подтверждение пароля</label></div></td>
-            <td><div><input th:id="confirm_password" type="password" onkeyup='check();'/></div></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><div><button type="submit">Зарегистрироваться</button></div></td>
-            <td><div><a th:href="@{/login}">Войти в систему</a></div></td>
-            <td></td>
-        </tr>
-    </table>
-    </table>
+<form action="/" th:action="@{/registration}" th:object="${applicationUser}" method="POST">
+
+        <table id="registrationTable">
+            <tr>
+                <td><div align="right"><label>Ваше имя</label></div></td>
+                <td><div><input th:id="name" th:field="*{name}" th:value="${applicationUser.name}"/></div></td>
+            </tr>
+            <tr>
+                <td><div align="right"><label>Ваша фамилия</label></div></td>
+                <td><div><input th:id="surname"th:field="*{surname}" th:value="${applicationUser.surname}"/></div></td>
+            </tr>
+            <tr>
+                <td><div align="right"><label>Email</label></div></td>
+                <td><div><input type="email" th:id="email" th:field="*{email}" th:value="${applicationUser.email}"/></div></td>
+            </tr>
+            <tr>
+                <td><div align="right"><label>Пароль</label></div></td>
+                <td><div><input type="password" th:id="password" th:field="*{password}" onkeyup='check();'/></div></td>
+            </tr>
+            <tr>
+                <td><div align="right"><label>Подтверждение пароля</label></div></td>
+                <td><div><input th:id="confirm_password" type="password" onkeyup='check();'/></div></td>
+            </tr>
+            <tr>
+                <td><div align="right"><button type="submit">Зарегистрироваться</button></div></td>
+                <td><div><a th:href="@{/login}">Войти в систему</a></div></td>
+            </tr>
+        </table>
+
 </form>
 </center>
 <footer th:replace="fragments/fragments :: footer"></footer>
