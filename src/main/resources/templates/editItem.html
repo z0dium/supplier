@@ -24,6 +24,7 @@
                 <div class="title">Выбор категории</div>
                 <button data-close-button="#modal" class="close-button">&times;</button>
             </div>
+            <!--
             <div class="modal-body">
                 <select name="category" id="category">
                     <option th:if="${item.category == null}" value="" th:selected="selected" th:disabled="disabled">Выберите категорию</option>
@@ -33,6 +34,7 @@
                             th:selected="${category == item.category}"></option>
                 </select>
             </div>
+            -->
         </div>
 
         <table class="sort" align="center">
@@ -47,16 +49,14 @@
             </tr>
             <tr>
                 <td align="right">Категория</td>
-                <td><div th:if="${item.category != null}" th:text="${item.category} + ' asd das'"></div><button data-modal-target="#modal" class="modal-target">Выбрать категорию</button></td>
-                <!--
-                <td><select name="category" id="category">
-                    <option th:if="${item.category == null}" value="" th:selected="selected" th:disabled="disabled"></option>
+                <td><select name="category" id="category" th:field="${item.category}">
+                    <option th:if="${item.category == null}" value="" th:selected="selected" th:disabled="disabled">Выберите категорию</option>
                     <option th:each="category : ${listOfCategories}"
                             th:value="${category.id}"
                             th:text="${category}"
                             th:selected="${category == item.category}"></option>
-                </select></td>
-                -->
+                    </select>
+                </td>
             </tr>
 
             <tr>

@@ -5,10 +5,12 @@
     <title>ТМЦ</title>
     <link rel="stylesheet" href="/css/sort.css">
     <link rel="stylesheet" href="/css/menu.css">
+    <link rel="stylesheet" href="/css/modal.css">
     <script type="text/javascript" th:src="@{/js/sort.js}"></script>
 </head>
 <body>
 <header th:replace="supplierArea :: header"></header>
+<div id="overlay"></div>
 <div th:fragment="allItems" class="tableContainer">
     <table class="sort" align="center">
         <thead>
@@ -22,7 +24,10 @@
         </thead>
         <tbody>
         <tr th:each="item: ${items}">
-            <td><a th:href="'/app/items/' + ${item.id}" th:text="${item.name}"></a></td>
+            <td>
+                <div th:if="${item.category} != null"><a th:href="'/app/items/' + ${item.id}" th:text="${item.name}"></a></div>
+                <div th:if="${item.category} == null" th:text="${item.name}"></div></a>
+            </td>
             <td th:text="${item.model}"></td>
 
                 <td th:if="${item.category != null && item.category.name.length() > 0}" th:text="${item.category}"></td>
