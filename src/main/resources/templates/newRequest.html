@@ -52,8 +52,8 @@
     </fieldset>
     <center>
         <button type="button" th:onclick="addRow('listOfRequestLines');">Добавить строку</button>
-        <input type="submit" id="submitButton" value="Создать заявку">
-        <input type="submit" id="saveButton" value="Сохранить черновик">
+        <button type="submit" formaction="/app/requests/save" id="submitButton">Создать заявку</button>
+        <button type="submit" formaction="/app/wishlists/save" id="saveButton">Сохранить черновик</button>
     </center>
 </form>
 
