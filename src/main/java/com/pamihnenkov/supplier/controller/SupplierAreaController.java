@@ -1,6 +1,6 @@
 package com.pamihnenkov.supplier.controller;
 
-import com.pamihnenkov.supplier.model.RequestLinesContainer;
+import com.pamihnenkov.supplier.model.RequestLine;
 import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.RequestService;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.persistence.Persistence;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -35,15 +35,22 @@ public class SupplierAreaController {
         return "supplierArea";
     }
 
+    @GetMapping("supplier/checking")
+    public ModelAndView checkNewRequests(){
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("requests", requestService.findAllUnchecked());
+        mav.addObject("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
+        mav.addObject("listOfDepartmentsForCurrentSupplier", departmentService.findBySupplier(applicationUserService.getCurrentUser()));
+        mav.setViewName("allRequests");
+        return mav;
+    }
     @GetMapping("supplier/{org}")
     public ModelAndView enterSibArea(@PathVariable String org){
-
-        RequestLinesContainer container = new RequestLinesContainer();
         Long id = null;
         if (org.equals("sib")) id = 1L;
         if (org.equals("gbi")) id = 2L;
         Long finalId = id;
-        container.setRequestLines(requestService.findByDepartmentIn(departmentService.findAll().stream()
+        List<RequestLine> container = (requestService.findByDepartmentIn(departmentService.findAll().stream()
                 .filter(department -> department.getOrganization().getId()== finalId)  // TODO remove hardcoded Organization id
                 .collect(Collectors.toSet())).stream()
                 .flatMap(request -> request.getRequestLines().stream())
@@ -56,13 +63,5 @@ public class SupplierAreaController {
         return mav;
     }
 
-    @GetMapping("supplier/checking")
-    public ModelAndView checkNewRequests(){
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("requests", requestService.findAllUnchecked());
-        mav.addObject("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
-        mav.addObject("listOfDepartmentsForCurrentSupplier", departmentService.findBySupplier(applicationUserService.getCurrentUser()));
-        mav.setViewName("allRequests");
-        return mav;
-    }
+
 }

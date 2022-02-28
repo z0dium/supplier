@@ -15,8 +15,8 @@
     <span th:text="'Подразделение: ' + ${request.department.organization.name + ', ' + request.department.name} ">Подразделение:  Цех ...</span>,&nbsp
     <span th:text="'Цель приобретения: ' + ${request.goal}">Цель приобретения: для того-то...</span>
 </div>
-<div class="tableContainer">
-<table th:if="${container != null}" class="sort" align="center">
+<div th:fragment="allRequestLines" class="tableContainer">
+<table class="sort" align="center">
     <thead>
     <tr>
         <td th:if="${request == null}">Дата</td>
@@ -32,7 +32,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="rl: ${container.requestLines}">
+    <tr th:each="rl: ${container}">
 
         <td th:if="${request == null}" th:text="${rl.request.date}"></td>
         <td th:if="${request == null}" th:text="${rl.request.id}"></td>
