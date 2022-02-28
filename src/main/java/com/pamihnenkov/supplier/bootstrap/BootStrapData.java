@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 
-@Component
+
 @AllArgsConstructor
-public class BootStrapData implements CommandLineRunner {
+public class BootStrapData {
 
     private final OrganizationService organizationService;
     private final DepartmentService departmentService;
@@ -28,7 +28,7 @@ public class BootStrapData implements CommandLineRunner {
 
 
 
-    @Override
+
     public void run(String... args) {
 
         Category usluga = new Category();
