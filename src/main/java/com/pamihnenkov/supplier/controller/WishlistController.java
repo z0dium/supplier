@@ -33,31 +33,31 @@ public class WishlistController {
     public String showAllWishlists(Model model){
 
 
-        model.addAttribute("wishlist", wishlistService.findAll());
+        model.addAttribute("wishlists", wishlistService.getWishlistsForCurrentUser());
         model.addAttribute("listOfDepartments", departmentService.findAll());
         return "allWishlists";
     }
 
-    @GetMapping("wishlists/{Id}")
+    @GetMapping("wishlists/{id}")
     public ModelAndView showRequest(@PathVariable Long id, HttpServletRequest request){
         WishList wishList = wishlistService.findById(id);
         ModelAndView mav = new ModelAndView();
         if (wishList != null) {
 
             mav.addObject("container",wishList.getRequestLines());
-            mav.addObject("request", wishList);
-            mav.setViewName("allRequestsLines");
-            return mav;
+            mav.addObject("wishlist", wishList);
+            mav.setViewName("editWishlist");
         } else {
-            mav.addObject("message","Заявки с таким номером не существует.");
+            mav.addObject("message","Черновика с таким номером не существует.");
             mav.setViewName("redirect:"+request.getHeader("Referer"));
-            return mav;
         }
+        mav.addObject("departments", departmentService.findAll());
+        return mav;
     }
 
     @PostMapping("wishlists/save")
     public String saveWishlist(@ModelAttribute WishList wishList){
-        wishList.setAuthor(applicationUserService.getCurrentUser());
+        if (wishList.getAuthor() == null) wishList.setAuthor(applicationUserService.getCurrentUser());
         wishList.setDepartment(departmentService.findById(wishList.getDepartment().getId()));
         wishlistService.save(wishList);
         return "redirect:/app/wishlists";

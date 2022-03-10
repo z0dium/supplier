@@ -1,7 +1,9 @@
 package com.pamihnenkov.supplier.service.JPA;
 
 import com.pamihnenkov.supplier.model.WishList;
+import com.pamihnenkov.supplier.security.ApplicationUser.ApplicationUser;
 import com.pamihnenkov.supplier.service.repository.WishlistRepository;
+import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.RequestLinesService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,18 @@ public class WishlistJpaService implements WishlistService {
 
     private final WishlistRepository wishlistRepository;
     private final RequestLinesService requestLinesService;
+    private final ApplicationUserService applicationUserService;
 
     @Autowired
-    public WishlistJpaService(WishlistRepository wishlistRepository, RequestLinesService requestLinesService) {
+    public WishlistJpaService(WishlistRepository wishlistRepository, RequestLinesService requestLinesService, ApplicationUserService applicationUserService) {
         this.wishlistRepository = wishlistRepository;
         this.requestLinesService = requestLinesService;
+        this.applicationUserService = applicationUserService;
+    }
+
+    @Override
+    public Set<WishList> getWishlistsForCurrentUser() {
+        return wishlistRepository.findByAuthor(applicationUserService.getCurrentUser());
     }
 
     @Override

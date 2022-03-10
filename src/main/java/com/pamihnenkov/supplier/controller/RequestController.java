@@ -3,9 +3,11 @@ package com.pamihnenkov.supplier.controller;
 import com.pamihnenkov.supplier.model.Department;
 import com.pamihnenkov.supplier.model.Request;
 import com.pamihnenkov.supplier.model.RequestLine;
+import com.pamihnenkov.supplier.model.WishList;
 import com.pamihnenkov.supplier.service.serviceInterfaces.ApplicationUserService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.DepartmentService;
 import com.pamihnenkov.supplier.service.serviceInterfaces.RequestService;
+import com.pamihnenkov.supplier.service.serviceInterfaces.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -27,12 +30,14 @@ public class RequestController {
     private final RequestService requestService;
     private final ApplicationUserService applicationUserService;
     private final DepartmentService departmentService;
+    private final WishlistService wishlistService;
 
     @Autowired
-    public RequestController(RequestService requestService, ApplicationUserService applicationUserService, DepartmentService departmentService) {
+    public RequestController(RequestService requestService, ApplicationUserService applicationUserService, DepartmentService departmentService, WishlistService wishlistService) {
         this.requestService = requestService;
         this.applicationUserService = applicationUserService;
         this.departmentService = departmentService;
+        this.wishlistService = wishlistService;
     }
 
     @GetMapping("requests")
@@ -86,11 +91,11 @@ public class RequestController {
     @GetMapping("requests/create")
     public String showCreateForm(Model model) {
 
-        Request request = new Request();
+        WishList wishlist = new WishList();
     //    request.setDepartment(new Department());
-        request.setRequestLines(List.of(new RequestLine()));   //1 empty string needed for better vision on fronted
+        wishlist.setRequestLines(List.of(new RequestLine()));   //1 empty string needed for better vision on fronted
         Iterable<Department> departments = (departmentService.findAll());  // список компаний для селектов
-        model.addAttribute(request);
+        model.addAttribute("wishlist", wishlist);
         model.addAttribute("departments",departments);
         model.addAttribute("isNewRequestsExistsForSupplier",requestService.isNewRequestsExistsForSupplier());
         model.addAttribute("listOfDepartmentsForCurrentSupplier", departmentService.findBySupplier(applicationUserService.getCurrentUser()));
@@ -98,12 +103,20 @@ public class RequestController {
         return "newRequest";
     }
 
-    @PostMapping("requests/save")
-    public String createRequest(@ModelAttribute Request request) {
+    @Transactional
+    @PostMapping("requests/create")
+    public String createRequest(@ModelAttribute WishList wishlist) {
+        if (wishlist.getDepartment() == null) wishlist.setDepartment(departmentService.findById(wishlist.getDepartment().getId()));
+        if (wishlist.getAuthor() == null) wishlist.setAuthor(applicationUserService.getCurrentUser());
+        Request newRequest = new Request(wishlist);
+        newRequest.setDate(new Date());
+        requestService.save(newRequest);
+        wishlistService.delete(wishlist);
+        return "redirect:/app/requests";
+    }
 
-        request.setDepartment(departmentService.findById(request.getDepartment().getId()));
-        request.setAuthor(applicationUserService.getCurrentUser());
-        request.setDate(new Date());
+    @PostMapping("requests/save")
+    public String saveRequest(@ModelAttribute Request request) {
         requestService.save(request);
         return "redirect:/app/requests";
     }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta th:replace="fragments/fragments :: meta">
+    <title>Редактировать черновик</title>
+    <link rel="stylesheet" href="/css/sort.css">
+    <link rel="stylesheet" href="/css/menu.css">
+    <script type="text/javascript" th:src="@{/js/sort.js}"></script>
+    <script type="text/javascript" th:src="@{/js/javascript.js}"></script>
+</head>
+<body>
+    <header th:replace="supplierArea :: header"></header>
+    <div th:fragment="editingWishlist" class="tableContainer">
+        <form action="#" th:action="@{/app/wishlists/save}" th:object="${wishlist}" method="post" autocomplete="off">
+            <fieldset>
+                <label>Цель приобретения</label>
+                <input type="text" th:field="*{goal}">
+                <label>в</label>
+                <select th:field="*{department.id}">
+                    <option th:each="dep : ${departments}"
+                            th:value="${dep.id}"
+                            th:text="${dep}"></option>
+                </select>
+                <input type="text" th:field="*{id}" style="display:none;" readonly>
+                <hr>
+                <table id="listOfRequestLines">
+                    <thead>
+                    <tr>
+                        <th>Наименование</th>
+                        <th>Модель</th>
+                        <th>Характеристики</th>
+                        <th>Количество</th>
+                        <th></th>
+                        <th>Срочность</th>
+                        <th>Ссылка</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="requestLine, itemStat : *{requestLines}">
+                        <td><input th:field="*{requestLines[__${itemStat.index}__].item.name}" th:required="required" autocomplete="new-password"></td>
+                        <td><input th:field="*{requestLines[__${itemStat.index}__].item.model}" autocomplete="new-password"></td>
+                        <td><input th:field="*{requestLines[__${itemStat.index}__].description}" autocomplete="new-password"></td>
+                        <td><input th:field="*{requestLines[__${itemStat.index}__].orderedQuantity}" th:required="required" autocomplete="new-password"></td>
+                        <td><select style="font-size: 0.9rem" th:field="*{requestLines[__${itemStat.index}__].unitOfMeasure}">
+                            <option th:each="uom : ${T(com.pamihnenkov.supplier.model.UnitOfMeasures).values()}"
+                                    th:value="${uom}"
+                                    th:text="${uom.title}"></option>
+                        </select></td>
+                        <td><input th:type="date" th:field="*{requestLines[__${itemStat.index}__].expectedTo}" th:value="yyyy-MM-dd" autocomplete="new-password"></td>
+                        <td><input th:field="*{requestLines[__${itemStat.index}__].item.urlOfExample}" ondblclick="window.open(this.value)" autocomplete="new-password"></td>
+                        <td><button type="button" th:onclick="cloneRow('listOfRequestLines',this)">+</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+            <center>
+                <button type="button" th:onclick="addRow('listOfRequestLines');">Добавить строку</button>
+                <button type="submit" formaction="/app/requests/create" id="submitButton">Создать заявку</button>
+                <button type="submit" formaction="/app/wishlists/save" id="saveButton">Сохранить черновик</button>
+            </center>
+        </form>
+    </div>
+</body>
+</html>

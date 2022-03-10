@@ -10,7 +10,29 @@
 </head>
 <body>
 <header th:replace="supplierArea :: header"></header>
-
-
+<div th:if="${message != null}" th:text="${message}" style="color:red;"></div>
+    <div th:fragment="allWishlists" class="tableContainer">
+        <table class="sort" align="center">
+            <thead>
+            <tr>
+                <td>Номер черновика</td>
+                <td>Фамилия</td>
+                <td>Цель заявки</td>
+                <td>Подразделение</td>
+                <td>Список</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="wishlist: ${wishlists}">
+                <td th:text="${wishlist.id}"></td>
+                <td th:text="${wishlist.author.surname}"></td>
+                <td th:text="${wishlist.goal}"></td>
+                <td th:text="${wishlist.department}"></td>
+                <td><button th:onclick="'window.location.href=\'/app/wishlists/' + ${wishlist.id} +'\';'"
+                                                                     type="button">Список</button></td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
-</html>`
+</html>

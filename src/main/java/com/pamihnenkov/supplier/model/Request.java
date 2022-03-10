@@ -33,6 +33,13 @@ public class Request extends BaseEntity{
     @OneToMany(mappedBy = "request")
         private List<RequestLine> requestLines = new ArrayList<>();
 
+    public Request (WishList wishList){
+        this.goal = wishList.getGoal();
+        this.department = wishList.getDepartment();
+        this.requestLines = wishList.getRequestLines();
+        this.author = wishList.getAuthor();
+    }
+
     @Override
         public boolean equals(Object o) {
         if (this == o) return true;
