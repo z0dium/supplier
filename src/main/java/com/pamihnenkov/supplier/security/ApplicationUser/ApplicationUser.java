@@ -119,10 +119,6 @@ public class ApplicationUser extends User implements UserDetails {
     public String toString() {
         return "ApplicationUser{" +
                 "id=" + getId() +
-                ", isAccountNonExpired=" + isAccountNonExpired +
-                ", isAccountNonLocked=" + isAccountNonLocked +
-                ", isCredentialsNonExpired=" + isCredentialsNonExpired +
-                ", isEnabled=" + isEnabled +
                 "} " + super.toString();
     }
 }

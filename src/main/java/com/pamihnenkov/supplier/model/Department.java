@@ -39,4 +39,9 @@ public class Department extends BaseEntity {
     public int hashCode() {
         return Objects.hash(name, organization);
     }
+
+    @Override
+    public String toString(){
+        return organization.getName() + ", " + name;
+    }
 }

@@ -30,11 +30,13 @@
                 <td th:text="${request.date}"></td>
                 <td th:text="${request.author.surname}"></td>
                 <td th:text="${request.goal}"></td>
-                <td sec:authorize="hasRole('ROLE_SUPPLIER')"><button th:onclick="'window.location.href=\'/app/requests/' + ${request.id} +'\';'"
+                <td>
+                    <div sec:authorize="hasRole('ROLE_SUPPLIER')"><button th:onclick="'window.location.href=\'/app/requests/' + ${request.id} +'\';'"
                             th:class="${(isNewRequestsExistsForSupplier == true) && (listOfDepartmentsForCurrentSupplier.contains(request.department))?'active':''}"
-                            type="button">Список</button></td>
-                <td sec:authorize="hasRole('ROLE_SIGNER')"><button th:onclick="'window.location.href=\'/app/requests/' + ${request.id} +'\';'"
-                            type="button">Список</button></td>
+                                                                          type="button">Список</button></div>
+                    <div sec:authorize="!hasRole('ROLE_SUPPLIER')"><button th:onclick="'window.location.href=\'/app/requests/' + ${request.id} +'\';'"
+                                                                        type="button">Список</button></div>
+                </td>
             </tr>
             </tbody>
         </table>
