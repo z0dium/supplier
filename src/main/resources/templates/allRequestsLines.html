@@ -60,7 +60,10 @@
     </div>
     <div sec:authorize="hasRole('ROLE_SIGNER')" th:if="${request != null && request.supplier != null && request.signer == null }">
         <form th:action="@{/app/signer/__${request.id}__/approve}" method="post">
-            <center><button class="active" type="submit">Утвердить заявку</button></center>
+            <center>
+                <button class="active" type="submit">Утвердить заявку</button>
+                <button class="activeNegative" type="submit" th:formaction="@{/app/signer/__${request.id}__/cancel}" id="cancelButton">Отклонить заявку</button>
+            </center>
         </form>
     </div>
 </center>

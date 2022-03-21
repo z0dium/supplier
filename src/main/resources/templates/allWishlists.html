@@ -11,11 +11,13 @@
 <body>
 <header th:replace="supplierArea :: header"></header>
 <div th:if="${message != null}" th:text="${message}" style="color:red;"></div>
+<div th:if="${(!(wishlists == null)) && (wishlists.size() == 0)}"><center>Черновиков на данный момент нет</center></div>
+<div th:if="${(!(wishlists == null)) && (wishlists.size() != 0)}">
     <div th:fragment="allWishlists" class="tableContainer">
         <table class="sort" align="center">
             <thead>
             <tr>
-                <td>Номер черновика</td>
+                <!-- <td>Номер черновика</td> -->
                 <td>Фамилия</td>
                 <td>Цель заявки</td>
                 <td>Подразделение</td>
@@ -24,7 +26,7 @@
             </thead>
             <tbody>
             <tr th:each="wishlist: ${wishlists}">
-                <td th:text="${wishlist.id}"></td>
+                <!-- <td th:text="${wishlist.id}"></td> -->
                 <td th:text="${wishlist.author.surname}"></td>
                 <td th:text="${wishlist.goal}"></td>
                 <td th:text="${wishlist.department}"></td>
@@ -34,5 +36,6 @@
             </tbody>
         </table>
     </div>
+</div>
 </body>
 </html>
